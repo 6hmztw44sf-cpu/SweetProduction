@@ -3,25 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Sweet Production — Film · Foto · Content</title>
+
   <meta name="description" content="Sweet Production — Film, Foto och Content.">
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header class="nav">
-  <a href="#top" class="logo">SWEET<span>PRODUCTION</span></a>
+
+  <a href="#top" class="logo">
+    SWEET<span>PRODUCTION</span>
+  </a>
+
   <nav>
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
+
 </header>
 
 <main id="top">
 
 <section class="hero">
+
   <div class="hero-bg">
     <div class="glow one"></div>
     <div class="glow two"></div>
@@ -29,9 +38,12 @@
   </div>
 
   <div class="hero-content">
-    <p class="eyebrow">Stockholm · Sweden</p>
 
-    <h1>
+    <p class="eyebrow" id="location">
+      Stockholm · Sweden
+    </p>
+
+    <h1 id="hero-title">
       Film.<br>
       Foto.<br>
       <i>Content.</i>
@@ -40,57 +52,107 @@
     <a href="#work" class="scroll">
       Scroll to explore <b>↓</b>
     </a>
+
   </div>
+
 </section>
 
 <section class="statement">
-  <p class="eyebrow">Sweet Production</p>
 
-  <h2>
+  <p class="eyebrow">
+    Sweet Production
+  </p>
+
+  <h2 id="statement">
     Visuals that<br>
     <span>stay with you.</span>
   </h2>
+
 </section>
 
 <section id="work" class="work">
 
   <div class="section-top">
-    <p class="eyebrow">Selected work</p>
+
+    <p class="eyebrow">
+      Selected work
+    </p>
+
     <span>01 — 03</span>
+
   </div>
 
   <div class="projects">
 
     <article class="project big">
-      <div class="media" id="image1">YOUR PROJECT</div>
-      <div class="meta">
-        <strong id="title1">Project One</strong>
-        <small id="category1">Film / Content</small>
+
+      <div class="media" id="image1">
+        YOUR PROJECT
       </div>
+
+      <div class="meta">
+
+        <strong id="title1">
+          Project One
+        </strong>
+
+        <small id="category1">
+          Film / Content
+        </small>
+
+      </div>
+
     </article>
 
     <article class="project">
-      <div class="media alt1" id="image2">YOUR PROJECT</div>
-      <div class="meta">
-        <strong id="title2">Project Two</strong>
-        <small id="category2">Foto / Content</small>
+
+      <div class="media alt1" id="image2">
+        YOUR PROJECT
       </div>
+
+      <div class="meta">
+
+        <strong id="title2">
+          Project Two
+        </strong>
+
+        <small id="category2">
+          Foto / Content
+        </small>
+
+      </div>
+
     </article>
 
     <article class="project">
-      <div class="media alt2" id="image3">YOUR PROJECT</div>
-      <div class="meta">
-        <strong id="title3">Project Three</strong>
-        <small id="category3">Film / Foto</small>
+
+      <div class="media alt2" id="image3">
+        YOUR PROJECT
       </div>
+
+      <div class="meta">
+
+        <strong id="title3">
+          Project Three
+        </strong>
+
+        <small id="category3">
+          Film / Foto
+        </small>
+
+      </div>
+
     </article>
 
   </div>
+
 </section>
 
 <section id="about" class="about">
 
-  <p class="eyebrow">What we do</p>
+  <p class="eyebrow">
+    What we do
+  </p>
 
   <div class="split">
 
@@ -100,31 +162,43 @@
     </h2>
 
     <div>
-      <p class="lead" id="aboutText">
-        Sweet Production creates film, photography and content for brands,
+
+      <p class="lead" id="about-text">
+        Sweet Production creates film,
+        photography and content for brands,
         people and ideas that deserve attention.
       </p>
 
       <div class="services">
+
         <span>01 — Film</span>
         <span>02 — Foto</span>
         <span>03 — Content</span>
+
       </div>
+
     </div>
 
   </div>
+
 </section>
 
 <section id="contact" class="contact">
 
-  <p class="eyebrow">Have an idea?</p>
+  <p class="eyebrow">
+    Have an idea?
+  </p>
 
   <h2>
     Let's make<br>
     <i>something sweet.</i>
   </h2>
 
-  <a class="email" id="email" href="mailto:hello@sweetproduction.se">
+  <a
+    class="email"
+    id="email"
+    href="mailto:hello@sweetproduction.se"
+  >
     hello@sweetproduction.se ↗
   </a>
 
@@ -133,45 +207,138 @@
 </main>
 
 <footer>
-  <span>© 2026 Sweet Production</span>
-  <span>Film · Foto · Content</span>
+
+  <span>
+    © 2026 Sweet Production
+  </span>
+
+  <span>
+    Film · Foto · Content
+  </span>
+
 </footer>
 
+
 <script>
-const saved = localStorage.getItem("sweetProduction");
+
+const saved = localStorage.getItem("sweetProductionContent");
 
 if (saved) {
+
   const data = JSON.parse(saved);
 
-  if (data.about)
-    document.getElementById("aboutText").textContent = data.about;
+  /* HERO */
+
+  if (data.location) {
+    document.getElementById("location").textContent =
+      data.location;
+  }
+
+  if (data.hero1 || data.hero2 || data.hero3) {
+
+    document.getElementById("hero-title").innerHTML =
+      `${data.hero1 || ""}<br>
+       ${data.hero2 || ""}<br>
+       <i>${data.hero3 || ""}</i>`;
+
+  }
+
+
+  /* STATEMENT */
+
+  if (data.statement) {
+
+    const lines = data.statement
+      .split("\n")
+      .filter(line => line.trim() !== "");
+
+    document.getElementById("statement").innerHTML =
+      `${lines[0] || ""}<br>
+       <span>${lines[1] || ""}</span>`;
+
+  }
+
+
+  /* PROJECT 1 */
+
+  if (data.project1)
+    document.getElementById("title1").textContent =
+      data.project1;
+
+  if (data.type1)
+    document.getElementById("category1").textContent =
+      data.type1;
+
+  if (data.image1)
+    setImage("image1", data.image1);
+
+
+  /* PROJECT 2 */
+
+  if (data.project2)
+    document.getElementById("title2").textContent =
+      data.project2;
+
+  if (data.type2)
+    document.getElementById("category2").textContent =
+      data.type2;
+
+  if (data.image2)
+    setImage("image2", data.image2);
+
+
+  /* PROJECT 3 */
+
+  if (data.project3)
+    document.getElementById("title3").textContent =
+      data.project3;
+
+  if (data.type3)
+    document.getElementById("category3").textContent =
+      data.type3;
+
+  if (data.image3)
+    setImage("image3", data.image3);
+
+
+  /* ABOUT */
+
+  if (data.about) {
+    document.getElementById("about-text").textContent =
+      data.about;
+  }
+
+
+  /* EMAIL */
 
   if (data.email) {
+
     const email = document.getElementById("email");
+
     email.textContent = data.email + " ↗";
     email.href = "mailto:" + data.email;
+
   }
 
-  if (data.projects) {
-    data.projects.forEach((project, i) => {
-      const number = i + 1;
-
-      document.getElementById("title" + number).textContent =
-        project.title;
-
-      document.getElementById("category" + number).textContent =
-        project.category;
-
-      if (project.image) {
-        const media = document.getElementById("image" + number);
-        media.style.backgroundImage = "url('" + project.image + "')";
-        media.style.backgroundSize = "cover";
-        media.style.backgroundPosition = "center";
-        media.textContent = "";
-      }
-    });
-  }
 }
+
+
+/* IMAGE */
+
+function setImage(id, url) {
+
+  const element = document.getElementById(id);
+
+  element.style.backgroundImage =
+    `url("${url}")`;
+
+  element.style.backgroundSize = "cover";
+  element.style.backgroundPosition = "center";
+
+  element.textContent = "";
+
+}
+
 </script>
 
 </body>
