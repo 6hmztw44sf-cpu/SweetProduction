@@ -3,277 +3,176 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Sweet Production — Film · Foto · Content</title>
-
-  <meta
-    name="description"
-    content="Sweet Production — Film, Foto och Content."
-  >
-
+  <meta name="description" content="Sweet Production — Film, Foto och Content.">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- NAVIGATION -->
+<header class="nav">
+  <a href="#top" class="logo">SWEET<span>PRODUCTION</span></a>
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
 
-  <header class="nav">
+<main id="top">
 
-    <a href="#top" class="logo">
-      SWEET<span>PRODUCTION</span>
+<section class="hero">
+  <div class="hero-bg">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="hero-content">
+    <p class="eyebrow">Stockholm · Sweden</p>
+
+    <h1>
+      Film.<br>
+      Foto.<br>
+      <i>Content.</i>
+    </h1>
+
+    <a href="#work" class="scroll">
+      Scroll to explore <b>↓</b>
     </a>
+  </div>
+</section>
 
-    <nav>
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+<section class="statement">
+  <p class="eyebrow">Sweet Production</p>
 
-  </header>
+  <h2>
+    Visuals that<br>
+    <span>stay with you.</span>
+  </h2>
+</section>
 
+<section id="work" class="work">
 
-  <main id="top">
+  <div class="section-top">
+    <p class="eyebrow">Selected work</p>
+    <span>01 — 03</span>
+  </div>
 
-    <!-- HERO -->
+  <div class="projects">
 
-    <section class="hero">
-
-      <div class="hero-bg">
-
-        <div class="glow one"></div>
-        <div class="glow two"></div>
-
-        <div class="grain"></div>
-
+    <article class="project big">
+      <div class="media" id="image1">YOUR PROJECT</div>
+      <div class="meta">
+        <strong id="title1">Project One</strong>
+        <small id="category1">Film / Content</small>
       </div>
+    </article>
 
-
-      <div class="hero-content">
-
-        <p class="eyebrow">
-          Stockholm · Sweden
-        </p>
-
-        <h1>
-          Film.<br>
-          Foto.<br>
-          <i>Content.</i>
-        </h1>
-
-        <a href="#work" class="scroll">
-          Scroll to explore <b>↓</b>
-        </a>
-
+    <article class="project">
+      <div class="media alt1" id="image2">YOUR PROJECT</div>
+      <div class="meta">
+        <strong id="title2">Project Two</strong>
+        <small id="category2">Foto / Content</small>
       </div>
+    </article>
 
-    </section>
+    <article class="project">
+      <div class="media alt2" id="image3">YOUR PROJECT</div>
+      <div class="meta">
+        <strong id="title3">Project Three</strong>
+        <small id="category3">Film / Foto</small>
+      </div>
+    </article>
 
+  </div>
+</section>
 
+<section id="about" class="about">
 
-    <!-- STATEMENT -->
+  <p class="eyebrow">What we do</p>
 
-    <section class="statement">
+  <div class="split">
 
-      <p class="eyebrow">
-        Sweet Production
+    <h2>
+      Small team.<br>
+      <i>Big visuals.</i>
+    </h2>
+
+    <div>
+      <p class="lead" id="aboutText">
+        Sweet Production creates film, photography and content for brands,
+        people and ideas that deserve attention.
       </p>
 
-      <h2>
-        Visuals that<br>
-        <span>stay with you.</span>
-      </h2>
-
-    </section>
-
-
-
-    <!-- WORK -->
-
-    <section id="work" class="work">
-
-      <div class="section-top">
-
-        <p class="eyebrow">
-          Selected work
-        </p>
-
-        <span>
-          01 — 03
-        </span>
-
+      <div class="services">
+        <span>01 — Film</span>
+        <span>02 — Foto</span>
+        <span>03 — Content</span>
       </div>
+    </div>
 
+  </div>
+</section>
 
-      <div class="projects">
+<section id="contact" class="contact">
 
+  <p class="eyebrow">Have an idea?</p>
 
-        <!-- PROJECT 1 -->
+  <h2>
+    Let's make<br>
+    <i>something sweet.</i>
+  </h2>
 
-        <article class="project big">
+  <a class="email" id="email" href="mailto:hello@sweetproduction.se">
+    hello@sweetproduction.se ↗
+  </a>
 
-          <div class="media">
-            YOUR PROJECT
-          </div>
+</section>
 
-          <div class="meta">
+</main>
 
-            <strong>
-              Project One
-            </strong>
+<footer>
+  <span>© 2026 Sweet Production</span>
+  <span>Film · Foto · Content</span>
+</footer>
 
-            <small>
-              Film / Content
-            </small>
+<script>
+const saved = localStorage.getItem("sweetProduction");
 
-          </div>
+if (saved) {
+  const data = JSON.parse(saved);
 
-        </article>
+  if (data.about)
+    document.getElementById("aboutText").textContent = data.about;
 
+  if (data.email) {
+    const email = document.getElementById("email");
+    email.textContent = data.email + " ↗";
+    email.href = "mailto:" + data.email;
+  }
 
+  if (data.projects) {
+    data.projects.forEach((project, i) => {
+      const number = i + 1;
 
-        <!-- PROJECT 2 -->
+      document.getElementById("title" + number).textContent =
+        project.title;
 
-        <article class="project">
+      document.getElementById("category" + number).textContent =
+        project.category;
 
-          <div class="media alt1">
-            YOUR PROJECT
-          </div>
-
-          <div class="meta">
-
-            <strong>
-              Project Two
-            </strong>
-
-            <small>
-              Foto / Content
-            </small>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- PROJECT 3 -->
-
-        <article class="project">
-
-          <div class="media alt2">
-            YOUR PROJECT
-          </div>
-
-          <div class="meta">
-
-            <strong>
-              Project Three
-            </strong>
-
-            <small>
-              Film / Foto
-            </small>
-
-          </div>
-
-        </article>
-
-
-      </div>
-
-    </section>
-
-
-
-    <!-- ABOUT -->
-
-    <section id="about" class="about">
-
-      <p class="eyebrow">
-        What we do
-      </p>
-
-
-      <div class="split">
-
-        <h2>
-          Small team.<br>
-          <i>Big visuals.</i>
-        </h2>
-
-
-        <div>
-
-          <p class="lead">
-            Sweet Production creates film,
-            photography and content for brands,
-            people and ideas that deserve attention.
-          </p>
-
-
-          <div class="services">
-
-            <span>
-              01 — Film
-            </span>
-
-            <span>
-              02 — Foto
-            </span>
-
-            <span>
-              03 — Content
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- CONTACT -->
-
-    <section id="contact" class="contact">
-
-      <p class="eyebrow">
-        Have an idea?
-      </p>
-
-      <h2>
-        Let's make<br>
-        <i>something sweet.</i>
-      </h2>
-
-      <a
-        class="email"
-        href="mailto:hello@sweetproduction.se"
-      >
-        hello@sweetproduction.se ↗
-      </a>
-
-    </section>
-
-  </main>
-
-
-
-  <!-- FOOTER -->
-
-  <footer>
-
-    <span>
-      © 2026 Sweet Production
-    </span>
-
-    <span>
-      Film · Foto · Content
-    </span>
-
-  </footer>
+      if (project.image) {
+        const media = document.getElementById("image" + number);
+        media.style.backgroundImage = "url('" + project.image + "')";
+        media.style.backgroundSize = "cover";
+        media.style.backgroundPosition = "center";
+        media.textContent = "";
+      }
+    });
+  }
+}
+</script>
 
 </body>
 </html>
