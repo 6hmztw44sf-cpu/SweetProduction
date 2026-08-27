@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Production — Admin</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 30px;
+      background: #080808;
+      color: #f1efe9;
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin-inline: auto;
+    }
+    h1 { margin-bottom: 40px; }
+    label {
+      display: block;
+      margin-top: 25px;
+      margin-bottom: 8px;
+      opacity: .7;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      background: #151515;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 4px;
+      font: inherit;
+    }
+    textarea { min-height: 120px; }
+    button {
+      margin-top: 35px;
+      padding: 15px 25px;
+      background: white;
+      color: black;
+      border: 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .project {
+      border-top: 1px solid #333;
+      margin-top: 40px;
+      padding-top: 20px;
+    }
+    #status {
+      margin-top: 20px;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Sweet Production — Admin</h1>
+
+<label>Hero-rubrik</label>
+<input id="hero" value="Film. Foto. Content.">
+
+<label>Om oss</label>
+<textarea id="about">Sweet Production creates film, photography and content for brands, people and ideas that deserve attention.</textarea>
+
+<div class="project">
+  <h2>Projekt 1</h2>
+  <label>Bild URL</label>
+  <input id="image1" placeholder="https://...">
+
+  <label>Titel</label>
+  <input id="title1" value="Project One">
+
+  <label>Kategori</label>
+  <input id="category1" value="Film / Content">
+</div>
+
+<div class="project">
+  <h2>Projekt 2</h2>
+  <label>Bild URL</label>
+  <input id="image2" placeholder="https://...">
+
+  <label>Titel</label>
+  <input id="title2" value="Project Two">
+
+  <label>Kategori</label>
+  <input id="category2" value="Foto / Content">
+</div>
+
+<div class="project">
+  <h2>Projekt 3</h2>
+  <label>Bild URL</label>
+  <input id="image3" placeholder="https://...">
+
+  <label>Titel</label>
+  <input id="title3" value="Project Three">
+
+  <label>Kategori</label>
+  <input id="category3" value="Film / Foto">
+</div>
+
+<label>E-post</label>
+<input id="email" value="hello@sweetproduction.se">
+
+<button onclick="save()">Spara ändringar</button>
+
+<div id="status"></div>
+
+<script>
+function save() {
+  const data = {
+    hero: document.getElementById("hero").value,
+    about: document.getElementById("about").value,
+    email: document.getElementById("email").value,
+
+    projects: [
+      {
+        image: document.getElementById("image1").value,
+        title: document.getElementById("title1").value,
+        category: document.getElementById("category1").value
+      },
+      {
+        image: document.getElementById("image2").value,
+        title: document.getElementById("title2").value,
+        category: document.getElementById("category2").value
+      },
+      {
+        image: document.getElementById("image3").value,
+        title: document.getElementById("title3").value,
+        category: document.getElementById("category3").value
+      }
+    ]
+  };
+
+  localStorage.setItem("sweetProduction", JSON.stringify(data));
+
+  document.getElementById("status").textContent =
+    "✓ Ändringar sparade på denna enhet.";
+}
+</script>
+
+</body>
+</html>
