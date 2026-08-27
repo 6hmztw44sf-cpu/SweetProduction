@@ -1,155 +1,269 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sweet Production — Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Production — Admin</title>
 
-<style>
-*{box-sizing:border-box}
+  <style>
+    * { box-sizing: border-box; }
 
-body{
-  margin:0;
-  padding:30px;
-  background:#080808;
-  color:#f1efe9;
-  font-family:Arial,Helvetica,sans-serif;
-  max-width:800px;
-  margin:auto;
-}
+    body {
+      margin: 0;
+      background: #080808;
+      color: #f1efe9;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 40px 5vw;
+    }
 
-h1{margin-bottom:40px}
+    .admin {
+      max-width: 900px;
+      margin: auto;
+    }
 
-label{
-  display:block;
-  margin:25px 0 8px;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  opacity:.6;
-}
+    h1 {
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
 
-input,textarea{
-  width:100%;
-  padding:14px;
-  background:#151515;
-  color:white;
-  border:1px solid #333;
-  font:inherit;
-}
+    .intro {
+      color: #888;
+      margin-bottom: 50px;
+    }
 
-textarea{min-height:120px}
+    .card {
+      border: 1px solid #292929;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
 
-.project{
-  border-top:1px solid #333;
-  margin-top:40px;
-  padding-top:20px;
-}
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
 
-button{
-  margin-top:35px;
-  padding:15px 25px;
-  border:0;
-  background:#fff;
-  color:#000;
-  font-weight:bold;
-  cursor:pointer;
-}
+    label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #888;
+      margin: 20px 0 8px;
+    }
 
-#status{
-  margin-top:20px;
-  color:#aaa;
-}
-</style>
+    input,
+    textarea {
+      width: 100%;
+      background: #111;
+      color: white;
+      border: 1px solid #333;
+      padding: 14px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      background: #f1efe9;
+      color: #080808;
+      padding: 15px 25px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      opacity: .8;
+    }
+
+    #status {
+      margin-top: 20px;
+      color: #aaa;
+    }
+
+    a {
+      color: white;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>Sweet Production</h1>
+<div class="admin">
 
-<label>Hero-rubrik</label>
-<input id="hero" value="Film. Foto. Content.">
+  <h1>Sweet Production</h1>
 
-<label>Om oss</label>
-<textarea id="about">Sweet Production creates film, photography and content for brands, people and ideas that deserve attention.</textarea>
+  <p class="intro">
+    Admin — ändra texten här och spara.
+  </p>
 
-<div class="project">
-<h2>Projekt 1</h2>
+  <div class="card">
 
-<label>Bild URL</label>
-<input id="image1" placeholder="https://...">
+    <h2>Hero</h2>
 
-<label>Titel</label>
-<input id="title1" value="Project One">
+    <label>Plats</label>
+    <input id="location" value="Stockholm · Sweden">
 
-<label>Kategori</label>
-<input id="category1" value="Film / Content">
+    <label>Rubrik rad 1</label>
+    <input id="hero1" value="Film.">
+
+    <label>Rubrik rad 2</label>
+    <input id="hero2" value="Foto.">
+
+    <label>Rubrik rad 3</label>
+    <input id="hero3" value="Content.">
+
+  </div>
+
+  <div class="card">
+
+    <h2>Statement</h2>
+
+    <label>Rubrik</label>
+    <textarea id="statement">Visuals that
+stay with you.</textarea>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Projekt 1</h2>
+
+    <label>Namn</label>
+    <input id="project1" value="Project One">
+
+    <label>Typ</label>
+    <input id="type1" value="Film / Content">
+
+    <label>Bild URL</label>
+    <input id="image1" placeholder="https://...">
+
+  </div>
+
+  <div class="card">
+
+    <h2>Projekt 2</h2>
+
+    <label>Namn</label>
+    <input id="project2" value="Project Two">
+
+    <label>Typ</label>
+    <input id="type2" value="Foto / Content">
+
+    <label>Bild URL</label>
+    <input id="image2" placeholder="https://...">
+
+  </div>
+
+  <div class="card">
+
+    <h2>Projekt 3</h2>
+
+    <label>Namn</label>
+    <input id="project3" value="Project Three">
+
+    <label>Typ</label>
+    <input id="type3" value="Film / Foto">
+
+    <label>Bild URL</label>
+    <input id="image3" placeholder="https://...">
+
+  </div>
+
+  <div class="card">
+
+    <h2>About</h2>
+
+    <label>Beskrivning</label>
+
+    <textarea id="about">Sweet Production creates film, photography and content for brands, people and ideas that deserve attention.</textarea>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Kontakt</h2>
+
+    <label>E-post</label>
+    <input id="email" value="hello@sweetproduction.se">
+
+  </div>
+
+  <button onclick="save()">Spara ändringar</button>
+
+  <p id="status"></p>
+
+  <p>
+    <a href="/" target="_blank">← Öppna hemsidan</a>
+  </p>
+
 </div>
-
-<div class="project">
-<h2>Projekt 2</h2>
-
-<label>Bild URL</label>
-<input id="image2" placeholder="https://...">
-
-<label>Titel</label>
-<input id="title2" value="Project Two">
-
-<label>Kategori</label>
-<input id="category2" value="Foto / Content">
-</div>
-
-<div class="project">
-<h2>Projekt 3</h2>
-
-<label>Bild URL</label>
-<input id="image3" placeholder="https://...">
-
-<label>Titel</label>
-<input id="title3" value="Project Three">
-
-<label>Kategori</label>
-<input id="category3" value="Film / Foto">
-</div>
-
-<label>E-post</label>
-<input id="email" value="hello@sweetproduction.se">
-
-<button onclick="save()">Spara ändringar</button>
-
-<div id="status"></div>
 
 <script>
-function save(){
 
-const data={
-hero:document.getElementById("hero").value,
-about:document.getElementById("about").value,
-email:document.getElementById("email").value,
+function save() {
 
-projects:[
-{
-image:document.getElementById("image1").value,
-title:document.getElementById("title1").value,
-category:document.getElementById("category1").value
-},
-{
-image:document.getElementById("image2").value,
-title:document.getElementById("title2").value,
-category:document.getElementById("category2").value
-},
-{
-image:document.getElementById("image3").value,
-title:document.getElementById("title3").value,
-category:document.getElementById("category3").value
+  const data = {
+    location: document.getElementById("location").value,
+    hero1: document.getElementById("hero1").value,
+    hero2: document.getElementById("hero2").value,
+    hero3: document.getElementById("hero3").value,
+
+    statement: document.getElementById("statement").value,
+
+    project1: document.getElementById("project1").value,
+    type1: document.getElementById("type1").value,
+    image1: document.getElementById("image1").value,
+
+    project2: document.getElementById("project2").value,
+    type2: document.getElementById("type2").value,
+    image2: document.getElementById("image2").value,
+
+    project3: document.getElementById("project3").value,
+    type3: document.getElementById("type3").value,
+    image3: document.getElementById("image3").value,
+
+    about: document.getElementById("about").value,
+    email: document.getElementById("email").value
+  };
+
+  localStorage.setItem(
+    "sweetProductionContent",
+    JSON.stringify(data)
+  );
+
+  document.getElementById("status").textContent =
+    "✓ Ändringarna är sparade.";
+
 }
-]
-};
 
-localStorage.setItem("sweetProduction",JSON.stringify(data));
+function load() {
 
-document.getElementById("status").textContent="✓ Sparat";
+  const saved =
+    localStorage.getItem("sweetProductionContent");
+
+  if (!saved) return;
+
+  const data = JSON.parse(saved);
+
+  Object.keys(data).forEach(key => {
+
+    const field = document.getElementById(key);
+
+    if (field) {
+      field.value = data[key];
+    }
+
+  });
+
 }
+
+load();
+
 </script>
 
 </body>
