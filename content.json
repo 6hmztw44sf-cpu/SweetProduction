@@ -1,3 +1,44 @@
 {
-  "blocks": []
+  "blocks": [
+    {
+      "type": "hero",
+      "location": "Stockholm · Sweden",
+      "title": "Film.\nFoto.\nContent."
+    },
+    {
+      "type": "statement",
+      "text": "Visuals that\nstay with you."
+    },
+    {
+      "type": "projects",
+      "title": "Selected work",
+      "projects": [
+        {
+          "title": "Project One",
+          "category": "Film / Content",
+          "image": ""
+        },
+        {
+          "title": "Project Two",
+          "category": "Photography",
+          "image": ""
+        },
+        {
+          "title": "Project Three",
+          "category": "Commercial",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "type": "about",
+      "title": "We create\nvisual stories.",
+      "text": "Sweet Production är en kreativ studio i Stockholm. Vi skapar film, foto och content för varumärken, företag och människor som vill synas."
+    },
+    {
+      "type": "contact",
+      "title": "Let's make\nsomething sweet.",
+      "email": "hello@sweetproduction.se"
+    }
+  ]
 }
