@@ -63,6 +63,22 @@ const defaultContent = {
 };
 
 function renderPage(content) {
+    if (content.settings) {
+    document.documentElement.style.setProperty(
+      "--bg-color",
+      content.settings.bgColor || "#080808"
+    );
+
+    document.documentElement.style.setProperty(
+      "--text-color",
+      content.settings.textColor || "#f1efe9"
+    );
+
+    document.documentElement.style.setProperty(
+      "--accent-color",
+      content.settings.accentColor || "#f1efe9"
+    );
+  }
 
   const page = document.getElementById("page");
   page.innerHTML = "";
