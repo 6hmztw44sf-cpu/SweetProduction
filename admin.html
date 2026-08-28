@@ -1,268 +1,736 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sweet Production — Admin</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweet Production — Admin</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+*{box-sizing:border-box}
 
-    body {
-      margin: 0;
-      background: #080808;
-      color: #f1efe9;
-      font-family: Arial, Helvetica, sans-serif;
-      padding: 40px 5vw;
-    }
+body{
+  margin:0;
+  background:#080808;
+  color:#f1efe9;
+  font-family:Arial,Helvetica,sans-serif;
+  padding:40px 5vw;
+}
 
-    .admin {
-      max-width: 900px;
-      margin: auto;
-    }
+.admin{
+  max-width:900px;
+  margin:auto;
+}
 
-    h1 {
-      font-size: 42px;
-      margin-bottom: 8px;
-    }
+h1{
+  font-size:42px;
+  margin-bottom:8px;
+}
 
-    .intro {
-      color: #888;
-      margin-bottom: 50px;
-    }
+.intro{
+  color:#888;
+  margin-bottom:35px;
+}
 
-    .card {
-      border: 1px solid #292929;
-      padding: 25px;
-      margin-bottom: 20px;
-    }
+.block{
+  border:1px solid #292929;
+  background:#0d0d0d;
+  margin-bottom:15px;
+}
 
-    h2 {
-      margin-top: 0;
-      font-size: 18px;
-    }
+.block-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 20px;
+  cursor:grab;
+  border-bottom:1px solid #222;
+}
 
-    label {
-      display: block;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: #888;
-      margin: 20px 0 8px;
-    }
+.block-header strong{
+  font-size:15px;
+}
 
-    input,
-    textarea {
-      width: 100%;
-      background: #111;
-      color: white;
-      border: 1px solid #333;
-      padding: 14px;
-      font: inherit;
-    }
+.block-controls{
+  display:flex;
+  gap:6px;
+}
 
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
+button{
+  border:0;
+  background:#f1efe9;
+  color:#080808;
+  padding:10px 15px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    button {
-      border: 0;
-      background: #f1efe9;
-      color: #080808;
-      padding: 15px 25px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+button:hover{
+  opacity:.8;
+}
 
-    button:hover {
-      opacity: .8;
-    }
+button.dark{
+  background:#222;
+  color:#fff;
+}
 
-    #status {
-      margin-top: 20px;
-      color: #aaa;
-    }
+button.red{
+  background:#321818;
+  color:#ffaaaa;
+}
 
-    a {
-      color: white;
-    }
-  </style>
+.block-content{
+  padding:20px;
+}
+
+label{
+  display:block;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#888;
+  margin:15px 0 7px;
+}
+
+input,textarea,select{
+  width:100%;
+  background:#111;
+  color:white;
+  border:1px solid #333;
+  padding:12px;
+  font:inherit;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.add{
+  margin:25px 0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.status{
+  color:#aaa;
+  margin:20px 0;
+}
+
+.project{
+  border:1px solid #292929;
+  padding:15px;
+  margin-top:12px;
+}
+
+.project-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.project-actions{
+  display:flex;
+  gap:5px;
+}
+
+#login{
+  max-width:400px;
+  margin:100px auto;
+}
+
+.hidden{
+  display:none;
+}
+</style>
 </head>
 
 <body>
 
-<div class="admin">
+<div id="login">
 
-  <h1>Sweet Production</h1>
+<h1>Admin</h1>
 
-  <p class="intro">
-    Admin — ändra texten här och spara.
-  </p>
+<p class="intro">
+  Sweet Production
+</p>
 
-  <div class="card">
+<label>Lösenord</label>
+<input type="password" id="password">
 
-    <h2>Hero</h2>
+<button onclick="login()">Logga in</button>
 
-    <label>Plats</label>
-    <input id="location" value="Stockholm · Sweden">
-
-    <label>Rubrik rad 1</label>
-    <input id="hero1" value="Film.">
-
-    <label>Rubrik rad 2</label>
-    <input id="hero2" value="Foto.">
-
-    <label>Rubrik rad 3</label>
-    <input id="hero3" value="Content.">
-
-  </div>
-
-  <div class="card">
-
-    <h2>Statement</h2>
-
-    <label>Rubrik</label>
-    <textarea id="statement">Visuals that
-stay with you.</textarea>
-
-  </div>
-
-  <div class="card">
-
-    <h2>Projekt 1</h2>
-
-    <label>Namn</label>
-    <input id="project1" value="Project One">
-
-    <label>Typ</label>
-    <input id="type1" value="Film / Content">
-
-    <label>Bild URL</label>
-    <input id="image1" placeholder="https://...">
-
-  </div>
-
-  <div class="card">
-
-    <h2>Projekt 2</h2>
-
-    <label>Namn</label>
-    <input id="project2" value="Project Two">
-
-    <label>Typ</label>
-    <input id="type2" value="Foto / Content">
-
-    <label>Bild URL</label>
-    <input id="image2" placeholder="https://...">
-
-  </div>
-
-  <div class="card">
-
-    <h2>Projekt 3</h2>
-
-    <label>Namn</label>
-    <input id="project3" value="Project Three">
-
-    <label>Typ</label>
-    <input id="type3" value="Film / Foto">
-
-    <label>Bild URL</label>
-    <input id="image3" placeholder="https://...">
-
-  </div>
-
-  <div class="card">
-
-    <h2>About</h2>
-
-    <label>Beskrivning</label>
-
-    <textarea id="about">Sweet Production creates film, photography and content for brands, people and ideas that deserve attention.</textarea>
-
-  </div>
-
-  <div class="card">
-
-    <h2>Kontakt</h2>
-
-    <label>E-post</label>
-    <input id="email" value="hello@sweetproduction.se">
-
-  </div>
-
-  <button onclick="save()">Spara ändringar</button>
-
-  <p id="status"></p>
-
-  <p>
-    <a href="/" target="_blank">← Öppna hemsidan</a>
-  </p>
+<p id="loginStatus" class="status"></p>
 
 </div>
 
+
+<div class="admin hidden" id="admin">
+
+<h1>Sweet Production</h1>
+
+<p class="intro">
+  Bygg om hemsidan genom att lägga till och flytta block.
+</p>
+
+<div id="blocks"></div>
+
+<div class="add">
+
+<button onclick="addBlock('hero')">+ Hero</button>
+<button onclick="addBlock('statement')">+ Statement</button>
+<button onclick="addBlock('projects')">+ Projekt</button>
+<button onclick="addBlock('text')">+ Text</button>
+<button onclick="addBlock('image')">+ Bild</button>
+<button onclick="addBlock('about')">+ About</button>
+<button onclick="addBlock('contact')">+ Kontakt</button>
+
+</div>
+
+<button onclick="save()">Spara ändringar</button>
+
+<p id="status" class="status"></p>
+
+<p>
+<a href="/" target="_blank" style="color:white">
+← Öppna hemsidan
+</a>
+</p>
+
+</div>
+
+
 <script>
 
-function save() {
+const PASSWORD = "sweet";
 
-  const data = {
-    location: document.getElementById("location").value,
-    hero1: document.getElementById("hero1").value,
-    hero2: document.getElementById("hero2").value,
-    hero3: document.getElementById("hero3").value,
+let content = {
+  blocks:[]
+};
 
-    statement: document.getElementById("statement").value,
 
-    project1: document.getElementById("project1").value,
-    type1: document.getElementById("type1").value,
-    image1: document.getElementById("image1").value,
+function login(){
 
-    project2: document.getElementById("project2").value,
-    type2: document.getElementById("type2").value,
-    image2: document.getElementById("image2").value,
+  const password =
+    document.getElementById("password").value;
 
-    project3: document.getElementById("project3").value,
-    type3: document.getElementById("type3").value,
-    image3: document.getElementById("image3").value,
+  if(password === PASSWORD){
 
-    about: document.getElementById("about").value,
-    email: document.getElementById("email").value
-  };
+    document.getElementById("login")
+      .classList.add("hidden");
 
-  localStorage.setItem(
-    "sweetProductionContent",
-    JSON.stringify(data)
-  );
+    document.getElementById("admin")
+      .classList.remove("hidden");
 
-  document.getElementById("status").textContent =
-    "✓ Ändringarna är sparade.";
+    load();
+
+  }else{
+
+    document.getElementById("loginStatus")
+      .textContent="Fel lösenord.";
+
+  }
 
 }
 
-function load() {
 
-  const saved =
-    localStorage.getItem("sweetProductionContent");
+async function load(){
 
-  if (!saved) return;
+  try{
 
-  const data = JSON.parse(saved);
+    const response =
+      await fetch("content.json?cache="+Date.now());
 
-  Object.keys(data).forEach(key => {
+    content = await response.json();
 
-    const field = document.getElementById(key);
+  }catch{
 
-    if (field) {
-      field.value = data[key];
-    }
+    content = {blocks:[]};
+
+  }
+
+  render();
+
+}
+
+
+function render(){
+
+  const container =
+    document.getElementById("blocks");
+
+  container.innerHTML="";
+
+  content.blocks.forEach((block,index)=>{
+
+    const el =
+      document.createElement("div");
+
+    el.className="block";
+
+    el.draggable=true;
+
+    el.dataset.index=index;
+
+    el.innerHTML=`
+
+      <div class="block-header">
+
+        <strong>
+          ${index+1}. ${blockName(block.type)}
+        </strong>
+
+        <div class="block-controls">
+
+          <button class="dark"
+            onclick="moveUp(${index})">↑</button>
+
+          <button class="dark"
+            onclick="moveDown(${index})">↓</button>
+
+          <button class="red"
+            onclick="removeBlock(${index})">×</button>
+
+        </div>
+
+      </div>
+
+      <div class="block-content">
+
+        ${blockFields(block,index)}
+
+      </div>
+    `;
+
+    container.appendChild(el);
 
   });
 
 }
 
-load();
+
+function blockName(type){
+
+  const names={
+    hero:"Hero",
+    statement:"Statement",
+    projects:"Projekt",
+    text:"Text",
+    image:"Bild",
+    about:"About",
+    contact:"Kontakt"
+  };
+
+  return names[type] || type;
+
+}
+
+
+function blockFields(block,index){
+
+  if(block.type==="hero"){
+
+    return`
+
+      <label>Plats</label>
+
+      <input
+        value="${esc(block.location||"")}"
+        oninput="update(${index},'location',this.value)">
+
+      <label>Rubrik</label>
+
+      <textarea
+        oninput="update(${index},'title',this.value)"
+      >${esc(block.title||"")}</textarea>
+
+    `;
+
+  }
+
+
+  if(block.type==="statement"){
+
+    return`
+
+      <label>Text</label>
+
+      <textarea
+        oninput="update(${index},'text',this.value)"
+      >${esc(block.text||"")}</textarea>
+
+    `;
+
+  }
+
+
+  if(block.type==="text"){
+
+    return`
+
+      <label>Text</label>
+
+      <textarea
+        oninput="update(${index},'text',this.value)"
+      >${esc(block.text||"")}</textarea>
+
+    `;
+
+  }
+
+
+  if(block.type==="image"){
+
+    return`
+
+      <label>Bild URL</label>
+
+      <input
+        value="${esc(block.image||"")}"
+        placeholder="https://..."
+        oninput="update(${index},'image',this.value)">
+
+    `;
+
+  }
+
+
+  if(block.type==="about"){
+
+    return`
+
+      <label>Rubrik</label>
+
+      <textarea
+        oninput="update(${index},'title',this.value)"
+      >${esc(block.title||"")}</textarea>
+
+      <label>Beskrivning</label>
+
+      <textarea
+        oninput="update(${index},'text',this.value)"
+      >${esc(block.text||"")}</textarea>
+
+    `;
+
+  }
+
+
+  if(block.type==="contact"){
+
+    return`
+
+      <label>Rubrik</label>
+
+      <textarea
+        oninput="update(${index},'title',this.value)"
+      >${esc(block.title||"")}</textarea>
+
+      <label>E-post</label>
+
+      <input
+        value="${esc(block.email||"")}"
+        oninput="update(${index},'email',this.value)">
+
+    `;
+
+  }
+
+
+  if(block.type==="projects"){
+
+    let html=`
+
+      <label>Rubrik</label>
+
+      <input
+        value="${esc(block.title||"")}"
+        oninput="update(${index},'title',this.value)">
+
+    `;
+
+    (block.projects||[]).forEach((project,pIndex)=>{
+
+      html+=`
+
+        <div class="project">
+
+          <div class="project-top">
+
+            <strong>
+              Projekt ${pIndex+1}
+            </strong>
+
+            <div class="project-actions">
+
+              <button
+                class="dark"
+                onclick="projectUp(${index},${pIndex})">
+                ↑
+              </button>
+
+              <button
+                class="dark"
+                onclick="projectDown(${index},${pIndex})">
+                ↓
+              </button>
+
+              <button
+                class="red"
+                onclick="removeProject(${index},${pIndex})">
+                ×
+              </button>
+
+            </div>
+
+          </div>
+
+          <label>Namn</label>
+
+          <input
+            value="${esc(project.title||"")}"
+            oninput="updateProject(${index},${pIndex},'title',this.value)">
+
+          <label>Kategori</label>
+
+          <input
+            value="${esc(project.category||"")}"
+            oninput="updateProject(${index},${pIndex},'category',this.value)">
+
+          <label>Bild URL</label>
+
+          <input
+            value="${esc(project.image||"")}"
+            placeholder="https://..."
+            oninput="updateProject(${index},${pIndex},'image',this.value)">
+
+        </div>
+
+      `;
+
+    });
+
+
+    html+=`
+
+      <button
+        class="dark"
+        onclick="addProject(${index})">
+
+        + Lägg till projekt
+
+      </button>
+
+    `;
+
+    return html;
+
+  }
+
+
+  return "";
+
+}
+
+
+function update(index,key,value){
+
+  content.blocks[index][key]=value;
+
+}
+
+
+function updateProject(index,pIndex,key,value){
+
+  content.blocks[index].projects[pIndex][key]=value;
+
+}
+
+
+function addBlock(type){
+
+  const block={type};
+
+  if(type==="hero"){
+    block.location="Stockholm · Sweden";
+    block.title="Film.\nFoto.\nContent.";
+  }
+
+  if(type==="statement"){
+    block.text="Visuals that\nstay with you.";
+  }
+
+  if(type==="text"){
+    block.text="Ny text...";
+  }
+
+  if(type==="image"){
+    block.image="";
+  }
+
+  if(type==="projects"){
+    block.title="Selected work";
+    block.projects=[];
+  }
+
+  if(type==="about"){
+    block.title="We create\nvisual stories.";
+    block.text="";
+  }
+
+  if(type==="contact"){
+    block.title="Let's make\nsomething sweet.";
+    block.email="hello@sweetproduction.se";
+  }
+
+  content.blocks.push(block);
+
+  render();
+
+}
+
+
+function addProject(index){
+
+  content.blocks[index].projects.push({
+
+    title:"Nytt projekt",
+    category:"Film / Content",
+    image:""
+
+  });
+
+  render();
+
+}
+
+
+function removeBlock(index){
+
+  if(confirm("Ta bort blocket?")){
+
+    content.blocks.splice(index,1);
+
+    render();
+
+  }
+
+}
+
+
+function removeProject(index,pIndex){
+
+  content.blocks[index].projects.splice(pIndex,1);
+
+  render();
+
+}
+
+
+function moveUp(index){
+
+  if(index===0)return;
+
+  [
+    content.blocks[index-1],
+    content.blocks[index]
+  ]=[
+    content.blocks[index],
+    content.blocks[index-1]
+  ];
+
+  render();
+
+}
+
+
+function moveDown(index){
+
+  if(index===content.blocks.length-1)return;
+
+  [
+    content.blocks[index],
+    content.blocks[index+1]
+  ]=[
+    content.blocks[index+1],
+    content.blocks[index]
+  ];
+
+  render();
+
+}
+
+
+function projectUp(index,pIndex){
+
+  if(pIndex===0)return;
+
+  const projects =
+    content.blocks[index].projects;
+
+  [
+    projects[pIndex-1],
+    projects[pIndex]
+  ]=[
+    projects[pIndex],
+    projects[pIndex-1]
+  ];
+
+  render();
+
+}
+
+
+function projectDown(index,pIndex){
+
+  const projects =
+    content.blocks[index].projects;
+
+  if(pIndex===projects.length-1)return;
+
+  [
+    projects[pIndex],
+    projects[pIndex+1]
+  ]=[
+    projects[pIndex+1],
+    projects[pIndex]
+  ];
+
+  render();
+
+}
+
+
+async function save(){
+
+  /*
+    OBS:
+    Den här versionen sparar strukturen lokalt.
+    Nästa steg kopplar vi Save till GitHub så
+    ändringarna verkligen publiceras.
+  */
+
+  localStorage.setItem(
+    "sweetProductionContent",
+    JSON.stringify(content)
+  );
+
+  document.getElementById("status")
+    .textContent=
+    "✓ Ändringarna är sparade lokalt.";
+
+}
+
+
+function esc(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+
+}
 
 </script>
 
