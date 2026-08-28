@@ -1,59 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sweet Production</title>
-  <link rel="stylesheet" href="style.css">
-
-  <style>
-    :root {
-      --bg-color: #080808;
-      --text-color: #f1efe9;
-      --accent-color: #f1efe9;
-    }
-
-    body {
-      background: var(--bg-color);
-      color: var(--text-color);
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .custom-text {
-      padding: 10vw 5vw;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .custom-text p {
-      font-size: clamp(28px, 5vw, 70px);
-      line-height: 1.05;
-      margin: 0;
-    }
-
-    .custom-image {
-      width: 100%;
-      padding: 0 5vw 10vw;
-    }
-
-    .custom-image img {
-      display: block;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    .media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sweet Production</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -65,13 +16,10 @@
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
-    <a href="admin.html">Admin</a>
   </nav>
 </header>
 
-<main id="top">
-  <div id="page"></div>
-</main>
+<main id="page"></main>
 
 <footer>
   <span>© Sweet Production</span>
@@ -80,321 +28,198 @@
 
 <script>
 
-const defaultContent = {
-  settings: {
-    bgColor: "#080808",
-    textColor: "#f1efe9",
-    accentColor: "#f1efe9"
+const fallback = {
+  settings:{
+    bgColor:"#080808",
+    textColor:"#f1efe9",
+    accentColor:"#f1efe9"
   },
-
-  blocks: [
-    {
-      type: "hero",
-      location: "Stockholm · Sweden",
-      title: "Film.\nFoto.\nContent."
-    },
-
-    {
-      type: "statement",
-      text: "Visuals that\nstay with you."
-    },
-
-    {
-      type: "projects",
-      title: "Selected work",
-      projects: []
-    },
-
-    {
-      type: "about",
-      title: "We create\nvisual stories.",
-      text: "Sweet Production är en kreativ studio i Stockholm. Vi skapar film, foto och content för varumärken, företag och människor som vill synas."
-    },
-
-    {
-      type: "contact",
-      title: "Let's make\nsomething sweet.",
-      email: "hello@sweetproduction.se"
-    }
-  ]
+  blocks:[]
 };
 
-
-function applySettings(content) {
-
-  const settings = content.settings || defaultContent.settings;
-
-  document.documentElement.style.setProperty(
-    "--bg-color",
-    settings.bgColor || "#080808"
-  );
-
-  document.documentElement.style.setProperty(
-    "--text-color",
-    settings.textColor || "#f1efe9"
-  );
-
-  document.documentElement.style.setProperty(
-    "--accent-color",
-    settings.accentColor || "#f1efe9"
-  );
+function esc(v){
+  return String(v ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
+function render(content){
 
-function renderPage(content) {
+  const s=content.settings||fallback.settings;
 
-  applySettings(content);
+  document.documentElement.style.setProperty(
+    "--bg-color",s.bgColor
+  );
 
-  const page = document.getElementById("page");
+  document.documentElement.style.setProperty(
+    "--text-color",s.textColor
+  );
 
-  page.innerHTML = "";
+  document.documentElement.style.setProperty(
+    "--accent-color",s.accentColor
+  );
 
+  const page=document.getElementById("page");
 
-  content.blocks.forEach((block) => {
+  page.innerHTML="";
 
+  (content.blocks||[]).forEach(block=>{
 
-    if (block.type === "hero") {
+    if(block.type==="hero"){
+      page.innerHTML+=`
+      <section class="hero">
+        <div class="hero-bg">
+          <div class="glow one"></div>
+          <div class="glow two"></div>
+          <div class="grain"></div>
+        </div>
 
-      page.innerHTML += `
-        <section class="hero">
-
-          <div class="hero-bg">
-            <div class="glow one"></div>
-            <div class="glow two"></div>
-            <div class="grain"></div>
-          </div>
-
-          <div class="hero-content">
-
-            <p class="eyebrow">
-              ${escapeHTML(block.location || "")}
-            </p>
-
-            <h1>
-              ${escapeHTML(block.title || "").replace(/\n/g, "<br>")}
-            </h1>
-
-            <a href="#work" class="scroll">
-              Scroll to explore <b>↓</b>
-            </a>
-
-          </div>
-
-        </section>
-      `;
+        <div class="hero-content">
+          <p class="eyebrow">${esc(block.location)}</p>
+          <h1>${esc(block.title).replace(/\n/g,"<br>")}</h1>
+          <a href="#work" class="scroll">Scroll to explore ↓</a>
+        </div>
+      </section>`;
     }
 
-
-    if (block.type === "statement") {
-
-      page.innerHTML += `
-        <section class="statement">
-
-          <p class="eyebrow">
-            Sweet Production
-          </p>
-
-          <h2>
-            ${escapeHTML(block.text || "").replace(/\n/g, "<br>")}
-          </h2>
-
-        </section>
-      `;
+    if(block.type==="statement"){
+      page.innerHTML+=`
+      <section class="statement">
+        <p class="eyebrow">Sweet Production</p>
+        <h2>${esc(block.text).replace(/\n/g,"<br>")}</h2>
+      </section>`;
     }
 
+    if(block.type==="text"){
+      page.innerHTML+=`
+      <section class="custom-text">
+        <p>${esc(block.text).replace(/\n/g,"<br>")}</p>
+      </section>`;
+    }
 
-    if (block.type === "projects") {
+    if(block.type==="image" && block.src){
+      page.innerHTML+=`
+      <section class="custom-image">
+        <img src="${esc(block.src)}" alt="${esc(block.alt)}">
+      </section>`;
+    }
 
-      let projectsHTML = "";
+    if(block.type==="video" && block.src){
 
-      (block.projects || []).forEach((project) => {
+      const ratio=block.ratio==="9:16"
+        ? "vertical"
+        : "landscape";
 
-        projectsHTML += `
-          <article class="project">
+      page.innerHTML+=`
+      <section class="custom-video ${ratio}">
+        <video
+          src="${esc(block.src)}"
+          ${block.poster?`poster="${esc(block.poster)}"`:""}
+          autoplay
+          muted
+          loop
+          playsinline
+          controls>
+        </video>
+      </section>`;
+    }
 
-            <div class="media">
+    if(block.type==="projects"){
 
-              ${
-                project.image
-                ? `<img src="${escapeAttribute(project.image)}" alt="${escapeAttribute(project.title || "")}">`
-                : "YOUR PROJECT"
-              }
+      let html="";
 
-            </div>
+      (block.projects||[]).forEach(p=>{
 
-            <div class="meta">
+        let media="";
 
-              <strong>
-                ${escapeHTML(project.title || "")}
-              </strong>
+        if(p.type==="video" && p.image){
+          media=`
+          <video
+            src="${esc(p.image)}"
+            autoplay
+            muted
+            loop
+            playsinline>
+          </video>`;
+        }else if(p.image){
+          media=`<img src="${esc(p.image)}" alt="">`;
+        }else{
+          media=`<div class="empty-media"></div>`;
+        }
 
-              <small>
-                ${escapeHTML(project.category || "")}
-              </small>
-
-            </div>
-
-          </article>
-        `;
-
+        html+=`
+        <article class="project">
+          <div class="media">${media}</div>
+          <div class="meta">
+            <strong>${esc(p.title)}</strong>
+            <small>${esc(p.category)}</small>
+          </div>
+        </article>`;
       });
 
+      page.innerHTML+=`
+      <section id="work" class="work">
+        <div class="section-top">
+          <p class="eyebrow">${esc(block.title)}</p>
+          <span>${String((block.projects||[]).length).padStart(2,"0")}</span>
+        </div>
 
-      page.innerHTML += `
-        <section id="work" class="work">
-
-          <div class="section-top">
-
-            <p class="eyebrow">
-              ${escapeHTML(block.title || "Selected work")}
-            </p>
-
-            <span>
-              ${String(block.projects?.length || 0).padStart(2, "0")}
-            </span>
-
-          </div>
-
-          <div class="projects">
-            ${projectsHTML}
-          </div>
-
-        </section>
-      `;
+        <div class="projects">${html}</div>
+      </section>`;
     }
 
-
-    if (block.type === "about") {
-
-      page.innerHTML += `
-        <section id="about" class="about">
-
-          <p class="eyebrow">
-            About
-          </p>
-
-          <h2>
-            ${escapeHTML(block.title || "").replace(/\n/g, "<br>")}
-          </h2>
-
-          <p class="about-text">
-            ${escapeHTML(block.text || "").replace(/\n/g, "<br>")}
-          </p>
-
-        </section>
-      `;
+    if(block.type==="about"){
+      page.innerHTML+=`
+      <section id="about" class="about">
+        <p class="eyebrow">About</p>
+        <h2>${esc(block.title).replace(/\n/g,"<br>")}</h2>
+        <p class="about-text">
+          ${esc(block.text).replace(/\n/g,"<br>")}
+        </p>
+      </section>`;
     }
 
+    if(block.type==="contact"){
+      page.innerHTML+=`
+      <section id="contact" class="contact">
+        <p class="eyebrow">Contact</p>
+        <h2>${esc(block.title).replace(/\n/g,"<br>")}</h2>
 
-    if (block.type === "contact") {
-
-      page.innerHTML += `
-        <section id="contact" class="contact">
-
-          <p class="eyebrow">
-            Contact
-          </p>
-
-          <h2>
-            ${escapeHTML(block.title || "").replace(/\n/g, "<br>")}
-          </h2>
-
-          <a
-            class="email"
-            href="mailto:${escapeAttribute(block.email || "")}">
-            ${escapeHTML(block.email || "")}
-          </a>
-
-        </section>
-      `;
-    }
-
-
-    if (block.type === "text") {
-
-      page.innerHTML += `
-        <section class="custom-text">
-
-          <p>
-            ${escapeHTML(block.text || "").replace(/\n/g, "<br>")}
-          </p>
-
-        </section>
-      `;
-    }
-
-
-    if (block.type === "image") {
-
-      if (block.image) {
-
-        page.innerHTML += `
-          <section class="custom-image">
-
-            <img
-              src="${escapeAttribute(block.image)}"
-              alt="">
-
-          </section>
-        `;
-
-      }
-
+        <a class="email"
+          href="mailto:${esc(block.email)}">
+          ${esc(block.email)}
+        </a>
+      </section>`;
     }
 
   });
-
 }
 
+async function load(){
 
-function escapeHTML(value) {
+  try{
 
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    const r=await fetch(
+      "content.json?v="+Date.now()
+    );
 
-}
+    if(!r.ok) throw new Error();
 
+    render(await r.json());
 
-function escapeAttribute(value) {
+  }catch(e){
 
-  return escapeHTML(value);
-
-}
-
-
-async function loadContent() {
-
-  try {
-
-    const response =
-      await fetch("content.json?cache=" + Date.now());
-
-    if (!response.ok) throw new Error();
-
-    const content =
-      await response.json();
-
-    if (!content.blocks) throw new Error();
-
-    renderPage(content);
-
-  } catch (error) {
-
-    renderPage(defaultContent);
+    render(fallback);
 
   }
-
 }
 
-
-loadContent();
+load();
 
 </script>
 
 </body>
 </html>
-```
