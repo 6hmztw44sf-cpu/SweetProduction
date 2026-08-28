@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sweet Production — Film · Foto · Content</title>
-  <meta name="description" content="Sweet Production — Film, Foto och Content.">
+  <title>Sweet Production</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -23,107 +22,7 @@
 
 <main id="top">
 
-<section class="hero">
-  <div class="hero-bg">
-    <div class="glow one"></div>
-    <div class="glow two"></div>
-    <div class="grain"></div>
-  </div>
-
-  <div class="hero-content">
-    <p class="eyebrow">Stockholm · Sweden</p>
-
-    <h1>
-      Film.<br>
-      Foto.<br>
-      <i>Content.</i>
-    </h1>
-
-    <a href="#work" class="scroll">
-      Scroll to explore <b>↓</b>
-    </a>
-  </div>
-</section>
-
-<section class="statement">
-  <p class="eyebrow">Sweet Production</p>
-
-  <h2>
-    Visuals that<br>
-    <span>stay with you.</span>
-  </h2>
-</section>
-
-<section id="work" class="work">
-
-  <div class="section-top">
-    <p class="eyebrow">Selected work</p>
-    <span>01 — 03</span>
-  </div>
-
-  <div class="projects">
-
-    <article class="project big">
-      <div class="media" id="image1">YOUR PROJECT</div>
-
-      <div class="meta">
-        <strong id="title1">Project One</strong>
-        <small id="category1">Film / Content</small>
-      </div>
-    </article>
-
-    <article class="project">
-      <div class="media" id="image2">YOUR PROJECT</div>
-
-      <div class="meta">
-        <strong id="title2">Project Two</strong>
-        <small id="category2">Photography</small>
-      </div>
-    </article>
-
-    <article class="project">
-      <div class="media" id="image3">YOUR PROJECT</div>
-
-      <div class="meta">
-        <strong id="title3">Project Three</strong>
-        <small id="category3">Commercial</small>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<section id="about" class="about">
-
-  <p class="eyebrow">About</p>
-
-  <h2>
-    We create<br>
-    <span>visual stories.</span>
-  </h2>
-
-  <p class="about-text">
-    Sweet Production är en kreativ studio i Stockholm.
-    Vi skapar film, foto och content för varumärken,
-    företag och människor som vill synas.
-  </p>
-
-</section>
-
-<section id="contact" class="contact">
-
-  <p class="eyebrow">Contact</p>
-
-  <h2>
-    Let's make<br>
-    <i>something sweet.</i>
-  </h2>
-
-  <a class="email" href="mailto:hello@sweetproduction.se">
-    hello@sweetproduction.se
-  </a>
-
-</section>
+  <div id="page"></div>
 
 </main>
 
@@ -131,6 +30,229 @@
   <span>© Sweet Production</span>
   <span>Stockholm, Sweden</span>
 </footer>
+
+<script>
+
+const defaultContent = {
+  blocks: [
+    {
+      type: "hero",
+      location: "Stockholm · Sweden",
+      title: "Film.\nFoto.\nContent."
+    },
+    {
+      type: "statement",
+      text: "Visuals that\nstay with you."
+    },
+    {
+      type: "projects",
+      title: "Selected work",
+      projects: []
+    },
+    {
+      type: "about",
+      title: "We create\nvisual stories.",
+      text: "Sweet Production är en kreativ studio i Stockholm. Vi skapar film, foto och content för varumärken, företag och människor som vill synas."
+    },
+    {
+      type: "contact",
+      title: "Let's make\nsomething sweet.",
+      email: "hello@sweetproduction.se"
+    }
+  ]
+};
+
+function renderPage(content) {
+
+  const page = document.getElementById("page");
+  page.innerHTML = "";
+
+  content.blocks.forEach((block, index) => {
+
+    if (block.type === "hero") {
+
+      page.innerHTML += `
+        <section class="hero">
+          <div class="hero-bg">
+            <div class="glow one"></div>
+            <div class="glow two"></div>
+            <div class="grain"></div>
+          </div>
+
+          <div class="hero-content">
+            <p class="eyebrow">${escapeHTML(block.location || "")}</p>
+
+            <h1>
+              ${escapeHTML(block.title || "").replace(/\n/g, "<br>")}
+            </h1>
+
+            <a href="#work" class="scroll">
+              Scroll to explore <b>↓</b>
+            </a>
+          </div>
+        </section>
+      `;
+
+    }
+
+    if (block.type === "statement") {
+
+      page.innerHTML += `
+        <section class="statement">
+          <p class="eyebrow">Sweet Production</p>
+
+          <h2>
+            ${escapeHTML(block.text || "").replace(/\n/g, "<br>")}
+          </h2>
+        </section>
+      `;
+
+    }
+
+    if (block.type === "projects") {
+
+      let projectsHTML = "";
+
+      (block.projects || []).forEach((project) => {
+
+        projectsHTML += `
+          <article class="project">
+            <div class="media">
+              ${
+                project.image
+                ? `<img src="${escapeAttribute(project.image)}" alt="">`
+                : "YOUR PROJECT"
+              }
+            </div>
+
+            <div class="meta">
+              <strong>${escapeHTML(project.title || "")}</strong>
+              <small>${escapeHTML(project.category || "")}</small>
+            </div>
+          </article>
+        `;
+
+      });
+
+      page.innerHTML += `
+        <section id="work" class="work">
+
+          <div class="section-top">
+            <p class="eyebrow">${escapeHTML(block.title || "Selected work")}</p>
+            <span>${String(block.projects?.length || 0).padStart(2, "0")}</span>
+          </div>
+
+          <div class="projects">
+            ${projectsHTML}
+          </div>
+
+        </section>
+      `;
+
+    }
+
+    if (block.type === "about") {
+
+      page.innerHTML += `
+        <section id="about" class="about">
+
+          <p class="eyebrow">About</p>
+
+          <h2>
+            ${escapeHTML(block.title || "").replace(/\n/g, "<br>")}
+          </h2>
+
+          <p class="about-text">
+            ${escapeHTML(block.text || "")}
+          </p>
+
+        </section>
+      `;
+
+    }
+
+    if (block.type === "contact") {
+
+      page.innerHTML += `
+        <section id="contact" class="contact">
+
+          <p class="eyebrow">Contact</p>
+
+          <h2>
+            ${escapeHTML(block.title || "").replace(/\n/g, "<br>")}
+          </h2>
+
+          <a class="email" href="mailto:${escapeAttribute(block.email || "")}">
+            ${escapeHTML(block.email || "")}
+          </a>
+
+        </section>
+      `;
+
+    }
+
+    if (block.type === "text") {
+
+      page.innerHTML += `
+        <section class="custom-text">
+          <p>${escapeHTML(block.text || "").replace(/\n/g, "<br>")}</p>
+        </section>
+      `;
+
+    }
+
+    if (block.type === "image") {
+
+      page.innerHTML += `
+        <section class="custom-image">
+          <img src="${escapeAttribute(block.image || "")}" alt="">
+        </section>
+      `;
+
+    }
+
+  });
+
+}
+
+function escapeHTML(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function escapeAttribute(value) {
+  return escapeHTML(value);
+}
+
+async function loadContent() {
+
+  try {
+
+    const response = await fetch("content.json?cache=" + Date.now());
+
+    if (!response.ok) throw new Error();
+
+    const content = await response.json();
+
+    if (!content.blocks) throw new Error();
+
+    renderPage(content);
+
+  } catch (error) {
+
+    renderPage(defaultContent);
+
+  }
+
+}
+
+loadContent();
+
+</script>
 
 </body>
 </html>
