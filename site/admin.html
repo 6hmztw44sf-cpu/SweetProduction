@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -7,135 +6,278 @@
   <title>Sweet Production – Admin</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: #f3f3f3;
       color: #111;
     }
 
     .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px 80px;
     }
 
-    h1 {
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      color: #666;
-      margin-bottom: 30px;
-    }
+    h1 { margin: 0 0 5px; }
+    .subtitle { color: #666; margin-bottom: 30px; }
 
     .card {
-      background: white;
-      border-radius: 12px;
+      background: #fff;
+      border-radius: 14px;
       padding: 25px;
       margin-bottom: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 21px;
     }
 
     label {
       display: block;
       font-weight: bold;
-      margin-bottom: 8px;
+      margin: 18px 0 7px;
     }
 
-    input,
-    textarea {
+    input, textarea {
       width: 100%;
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font: inherit;
-      margin-bottom: 18px;
     }
 
     textarea {
-      min-height: 140px;
+      min-height: 110px;
       resize: vertical;
+    }
+
+    .project {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 18px;
+      margin-top: 15px;
     }
 
     button {
       border: 0;
       border-radius: 8px;
-      padding: 12px 20px;
+      padding: 13px 20px;
       font-size: 16px;
       cursor: pointer;
       background: #111;
-      color: white;
+      color: #fff;
     }
 
-    button:hover {
-      opacity: .85;
-    }
+    button:hover { opacity: .85; }
 
     #status {
       margin-top: 15px;
       font-weight: bold;
+    }
+
+    .save {
+      position: sticky;
+      bottom: 20px;
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1>Sweet Production</h1>
-    <div class="subtitle">Adminpanel</div>
+  <h1>Sweet Production</h1>
+  <div class="subtitle">Adminpanel</div>
 
-    <div class="card">
-      <h2>Redigera innehåll</h2>
+  <div class="card">
+    <h2>Hero</h2>
 
-      <label for="heroTitle">Rubrik</label>
-      <input id="heroTitle" type="text">
+    <label>Plats</label>
+    <input id="heroLocation">
 
-      <label for="heroText">Text</label>
-      <textarea id="heroText"></textarea>
-
-      <button onclick="saveContent()">Spara ändringar</button>
-
-      <div id="status"></div>
-    </div>
-
+    <label>Rubrik</label>
+    <textarea id="heroTitle"></textarea>
   </div>
 
-  <script>
-    async function loadContent() {
-      try {
-        const response = await fetch('/content.json');
+  <div class="card">
+    <h2>Statement</h2>
 
-        if (!response.ok) {
-          throw new Error('Kunde inte läsa content.json');
-        }
+    <label>Text</label>
+    <textarea id="statementText"></textarea>
+  </div>
 
-        const content = await response.json();
+  <div class="card">
+    <h2>Projekt</h2>
 
-        document.getElementById('heroTitle').value =
-          content.heroTitle || '';
+    <label>Sektionens rubrik</label>
+    <input id="projectsTitle">
 
-        document.getElementById('heroText').value =
-          content.heroText || '';
+    <div id="projects"></div>
+  </div>
 
-      } catch (error) {
-        document.getElementById('status').textContent =
-          'Kunde inte läsa innehållet.';
-      }
+  <div class="card">
+    <h2>Om Sweet Production</h2>
+
+    <label>Rubrik</label>
+    <textarea id="aboutTitle"></textarea>
+
+    <label>Text</label>
+    <textarea id="aboutText"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>Kontakt</h2>
+
+    <label>Rubrik</label>
+    <textarea id="contactTitle"></textarea>
+
+    <label>Email</label>
+    <input id="contactEmail" type="email">
+  </div>
+
+  <button class="save" onclick="saveContent()">Spara ändringar</button>
+
+  <div id="status"></div>
+
+</div>
+
+<script>
+let content = null;
+
+async function loadContent() {
+  try {
+    const response = await fetch('/content.json');
+
+    if (!response.ok) {
+      throw new Error();
     }
 
-    async function saveContent() {
-      document.getElementById('status').textContent =
-        'Sparfunktion kommer kopplas in här...';
+    content = await response.json();
+
+    const hero = content.blocks.find(b => b.type === 'hero');
+    const statement = content.blocks.find(b => b.type === 'statement');
+    const projects = content.blocks.find(b => b.type === 'projects');
+    const about = content.blocks.find(b => b.type === 'about');
+    const contact = content.blocks.find(b => b.type === 'contact');
+
+    if (hero) {
+      document.getElementById('heroLocation').value = hero.location || '';
+      document.getElementById('heroTitle').value = hero.title || '';
     }
 
-    loadContent();
-  </script>
+    if (statement) {
+      document.getElementById('statementText').value = statement.text || '';
+    }
+
+    if (projects) {
+      document.getElementById('projectsTitle').value = projects.title || '';
+
+      const container = document.getElementById('projects');
+
+      projects.projects.forEach((project, index) => {
+        container.innerHTML += `
+          <div class="project">
+            <h3>Projekt ${index + 1}</h3>
+
+            <label>Titel</label>
+            <input id="projectTitle${index}" value="${escapeHtml(project.title || '')}">
+
+            <label>Kategori</label>
+            <input id="projectCategory${index}" value="${escapeHtml(project.category || '')}">
+
+            <label>Bild</label>
+            <input id="projectImage${index}" value="${escapeHtml(project.image || '')}">
+          </div>
+        `;
+      });
+    }
+
+    if (about) {
+      document.getElementById('aboutTitle').value = about.title || '';
+      document.getElementById('aboutText').value = about.text || '';
+    }
+
+    if (contact) {
+      document.getElementById('contactTitle').value = contact.title || '';
+      document.getElementById('contactEmail').value = contact.email || '';
+    }
+
+  } catch (error) {
+    document.getElementById('status').textContent =
+      'Kunde inte läsa content.json.';
+  }
+}
+
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+async function saveContent() {
+
+  const hero = content.blocks.find(b => b.type === 'hero');
+  const statement = content.blocks.find(b => b.type === 'statement');
+  const projects = content.blocks.find(b => b.type === 'projects');
+  const about = content.blocks.find(b => b.type === 'about');
+  const contact = content.blocks.find(b => b.type === 'contact');
+
+  if (hero) {
+    hero.location = document.getElementById('heroLocation').value;
+    hero.title = document.getElementById('heroTitle').value;
+  }
+
+  if (statement) {
+    statement.text = document.getElementById('statementText').value;
+  }
+
+  if (projects) {
+    projects.title = document.getElementById('projectsTitle').value;
+
+    projects.projects.forEach((project, index) => {
+      project.title =
+        document.getElementById(`projectTitle${index}`).value;
+
+      project.category =
+        document.getElementById(`projectCategory${index}`).value;
+
+      project.image =
+        document.getElementById(`projectImage${index}`).value;
+    });
+  }
+
+  if (about) {
+    about.title = document.getElementById('aboutTitle').value;
+    about.text = document.getElementById('aboutText').value;
+  }
+
+  if (contact) {
+    contact.title = document.getElementById('contactTitle').value;
+    contact.email = document.getElementById('contactEmail').value;
+  }
+
+  /*
+    OBS:
+    Webbläsaren kan inte skriva direkt till GitHub/content.json.
+    Därför sparar knappen ännu inte permanent.
+  */
+
+  document.getElementById('status').textContent =
+    'Ändringarna är förberedda – riktig sparfunktion kopplas in nästa steg.';
+}
+
+loadContent();
+</script>
 
 </body>
 </html>
