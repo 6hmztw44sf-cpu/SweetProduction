@@ -8,8 +8,8 @@ html {
 
 body {
   margin: 0;
-  background: #080808;
-  color: #f1efe9;
+  background: var(--bg-color, #080808);
+  color: var(--text-color, #f1efe9);
   font-family: Arial, Helvetica, sans-serif;
 }
 
