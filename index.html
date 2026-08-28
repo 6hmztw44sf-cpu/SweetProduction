@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -367,40 +368,6 @@ function escapeAttribute(value) {
 
 async function loadContent() {
 
-  /*
-    Först försöker vi läsa den senaste versionen
-    från localStorage.
-
-    Om den inte finns använder vi content.json.
-  */
-
-  const local = localStorage.getItem(
-    "sweetProductionContent"
-  );
-
-  if (local) {
-
-    try {
-
-      const content = JSON.parse(local);
-
-      if (content.blocks) {
-
-        renderPage(content);
-
-        return;
-
-      }
-
-    } catch (error) {
-
-      console.log("Local content kunde inte läsas.");
-
-    }
-
-  }
-
-
   try {
 
     const response =
@@ -430,3 +397,4 @@ loadContent();
 
 </body>
 </html>
+```
