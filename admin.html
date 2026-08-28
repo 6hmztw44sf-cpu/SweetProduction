@@ -740,15 +740,12 @@ function projectDown(index,pIndex){
 
 
 async function save(){
-  content.settings.bgColor =
-  document.getElementById("bgColor").value;
-
-content.settings.textColor =
-  document.getElementById("textColor").value;
-
-content.settings.accentColor =
-  document.getElementById("accentColor").value;
-
+ content.settings = {
+  bgColor: document.getElementById("bgColor").value,
+  textColor: document.getElementById("textColor").value,
+  accentColor: document.getElementById("accentColor").value
+};
+  
   /*
     OBS:
     Den här versionen sparar strukturen lokalt.
