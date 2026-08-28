@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Production – Admin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font: inherit;
+      margin-bottom: 18px;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #111;
+      color: white;
+    }
+
+    button:hover {
+      opacity: .85;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Sweet Production</h1>
+    <div class="subtitle">Adminpanel</div>
+
+    <div class="card">
+      <h2>Redigera innehåll</h2>
+
+      <label for="heroTitle">Rubrik</label>
+      <input id="heroTitle" type="text">
+
+      <label for="heroText">Text</label>
+      <textarea id="heroText"></textarea>
+
+      <button onclick="saveContent()">Spara ändringar</button>
+
+      <div id="status"></div>
+    </div>
+
+  </div>
+
+  <script>
+    async function loadContent() {
+      try {
+        const response = await fetch('/content.json');
+
+        if (!response.ok) {
+          throw new Error('Kunde inte läsa content.json');
+        }
+
+        const content = await response.json();
+
+        document.getElementById('heroTitle').value =
+          content.heroTitle || '';
+
+        document.getElementById('heroText').value =
+          content.heroText || '';
+
+      } catch (error) {
+        document.getElementById('status').textContent =
+          'Kunde inte läsa innehållet.';
+      }
+    }
+
+    async function saveContent() {
+      document.getElementById('status').textContent =
+        'Sparfunktion kommer kopplas in här...';
+    }
+
+    loadContent();
+  </script>
+
+</body>
+</html>
