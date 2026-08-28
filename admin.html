@@ -7,7 +7,7 @@
 
 <style>
 *{box-sizing:border-box}
-
+ 
 body{
   margin:0;
   background:#080808;
@@ -223,9 +223,13 @@ textarea{
 const PASSWORD = "sweet";
 
 let content = {
+  settings: {
+    bgColor: "#080808",
+    textColor: "#f1efe9",
+    accentColor: "#f1efe9"
+  },
   blocks:[]
 };
-
 
 function login(){
 
@@ -260,6 +264,22 @@ async function load(){
       await fetch("content.json?cache="+Date.now());
 
     content = await response.json();
+    if (!content.settings) {
+  content.settings = {
+    bgColor: "#080808",
+    textColor: "#f1efe9",
+    accentColor: "#f1efe9"
+  };
+}
+
+document.getElementById("bgColor").value =
+  content.settings.bgColor;
+
+document.getElementById("textColor").value =
+  content.settings.textColor;
+
+document.getElementById("accentColor").value =
+  content.settings.accentColor;
 
   }catch{
 
@@ -720,6 +740,14 @@ function projectDown(index,pIndex){
 
 
 async function save(){
+  content.settings.bgColor =
+  document.getElementById("bgColor").value;
+
+content.settings.textColor =
+  document.getElementById("textColor").value;
+
+content.settings.accentColor =
+  document.getElementById("accentColor").value;
 
   /*
     OBS:
