@@ -2,10 +2,4 @@ name = "sweetproduction"
 compatibility_date = "2026-08-28"
 
 [assets]
-directory = "."
-exclude = [
-  "node_modules/**",
-  ".git/**",
-  ".github/**",
-  "*.toml"
-]
+directory = "./site"
