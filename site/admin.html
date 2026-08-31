@@ -80,7 +80,6 @@ main{
   padding:30px 20px 120px;
 }
 
-.github-box,
 .settings{
   background:white;
   border:1px solid #ddd;
@@ -89,19 +88,8 @@ main{
   margin-bottom:25px;
 }
 
-.github-box{
-  background:#fff8df;
-  border-color:#eadb9b;
-}
-
-.github-box h2,
 .settings h2{
   margin-top:0;
-}
-
-.github-box p{
-  font-size:13px;
-  line-height:1.4;
 }
 
 .settings-grid{
@@ -115,6 +103,12 @@ main{
   flex-wrap:wrap;
   gap:8px;
   margin-bottom:25px;
+}
+
+.toolbar button{
+  background:white;
+  color:#111;
+  border:1px solid #ddd;
 }
 
 .block{
@@ -222,7 +216,6 @@ input[type="color"]{
 
   header{
     padding:15px;
-    align-items:flex-start;
   }
 
   header strong{
@@ -241,10 +234,6 @@ input[type="color"]{
     flex-wrap:wrap;
   }
 
-  .block-head strong{
-    min-width:100px;
-  }
-
 }
 
 </style>
@@ -261,10 +250,10 @@ input[type="color"]{
 
 <button
 class="secondary"
-onclick="loadFromGitHub()">
+onclick="loadFromWorker()">
 Ladda </button>
 
-<button onclick="saveToGitHub()">
+<button onclick="saveToWorker()">
   Spara
 </button>
 
@@ -273,62 +262,6 @@ Ladda </button>
 </header>
 
 <main>
-
-<section class="github-box">
-
-<h2>GitHub</h2>
-
-<p>
-Dina GitHub-uppgifter sparas endast i den här webbläsaren.
-Skicka aldrig tokenen till någon annan.
-</p>
-
-<div class="settings-grid">
-
-<div>
-
-<label>Owner</label>
-
-<input
-id="githubOwner"
-placeholder="GitHub username">
-
-</div>
-
-<div>
-
-<label>Repository</label>
-
-<input
-id="githubRepo"
-placeholder="Repository name">
-
-</div>
-
-<div>
-
-<label>Branch</label>
-
-<input
-id="githubBranch"
-value="main">
-
-</div>
-
-<div>
-
-<label>GitHub Token</label>
-
-<input
-id="githubToken"
-type="password"
-placeholder="github_pat_...">
-
-</div>
-
-</div>
-
-</section>
 
 <section class="settings">
 
@@ -437,7 +370,11 @@ oninput="updateSetting('bodyFont',this.value)">
 
 <script>
 
-let content = {
+const API=
+  "https://sweetproduction-admin.frycts5yrr.workers.dev";
+
+
+let content={
 
   settings:{
     bgColor:"#080808",
@@ -452,6 +389,7 @@ let content = {
 
 };
 
+
 let draggedIndex=null;
 
 
@@ -462,9 +400,10 @@ let draggedIndex=null;
 function createId(){
 
   return Date.now().toString(36)
-    + Math.random().toString(36).slice(2);
+    +Math.random().toString(36).slice(2);
 
 }
+
 
 function esc(value){
 
@@ -477,206 +416,69 @@ function esc(value){
 
 }
 
+
 function showStatus(message){
 
-  const el=document.getElementById("status");
+  const el=
+    document.getElementById("status");
 
   el.textContent=message;
 
   el.style.display="block";
 
   setTimeout(()=>{
+
     el.style.display="none";
+
   },2500);
 
 }
 
 
 /* =========================
-   GITHUB SETTINGS
+   LOAD
 ========================= */
 
-function getGitHubSettings(){
-
-  const owner=
-    document.getElementById("githubOwner").value.trim();
-
-  const repo=
-    document.getElementById("githubRepo").value.trim();
-
-  const branch=
-    document.getElementById("githubBranch").value.trim() || "main";
-
-  const token=
-    document.getElementById("githubToken").value.trim();
-
-  localStorage.setItem("sweetGithubOwner",owner);
-  localStorage.setItem("sweetGithubRepo",repo);
-  localStorage.setItem("sweetGithubBranch",branch);
-  localStorage.setItem("sweetGithubToken",token);
-
-  return {
-    owner,
-    repo,
-    branch,
-    token
-  };
-
-}
-
-
-function loadGitHubSettings(){
-
-  document.getElementById("githubOwner").value=
-    localStorage.getItem("sweetGithubOwner") || "";
-
-  document.getElementById("githubRepo").value=
-    localStorage.getItem("sweetGithubRepo") || "";
-
-  document.getElementById("githubBranch").value=
-    localStorage.getItem("sweetGithubBranch") || "main";
-
-  document.getElementById("githubToken").value=
-    localStorage.getItem("sweetGithubToken") || "";
-
-}
-
-
-/* =========================
-   GITHUB API
-========================= */
-
-async function githubFetch(url,options={}){
-
-  const token=
-    localStorage.getItem("sweetGithubToken");
-
-  const headers={
-    "Accept":"application/vnd.github+json",
-    "Content-Type":"application/json",
-    "X-GitHub-Api-Version":"2022-11-28"
-  };
-
-  if(token){
-    headers["Authorization"]="Bearer "+token;
-  }
-
-  const response=
-    await fetch(url,{
-      ...options,
-      headers
-    });
-
-  const text=await response.text();
-
-  let data={};
-
-  try{
-    data=JSON.parse(text);
-  }catch(e){
-    data={message:text};
-  }
-
-  if(!response.ok){
-
-    throw new Error(
-      data.message ||
-      `GitHub returned HTTP ${response.status}`
-    );
-
-  }
-
-  return data;
-
-}
-
-
-/* =========================
-   BASE64
-========================= */
-
-function encodeBase64Unicode(text){
-
-  const bytes=
-    new TextEncoder().encode(text);
-
-  let binary="";
-
-  for(const byte of bytes){
-
-    binary+=String.fromCharCode(byte);
-
-  }
-
-  return btoa(binary);
-
-}
-
-
-function decodeBase64Unicode(base64){
-
-  const binary=
-    atob(base64.replace(/\n/g,""));
-
-  const bytes=
-    Uint8Array.from(
-      binary,
-      char=>char.charCodeAt(0)
-    );
-
-  return new TextDecoder().decode(bytes);
-
-}
-
-
-/* =========================
-   LOAD FROM GITHUB
-========================= */
-
-async function loadFromGitHub(){
-
-  const settings=getGitHubSettings();
-
-  if(
-    !settings.owner ||
-    !settings.repo ||
-    !settings.token
-  ){
-
-    alert(
-      "Fyll i Owner, Repository och Token först."
-    );
-
-    return;
-
-  }
+async function loadFromWorker(){
 
   try{
 
-    showStatus("Laddar från GitHub...");
+    showStatus("Laddar...");
 
-    const url=
-      "https://api.github.com/repos/"
-      +encodeURIComponent(settings.owner)
-      +"/"
-      +encodeURIComponent(settings.repo)
-      +"/contents/site/content.json?ref="
-      +encodeURIComponent(settings.branch);
+
+    const response=
+      await fetch(
+        API+"/content",
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
 
 
     const data=
-      await githubFetch(url);
+      await response.json();
 
 
-    content=
-      JSON.parse(
-        decodeBase64Unicode(data.content)
+    if(!response.ok){
+
+      throw new Error(
+        data.error ||
+        "Kunde inte ladda innehållet."
       );
+
+    }
+
+
+    content=data.content;
 
 
     render();
 
-    showStatus("Laddat från GitHub ✓");
+
+    showStatus(
+      "Laddat från GitHub ✓"
+    );
 
   }
 
@@ -685,7 +487,7 @@ async function loadFromGitHub(){
     console.error(error);
 
     alert(
-      "Kunde inte ladda från GitHub:\n\n"
+      "Kunde inte ladda:\n\n"
       +error.message
     );
 
@@ -695,132 +497,65 @@ async function loadFromGitHub(){
 
 
 /* =========================
-   SAVE TO GITHUB
+   SAVE
 ========================= */
 
-async function saveToGitHub(){
-
-  const settings=getGitHubSettings();
-
-  if(
-    !settings.owner ||
-    !settings.repo ||
-    !settings.token
-  ){
-
-    alert(
-      "Fyll i Owner, Repository och Token först."
-    );
-
-    return;
-
-  }
-
+async function saveToWorker(){
 
   try{
 
-    showStatus("Hämtar aktuell fil...");
+    showStatus(
+      "Sparar till GitHub..."
+    );
 
 
-    /*
-      Först hämtar vi aktuell content.json.
-      Det ger oss SHA:n som GitHub kräver
-      när en befintlig fil ska uppdateras.
-    */
-
-    const fileUrl=
-      "https://api.github.com/repos/"
-      +encodeURIComponent(settings.owner)
-      +"/"
-      +encodeURIComponent(settings.repo)
-      +"/contents/site/content.json";
-
-
-    const current=
-      await githubFetch(
-        fileUrl
-        +"?ref="
-        +encodeURIComponent(settings.branch)
-      );
-
-
-    /*
-      Gör JSON snyggt formaterad.
-    */
-
-    const json=
-      JSON.stringify(
-        content,
-        null,
-        2
-      );
-
-
-    const encoded=
-      encodeBase64Unicode(json);
-
-
-    showStatus("Skriver till GitHub...");
-
-
-    /*
-      PUT = uppdatera befintlig fil.
-    */
-
-    const result=
-      await githubFetch(
-        fileUrl,
+    const response=
+      await fetch(
+        API+"/content",
         {
 
           method:"PUT",
 
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
           body:JSON.stringify({
-
-            message:
-              "Update website content",
-
-            content:
-              encoded,
-
-            sha:
-              current.sha,
-
-            branch:
-              settings.branch
-
+            content:content
           })
 
         }
       );
 
 
-    console.log(
-      "GitHub commit:",
-      result
-    );
+    const data=
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error ||
+        "Kunde inte spara."
+      );
+
+    }
 
 
     showStatus(
       "Sparat till GitHub ✓"
     );
 
-
   }
 
   catch(error){
 
-    console.error(
-      "SAVE ERROR:",
-      error
-    );
-
+    console.error(error);
 
     alert(
-      "Kunde inte spara till GitHub:\n\n"
+      "Kunde inte spara:\n\n"
       +error.message
-      +"\n\n"
-      +"Kontrollera att tokenen har "
-      +"Contents → Read and write."
     );
 
   }
@@ -829,10 +564,13 @@ async function saveToGitHub(){
 
 
 /* =========================
-   SITE SETTINGS
+   SETTINGS
 ========================= */
 
-function updateSetting(key,value){
+function updateSetting(
+  key,
+  value
+){
 
   content.settings[key]=value;
 
@@ -840,10 +578,14 @@ function updateSetting(key,value){
 
 
 /* =========================
-   INPUT HELPERS
+   INPUTS
 ========================= */
 
-function input(label,value,callback){
+function input(
+  label,
+  value,
+  callback
+){
 
   return `
 
@@ -859,7 +601,11 @@ function input(label,value,callback){
 }
 
 
-function textarea(label,value,callback){
+function textarea(
+  label,
+  value,
+  callback
+){
 
   return `
 
@@ -874,10 +620,13 @@ function textarea(label,value,callback){
 }
 
 /* =========================
-BLOCK FIELDS
+FIELDS
 ========================= */
 
-function fields(block,i){
+function fields(
+block,
+i
+){
 
 if(block.type==="hero"){
 
@@ -967,17 +716,13 @@ return `
     <option
       value="16:9"
       ${block.ratio==="16:9"?"selected":""}>
-
       16:9
-
     </option>
 
     <option
       value="9:16"
       ${block.ratio==="9:16"?"selected":""}>
-
       9:16
-
     </option>
 
   </select>
@@ -1006,13 +751,11 @@ if(block.type==="projects"){
 ```
 let html=`
 
-
   ${input(
     "Rubrik",
     block.title || "",
     `update(${i},'title'`
   )}
-
 
   <hr>
 
@@ -1020,95 +763,104 @@ let html=`
 
 
 (block.projects || [])
-  .forEach((project,pi)=>{
+  .forEach(
+    (project,pi)=>{
 
-    html+=`
+      html+=`
 
-      <div class="project">
+        <div class="project">
 
-        <div class="project-head">
+          <div class="project-head">
 
-          <strong>
-            Projekt ${pi+1}
-          </strong>
+            <strong>
+              Projekt ${pi+1}
+            </strong>
 
-          <button
-            class="delete"
-            onclick="
-              deleteProject(${i},${pi})
-            ">
+            <button
+              class="delete"
+              onclick="
+                deleteProject(
+                  ${i},
+                  ${pi}
+                )
+              ">
 
-            Ta bort
+              Ta bort
 
-          </button>
+            </button>
+
+          </div>
+
+
+          ${input(
+            "Titel",
+            project.title || "",
+            `updateProject(
+              ${i},
+              ${pi},
+              'title'`
+          )}
+
+
+          ${input(
+            "Kategori",
+            project.category || "",
+            `updateProject(
+              ${i},
+              ${pi},
+              'category'`
+          )}
+
+
+          ${input(
+            "Bild / Video URL",
+            project.image || "",
+            `updateProject(
+              ${i},
+              ${pi},
+              'image'`
+          )}
+
+
+          <label>Media</label>
+
+          <select
+            onchange="
+              updateProject(
+                ${i},
+                ${pi},
+                'type',
+                this.value
+              )
+            "
+          >
+
+            <option
+              value="image"
+              ${project.type==="image"?"selected":""}>
+              Bild
+            </option>
+
+            <option
+              value="video"
+              ${project.type==="video"?"selected":""}>
+              Video
+            </option>
+
+          </select>
 
         </div>
 
+      `;
 
-        ${input(
-          "Titel",
-          project.title || "",
-          `updateProject(${i},${pi},'title'`
-        )}
-
-
-        ${input(
-          "Kategori",
-          project.category || "",
-          `updateProject(${i},${pi},'category'`
-        )}
-
-
-        ${input(
-          "Bild / Video URL",
-          project.image || "",
-          `updateProject(${i},${pi},'image'`
-        )}
-
-
-        <label>
-          Media
-        </label>
-
-        <select
-          onchange="
-            updateProject(
-              ${i},
-              ${pi},
-              'type',
-              this.value
-            )
-          "
-        >
-
-          <option
-            value="image"
-            ${project.type==="image"?"selected":""}>
-
-            Bild
-
-          </option>
-
-          <option
-            value="video"
-            ${project.type==="video"?"selected":""}>
-
-            Video
-
-          </option>
-
-        </select>
-
-      </div>
-
-    `;
-
-  });
+    }
+  );
 
 
 html+=`
 
-  <button onclick="addProject(${i})">
+  <button
+    onclick="addProject(${i})">
     + Lägg till projekt
   </button>
 
@@ -1174,27 +926,50 @@ RENDER
 
 function render(){
 
-document.getElementById("bgColor").value=
-content.settings.bgColor || "#080808";
+const settings=
+content.settings || {};
 
-document.getElementById("textColor").value=
-content.settings.textColor || "#f1efe9";
+document.getElementById(
+"bgColor"
+).value=
+settings.bgColor ||
+"#080808";
 
-document.getElementById("accentColor").value=
-content.settings.accentColor || "#f1efe9";
+document.getElementById(
+"textColor"
+).value=
+settings.textColor ||
+"#f1efe9";
 
-document.getElementById("headingFont").value=
-content.settings.headingFont || "Arial";
+document.getElementById(
+"accentColor"
+).value=
+settings.accentColor ||
+"#f1efe9";
 
-document.getElementById("bodyFont").value=
-content.settings.bodyFont || "Arial";
+document.getElementById(
+"headingFont"
+).value=
+settings.headingFont ||
+"Arial";
+
+document.getElementById(
+"bodyFont"
+).value=
+settings.bodyFont ||
+"Arial";
 
 const root=
-document.getElementById("blocks");
+document.getElementById(
+"blocks"
+);
 
 root.innerHTML="";
 
-if(!content.blocks.length){
+if(
+!content.blocks ||
+!content.blocks.length
+){
 
 ```
 root.innerHTML=`
@@ -1213,145 +988,186 @@ return;
 
 }
 
-content.blocks.forEach((block,index)=>{
+content.blocks.forEach(
+(block,index)=>{
 
 ```
-const el=
-  document.createElement("div");
-
-el.className="block";
-
-el.draggable=true;
-
-
-el.addEventListener(
-  "dragstart",
-  ()=>{
-    draggedIndex=index;
-    el.classList.add("dragging");
-  }
-);
-
-
-el.addEventListener(
-  "dragend",
-  ()=>{
-    draggedIndex=null;
-    el.classList.remove("dragging");
-  }
-);
-
-
-el.addEventListener(
-  "dragover",
-  event=>{
-    event.preventDefault();
-    el.classList.add("drag-over");
-  }
-);
-
-
-el.addEventListener(
-  "dragleave",
-  ()=>{
-    el.classList.remove("drag-over");
-  }
-);
-
-
-el.addEventListener(
-  "drop",
-  event=>{
-
-    event.preventDefault();
-
-    el.classList.remove("drag-over");
-
-
-    const target=index;
-
-
-    if(
-      draggedIndex===null ||
-      draggedIndex===target
-    ){
-
-      return;
-
-    }
-
-
-    const moved=
-      content.blocks.splice(
-        draggedIndex,
-        1
-      )[0];
-
-
-    content.blocks.splice(
-      target,
-      0,
-      moved
+  const el=
+    document.createElement(
+      "div"
     );
 
 
-    draggedIndex=null;
+  el.className="block";
 
-    render();
-
-  }
-);
+  el.draggable=true;
 
 
-el.innerHTML=`
+  el.addEventListener(
+    "dragstart",
+    ()=>{
 
-  <div class="block-head">
+      draggedIndex=index;
 
-    <span class="drag">☰</span>
+      el.classList.add(
+        "dragging"
+      );
 
-    <strong>
-      ${index+1}. ${esc(block.type)}
-    </strong>
-
-    <button
-      class="secondary"
-      onclick="moveUp(${index})">
-      ↑
-    </button>
-
-    <button
-      class="secondary"
-      onclick="moveDown(${index})">
-      ↓
-    </button>
-
-    <button
-      class="secondary"
-      onclick="duplicateBlock(${index})">
-      Duplicera
-    </button>
-
-    <button
-      class="delete"
-      onclick="deleteBlock(${index})">
-      Ta bort
-    </button>
-
-  </div>
-
-  <div class="block-body">
-
-    ${fields(block,index)}
-
-  </div>
-
-`;
+    }
+  );
 
 
-root.appendChild(el);
+  el.addEventListener(
+    "dragend",
+    ()=>{
+
+      draggedIndex=null;
+
+      el.classList.remove(
+        "dragging"
+      );
+
+    }
+  );
+
+
+  el.addEventListener(
+    "dragover",
+    event=>{
+
+      event.preventDefault();
+
+      el.classList.add(
+        "drag-over"
+      );
+
+    }
+  );
+
+
+  el.addEventListener(
+    "dragleave",
+    ()=>{
+
+      el.classList.remove(
+        "drag-over"
+      );
+
+    }
+  );
+
+
+  el.addEventListener(
+    "drop",
+    event=>{
+
+      event.preventDefault();
+
+      el.classList.remove(
+        "drag-over"
+      );
+
+
+      const target=index;
+
+
+      if(
+        draggedIndex===null ||
+        draggedIndex===target
+      ){
+
+        return;
+
+      }
+
+
+      const moved=
+        content.blocks.splice(
+          draggedIndex,
+          1
+        )[0];
+
+
+      content.blocks.splice(
+        target,
+        0,
+        moved
+      );
+
+
+      draggedIndex=null;
+
+      render();
+
+    }
+  );
+
+
+  el.innerHTML=`
+
+    <div class="block-head">
+
+      <span class="drag">
+        ☰
+      </span>
+
+      <strong>
+        ${index+1}.
+        ${esc(block.type)}
+      </strong>
+
+      <button
+        class="secondary"
+        onclick="
+          moveUp(${index})
+        ">
+        ↑
+      </button>
+
+      <button
+        class="secondary"
+        onclick="
+          moveDown(${index})
+        ">
+        ↓
+      </button>
+
+      <button
+        class="secondary"
+        onclick="
+          duplicateBlock(${index})
+        ">
+        Duplicera
+      </button>
+
+      <button
+        class="delete"
+        onclick="
+          deleteBlock(${index})
+        ">
+        Ta bort
+      </button>
+
+    </div>
+
+    <div class="block-body">
+
+      ${fields(
+        block,
+        index
+      )}
+
+    </div>
+
+  `;
+
+
+  root.appendChild(el);
+
+}
 ```
 
-});
+);
 
 }
 
@@ -1359,11 +1175,24 @@ root.appendChild(el);
 UPDATE
 ========================= */
 
-function update(i,key,value){
+function update(
+index,
+key,
+value
+){
 
-if(!content.blocks[i]) return;
+if(
+!content.blocks[index]
+){
 
-content.blocks[i][key]=value;
+```
+return;
+```
+
+}
+
+content.blocks[index][key]=
+value;
 
 }
 
@@ -1388,7 +1217,9 @@ projectIndex
 
 function addProject(index){
 
-if(!content.blocks[index].projects){
+if(
+!content.blocks[index].projects
+){
 
 ```
 content.blocks[index].projects=[];
@@ -1403,7 +1234,8 @@ id:createId(),
 
 title:"Nytt projekt",
 
-category:"Film / Content",
+category:
+  "Film / Content",
 
 image:"",
 
@@ -1495,7 +1327,9 @@ block.poster="";
 if(type==="projects"){
 
 ```
-block.title="Selected work";
+block.title=
+  "Selected work";
+
 block.projects=[];
 ```
 
@@ -1524,7 +1358,9 @@ block.email=
 
 }
 
-content.blocks.push(block);
+content.blocks.push(
+block
+);
 
 render();
 
@@ -1544,7 +1380,10 @@ return;
 
 }
 
-content.blocks.splice(index,1);
+content.blocks.splice(
+index,
+1
+);
 
 render();
 
@@ -1565,13 +1404,15 @@ if(copy.projects){
 
 ```
 copy.projects=
-  copy.projects.map(project=>({
+  copy.projects.map(
+    project=>({
 
-    ...project,
+      ...project,
 
-    id:createId()
+      id:createId()
 
-  }));
+    })
+  );
 ```
 
 }
@@ -1605,7 +1446,8 @@ render();
 function moveDown(index){
 
 if(
-index>=content.blocks.length-1
+index>=
+content.blocks.length-1
 ){
 
 ```
@@ -1627,42 +1469,10 @@ render();
 }
 
 /* =========================
-INITIAL LOAD
+START
 ========================= */
 
-loadGitHubSettings();
-
-fetch(
-"content.json?v="+Date.now()
-)
-
-.then(response=>{
-
-if(!response.ok){
-
-```
-throw new Error();
-```
-
-}
-
-return response.json();
-
-})
-
-.then(data=>{
-
-content=data;
-
-render();
-
-})
-
-.catch(()=>{
-
-render();
-
-});
+loadFromWorker();
 
 </script>
 
