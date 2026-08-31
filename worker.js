@@ -49,6 +49,8 @@ async function githubRequest(path, options = {}, env) {
 
         "Content-Type":
           "application/json",
+        "User-Agent":
+  "SweetProduction-Admin",
 
         ...(options.headers || {})
       }
