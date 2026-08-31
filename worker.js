@@ -136,10 +136,15 @@ async function serveSite(pathname) {
     return null;
   }
 
-  const response =
-    await fetch(
-      `${SITE_RAW}/${file[0]}`
-    );
+  const response = await fetch(
+  `${SITE_RAW}/${file[0]}?v=${Date.now()}`,
+  {
+    cf: {
+      cacheTtl: 0,
+      cacheEverything: false
+    }
+  }
+);
 
   if (!response.ok) {
 
