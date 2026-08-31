@@ -220,6 +220,31 @@ textarea{
       id="accentColor"
       onchange="updateSetting('accentColor',this.value)"
     >
+    <label>Typsnitt rubriker</label>
+<select
+  onchange="updateSetting('headingFont',this.value); render()"
+>
+  <option value="Arial">Arial</option>
+  <option value="Helvetica">Helvetica</option>
+  <option value="Georgia">Georgia</option>
+  <option value="Times New Roman">Times New Roman</option>
+  <option value="Verdana">Verdana</option>
+  <option value="Trebuchet MS">Trebuchet MS</option>
+  <option value="Courier New">Courier New</option>
+</select>
+
+<label>Typsnitt brödtext</label>
+<select
+  onchange="updateSetting('bodyFont',this.value); render()"
+>
+  <option value="Arial">Arial</option>
+  <option value="Helvetica">Helvetica</option>
+  <option value="Georgia">Georgia</option>
+  <option value="Times New Roman">Times New Roman</option>
+  <option value="Verdana">Verdana</option>
+  <option value="Trebuchet MS">Trebuchet MS</option>
+  <option value="Courier New">Courier New</option>
+</select>
   </section>
 
   <div class="toolbar">
