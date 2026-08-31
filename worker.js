@@ -1,4 +1,3 @@
-
 const OWNER = "6hmztw44sf-cpu";
 const REPO = "SweetProduction";
 const BRANCH = "main";
@@ -96,13 +95,7 @@ async function serveSite(pathname) {
   }
 
   const response = await fetch(
-    `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/site/${file[0]}?v=${Date.now()}`,
-    {
-      cf: {
-        cacheTtl: 0,
-        cacheEverything: false
-      }
-    }
+    `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/site/${file[0]}?v=${Date.now()}`
   );
 
   if (!response.ok) {
@@ -128,11 +121,8 @@ async function serveSite(pathname) {
 
 export default {
   async fetch(request, env) {
-    const origin =
-      request.headers.get("Origin") || "";
-
-    const headers =
-      corsHeaders(origin);
+    const origin = request.headers.get("Origin") || "";
+    const headers = corsHeaders(origin);
 
     if (request.method === "OPTIONS") {
       return new Response(null, {
@@ -141,26 +131,22 @@ export default {
       });
     }
 
-    const url =
-      new URL(request.url);
+    const url = new URL(request.url);
 
     const isContentRoute =
       url.pathname === "/content" ||
       url.pathname === "/api/content";
 
     try {
-
-      // DIAGNOSTIK – testar GitHub-token
       if (
         request.method === "GET" &&
         url.pathname === "/github-test"
       ) {
-        const repo =
-          await githubRequest(
-            `/repos/${OWNER}/${REPO}`,
-            {},
-            env
-          );
+        const repo = await githubRequest(
+          `/repos/${OWNER}/${REPO}`,
+          {},
+          env
+        );
 
         return new Response(
           JSON.stringify({
@@ -176,22 +162,19 @@ export default {
         );
       }
 
-      // HÄMTA CONTENT
       if (
         request.method === "GET" &&
         isContentRoute
       ) {
-        const file =
-          await githubRequest(
-            `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
-            {},
-            env
-          );
+        const file = await githubRequest(
+          `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
+          {},
+          env
+        );
 
-        const content =
-          JSON.parse(
-            decodeBase64(file.content)
-          );
+        const content = JSON.parse(
+          decodeBase64(file.content)
+        );
 
         return new Response(
           JSON.stringify(content),
@@ -202,13 +185,11 @@ export default {
         );
       }
 
-      // SPARA CONTENT
       if (
         request.method === "PUT" &&
         isContentRoute
       ) {
-        const body =
-          await request.json();
+        const body = await request.json();
 
         if (!body) {
           return new Response(
@@ -222,47 +203,34 @@ export default {
           );
         }
 
-        const current =
-          await githubRequest(
-            `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
-            {},
-            env
-          );
+        const current = await githubRequest(
+          `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
+          {},
+          env
+        );
 
-        const encoded =
-          encodeBase64(
-            JSON.stringify(body, null, 2)
-          );
+        const encoded = encodeBase64(
+          JSON.stringify(body, null, 2)
+        );
 
-        const result =
-          await githubRequest(
-            `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`,
-            {
-              method: "PUT",
-
-              body:
-                JSON.stringify({
-                  message:
-                    "Update website content",
-
-                  content:
-                    encoded,
-
-                  sha:
-                    current.sha,
-
-                  branch:
-                    BRANCH
-                })
-            },
-            env
-          );
+        const result = await githubRequest(
+          `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`,
+          {
+            method: "PUT",
+            body: JSON.stringify({
+              message: "Update website content",
+              content: encoded,
+              sha: current.sha,
+              branch: BRANCH
+            })
+          },
+          env
+        );
 
         return new Response(
           JSON.stringify({
             success: true,
-            commit:
-              result.commit?.sha || null
+            commit: result.commit?.sha || null
           }),
           {
             status: 200,
@@ -271,14 +239,8 @@ export default {
         );
       }
 
-      // VANLIG HEMSIDA
-      if (
-        request.method === "GET"
-      ) {
-        const site =
-          await serveSite(
-            url.pathname
-          );
+      if (request.method === "GET") {
+        const site = await serveSite(url.pathname);
 
         if (site) {
           return site;
@@ -296,12 +258,9 @@ export default {
       );
 
     } catch (error) {
-
       return new Response(
         JSON.stringify({
-          error:
-            error.message ||
-            "Unknown error"
+          error: error.message || "Unknown error"
         }),
         {
           status: 500,
@@ -311,4 +270,3 @@ export default {
     }
   }
 };
-```
