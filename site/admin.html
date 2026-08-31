@@ -289,7 +289,7 @@ function input(label,value,callback){
     <label>${esc(label)}</label>
     <input
       value="${esc(value)}"
-      oninput="${callback}(this.value)"
+      oninput="${callback},this.value)"
     >
   `;
 }
