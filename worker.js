@@ -79,7 +79,67 @@ function encodeBase64(text) {
   return btoa(binary);
 }
 
+async function getContentFile(env) {
+  return await githubRequest(
+    `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}&_=${Date.now()}`,
+    {},
+    env
+  );
+}
+
+async function saveContent(body, env) {
+  const encoded = encodeBase64(
+    JSON.stringify(body, null, 2)
+  );
+
+  /*
+    Försök upp till 3 gånger.
+    Om GitHub svarar 409 hämtar vi den senaste SHA:n
+    och försöker igen.
+  */
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+
+    const current = await getContentFile(env);
+
+    try {
+
+      return await githubRequest(
+        `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            message: "Update website content",
+            content: encoded,
+            sha: current.sha,
+            branch: BRANCH
+          })
+        },
+        env
+      );
+
+    } catch (error) {
+
+      if (
+        error.message.includes("GitHub API 409") &&
+        attempt < 2
+      ) {
+        await new Promise(resolve =>
+          setTimeout(resolve, 500)
+        );
+
+        continue;
+      }
+
+      throw error;
+    }
+  }
+
+  throw new Error("Kunde inte spara efter flera försök");
+}
+
 async function serveSite(pathname) {
+
   const files = {
     "/": ["index.html", "text/html; charset=UTF-8"],
     "/index.html": ["index.html", "text/html; charset=UTF-8"],
@@ -120,15 +180,19 @@ async function serveSite(pathname) {
 }
 
 export default {
+
   async fetch(request, env) {
+
     const origin = request.headers.get("Origin") || "";
     const headers = corsHeaders(origin);
 
     if (request.method === "OPTIONS") {
+
       return new Response(null, {
         status: 204,
         headers
       });
+
     }
 
     const url = new URL(request.url);
@@ -138,10 +202,16 @@ export default {
       url.pathname === "/api/content";
 
     try {
+
+      /*
+        Testa GitHub
+      */
+
       if (
         request.method === "GET" &&
         url.pathname === "/github-test"
       ) {
+
         const repo = await githubRequest(
           `/repos/${OWNER}/${REPO}`,
           {},
@@ -160,17 +230,19 @@ export default {
             headers
           }
         );
+
       }
+
+      /*
+        Hämta content
+      */
 
       if (
         request.method === "GET" &&
         isContentRoute
       ) {
-        const file = await githubRequest(
-          `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
-          {},
-          env
-        );
+
+        const file = await getContentFile(env);
 
         const content = JSON.parse(
           decodeBase64(file.content)
@@ -183,15 +255,22 @@ export default {
             headers
           }
         );
+
       }
+
+      /*
+        Spara content
+      */
 
       if (
         request.method === "PUT" &&
         isContentRoute
       ) {
+
         const body = await request.json();
 
         if (!body) {
+
           return new Response(
             JSON.stringify({
               error: "Content saknas"
@@ -201,50 +280,52 @@ export default {
               headers
             }
           );
+
         }
 
-        const current = await githubRequest(
-          `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
-          {},
-          env
-        );
+        const result = await saveContent(body, env);
 
-        const encoded = encodeBase64(
-          JSON.stringify(body, null, 2)
-        );
+        /*
+          Kontrollera att GitHub verkligen skapade
+          en commit.
+        */
 
-        const result = await githubRequest(
-          `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`,
-          {
-            method: "PUT",
-            body: JSON.stringify({
-              message: "Update website content",
-              content: encoded,
-              sha: current.sha,
-              branch: BRANCH
-            })
-          },
-          env
-        );
+        if (!result.commit?.sha) {
+
+          throw new Error(
+            "GitHub sparade inte någon commit"
+          );
+
+        }
 
         return new Response(
           JSON.stringify({
             success: true,
-            commit: result.commit?.sha || null
+            saved: true,
+            commit: result.commit.sha
           }),
           {
             status: 200,
             headers
           }
         );
+
       }
 
+      /*
+        Vanliga hemsidefiler
+      */
+
       if (request.method === "GET") {
-        const site = await serveSite(url.pathname);
+
+        const site = await serveSite(
+          url.pathname
+        );
 
         if (site) {
           return site;
         }
+
       }
 
       return new Response(
@@ -258,6 +339,7 @@ export default {
       );
 
     } catch (error) {
+
       return new Response(
         JSON.stringify({
           error: error.message || "Unknown error"
@@ -267,6 +349,9 @@ export default {
           headers
         }
       );
+
     }
+
   }
+
 };
