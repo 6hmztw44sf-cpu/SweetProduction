@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
 
 <title>Sweet Production – Admin</title>
+
 
 <style>
 
@@ -13,172 +19,500 @@
   box-sizing:border-box;
 }
 
+
 body{
+
   margin:0;
+
   background:#f3f3f3;
+
   color:#111;
+
   font-family:Arial,sans-serif;
+
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
+
   position:sticky;
+
   top:0;
-  z-index:20;
+
+  z-index:100;
+
   background:#111;
+
   color:white;
+
   padding:18px 25px;
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
+
+  gap:15px;
+
 }
+
 
 header strong{
+
   letter-spacing:.05em;
+
 }
+
+
+.header-actions{
+
+  display:flex;
+
+  gap:8px;
+
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
 
 button{
+
   border:0;
+
   background:#111;
+
   color:white;
+
   padding:11px 16px;
+
   border-radius:7px;
+
   cursor:pointer;
+
   font-size:14px;
+
 }
+
+
+button:hover{
+
+  opacity:.8;
+
+}
+
 
 header button{
+
   background:white;
+
   color:#111;
+
 }
+
+
+button.secondary{
+
+  background:white;
+
+  color:#111;
+
+  border:1px solid #ddd;
+
+}
+
+
+button.delete{
+
+  background:#ddd;
+
+  color:#111;
+
+}
+
+
+button.danger{
+
+  background:#c62828;
+
+  color:white;
+
+}
+
+
+/* =========================
+   MAIN
+========================= */
 
 main{
-  max-width:900px;
+
+  max-width:1000px;
+
   margin:auto;
-  padding:30px 20px 100px;
+
+  padding:30px 20px 120px;
+
 }
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+.settings{
+
+  background:white;
+
+  border:1px solid #ddd;
+
+  border-radius:12px;
+
+  padding:20px;
+
+  margin-bottom:25px;
+
+}
+
+
+.settings h2{
+
+  margin-top:0;
+
+}
+
+
+.settings-grid{
+
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:15px;
+
+}
+
+
+/* =========================
+   TOOLBAR
+========================= */
 
 .toolbar{
+
   display:flex;
+
   flex-wrap:wrap;
+
   gap:8px;
+
   margin-bottom:25px;
+
 }
 
-.toolbar button{
-  background:white;
-  color:#111;
-  border:1px solid #ddd;
-}
+
+/* =========================
+   BLOCK
+========================= */
 
 .block{
+
   background:white;
+
   border:1px solid #ddd;
+
   border-radius:12px;
+
   margin-bottom:15px;
+
   overflow:hidden;
+
 }
+
 
 .block.dragging{
-  opacity:.4;
+
+  opacity:.35;
+
 }
+
+
+.block.drag-over{
+
+  border:2px dashed #111;
+
+}
+
 
 .block-head{
+
   display:flex;
+
   align-items:center;
+
   gap:10px;
+
   padding:14px;
+
   border-bottom:1px solid #eee;
+
   cursor:grab;
+
 }
+
+
+.block-head:active{
+
+  cursor:grabbing;
+
+}
+
 
 .drag{
+
   font-size:20px;
+
   color:#999;
+
 }
+
 
 .block-head strong{
+
   flex:1;
+
 }
+
 
 .block-body{
+
   padding:18px;
+
 }
 
+
+/* =========================
+   FORM
+========================= */
+
 label{
+
   display:block;
+
   font-size:12px;
+
   font-weight:bold;
+
   margin-bottom:6px;
+
 }
+
 
 input,
 textarea,
 select{
+
   width:100%;
+
   padding:11px;
+
   border:1px solid #ccc;
+
   border-radius:7px;
+
   margin-bottom:15px;
+
   font:inherit;
+
 }
+
 
 textarea{
+
   min-height:120px;
+
   resize:vertical;
+
 }
 
-.actions{
-  display:flex;
-  gap:7px;
+
+input[type="color"]{
+
+  height:45px;
+
+  padding:4px;
+
 }
 
-.delete{
-  background:#ddd;
-  color:#111;
-}
+
+/* =========================
+   PROJECT
+========================= */
 
 .project{
+
   border:1px solid #ddd;
+
   border-radius:8px;
+
   padding:15px;
+
   margin-bottom:10px;
+
 }
+
 
 .project-head{
+
   display:flex;
+
+  align-items:center;
+
   justify-content:space-between;
+
   margin-bottom:12px;
+
 }
+
+
+/* =========================
+   STATUS
+========================= */
 
 .status{
+
   position:fixed;
+
   bottom:20px;
+
   left:50%;
+
   transform:translateX(-50%);
+
   background:#111;
+
   color:white;
+
   padding:12px 18px;
+
   border-radius:8px;
+
   display:none;
-  z-index:50;
+
+  z-index:500;
+
 }
 
-.preview{
-  background:#eee;
-  border:1px solid #ddd;
-  padding:15px;
-  margin-bottom:20px;
+
+/* =========================
+   GITHUB
+========================= */
+
+.github-box{
+
+  background:#fff8df;
+
+  border:1px solid #eadb9b;
+
   border-radius:10px;
+
+  padding:15px;
+
+  margin-bottom:25px;
+
 }
 
-@media(max-width:600px){
 
-  main{
-    padding:20px 12px 80px;
-  }
+.github-box strong{
+
+  display:block;
+
+  margin-bottom:6px;
+
+}
+
+
+.github-box p{
+
+  margin:5px 0;
+
+  font-size:13px;
+
+  line-height:1.4;
+
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+
+  padding:30px;
+
+  text-align:center;
+
+  color:#777;
+
+  border:1px dashed #ccc;
+
+  border-radius:10px;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
 
   header{
+
     padding:15px;
+
+    align-items:flex-start;
+
+  }
+
+
+  header strong{
+
+    font-size:12px;
+
+  }
+
+
+  .settings-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+
+  main{
+
+    padding:20px 12px 100px;
+
+  }
+
+
+  .block-head{
+
+    flex-wrap:wrap;
+
+  }
+
+
+  .block-head strong{
+
+    min-width:100px;
+
   }
 
 }
@@ -187,155 +521,581 @@ textarea{
 
 </head>
 
+
 <body>
+
 
 <header>
 
-<strong>SWEET PRODUCTION — ADMIN</strong>
+<strong>
+SWEET PRODUCTION — ADMIN
+</strong>
 
-<button onclick="save()">Spara</button>
 
-</header>
+<div class="header-actions">
 
-<main>
+<button
+  class="secondary"
+  onclick="loadFromGitHub()">
 
-<div class="toolbar">
+  Ladda
 
-<button onclick="addBlock('hero')">+ Hero</button>
+</button>
 
-<button onclick="addBlock('statement')">+ Statement</button>
 
-<button onclick="addBlock('text')">+ Text</button>
+<button onclick="saveToGitHub()">
 
-<button onclick="addBlock('image')">+ Bild</button>
+  Spara
 
-<button onclick="addBlock('video')">+ Video</button>
-
-<button onclick="addBlock('projects')">+ Projekt</button>
-
-<button onclick="addBlock('about')">+ About</button>
-
-<button onclick="addBlock('contact')">+ Contact</button>
+</button>
 
 </div>
 
+</header>
+
+
+<main>
+
+
+<!-- =========================
+     GITHUB
+========================= -->
+
+<section class="github-box">
+
+<strong>
+GitHub-inställningar
+</strong>
+
+<p>
+Fyll i detta första gången. Uppgifterna sparas endast
+lokalt i den här webbläsaren.
+</p>
+
+<div class="settings-grid">
+
+<div>
+
+<label>
+GitHub användarnamn / Owner
+</label>
+
+<input
+  id="githubOwner"
+  placeholder="t.ex. dittnamn"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Repository
+</label>
+
+<input
+  id="githubRepo"
+  placeholder="t.ex. sweet-production"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Branch
+</label>
+
+<input
+  id="githubBranch"
+  value="main"
+>
+
+</div>
+
+
+<div>
+
+<label>
+GitHub Token
+</label>
+
+<input
+  id="githubToken"
+  type="password"
+  placeholder="github_pat_..."
+>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     SITE SETTINGS
+========================= -->
+
+<section class="settings">
+
+<h2>
+Site settings
+</h2>
+
+
+<div class="settings-grid">
+
+
+<div>
+
+<label>
+Bakgrund
+</label>
+
+<input
+  id="bgColor"
+  type="color"
+  onchange="updateSetting('bgColor',this.value)"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Text
+</label>
+
+<input
+  id="textColor"
+  type="color"
+  onchange="updateSetting('textColor',this.value)"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Accent
+</label>
+
+<input
+  id="accentColor"
+  type="color"
+  onchange="updateSetting('accentColor',this.value)"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Heading font
+</label>
+
+<input
+  id="headingFont"
+  oninput="updateSetting('headingFont',this.value)"
+  placeholder="Arial"
+>
+
+</div>
+
+
+<div>
+
+<label>
+Body font
+</label>
+
+<input
+  id="bodyFont"
+  oninput="updateSetting('bodyFont',this.value)"
+  placeholder="Arial"
+>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     ADD BLOCK
+========================= -->
+
+<div class="toolbar">
+
+<button onclick="addBlock('hero')">
++ Hero
+</button>
+
+<button onclick="addBlock('statement')">
++ Statement
+</button>
+
+<button onclick="addBlock('text')">
++ Text
+</button>
+
+<button onclick="addBlock('image')">
++ Bild
+</button>
+
+<button onclick="addBlock('video')">
++ Video
+</button>
+
+<button onclick="addBlock('projects')">
++ Projektsektion
+</button>
+
+<button onclick="addBlock('about')">
++ About
+</button>
+
+<button onclick="addBlock('contact')">
++ Contact
+</button>
+
+</div>
+
+
+<!-- =========================
+     BLOCKS
+========================= -->
+
 <div id="blocks"></div>
+
 
 </main>
 
-<div id="status" class="status"></div>
+
+<div
+  id="status"
+  class="status">
+</div>
+
 
 <script>
 
-let content={
+
+/* =========================
+   CONTENT
+========================= */
+
+let content = {
+
   settings:{
+
     bgColor:"#080808",
+
     textColor:"#f1efe9",
-    accentColor:"#f1efe9"
+
+    accentColor:"#f1efe9",
+
+    headingFont:"Arial",
+
+    bodyFont:"Arial",
+
+    customFonts:[]
+
   },
+
   blocks:[]
+
 };
 
-let dragged=null;
 
-function id(){
-  return Date.now().toString(36)+Math.random().toString(36).slice(2);
+let draggedIndex = null;
+
+
+/* =========================
+   ID
+========================= */
+
+function createId(){
+
+  return Date.now().toString(36)
+    + Math.random().toString(36).slice(2);
+
 }
 
-function load(){
 
-  const saved=localStorage.getItem("sweetProductionContent");
+/* =========================
+   ESCAPE
+========================= */
 
-  if(saved){
+function esc(value){
 
-    try{
-      content=JSON.parse(saved);
-    }catch(e){}
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
-  }else{
-
-    fetch("content.json?v="+Date.now())
-      .then(r=>r.json())
-      .then(data=>{
-        content=data;
-        render();
-      });
-
-    return;
-  }
-
-  render();
 }
+
+
+/* =========================
+   STATUS
+========================= */
+
+function status(message){
+
+  const el =
+    document.getElementById("status");
+
+  el.textContent=message;
+
+  el.style.display="block";
+
+  setTimeout(()=>{
+
+    el.style.display="none";
+
+  },2500);
+
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+function updateSetting(key,value){
+
+  content.settings[key]=value;
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
 
 function render(){
 
-  const root=document.getElementById("blocks");
+  document.getElementById("bgColor").value =
+    content.settings.bgColor || "#080808";
+
+
+  document.getElementById("textColor").value =
+    content.settings.textColor || "#f1efe9";
+
+
+  document.getElementById("accentColor").value =
+    content.settings.accentColor || "#f1efe9";
+
+
+  document.getElementById("headingFont").value =
+    content.settings.headingFont || "Arial";
+
+
+  document.getElementById("bodyFont").value =
+    content.settings.bodyFont || "Arial";
+
+
+  const root =
+    document.getElementById("blocks");
 
   root.innerHTML="";
 
+
+  if(!content.blocks.length){
+
+    root.innerHTML=`
+
+      <div class="empty">
+
+        Inga block ännu.<br>
+        Lägg till ett block ovan.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
   content.blocks.forEach((block,index)=>{
 
-    const el=document.createElement("div");
+    const el =
+      document.createElement("div");
+
 
     el.className="block";
+
     el.draggable=true;
+
     el.dataset.index=index;
 
-    el.addEventListener("dragstart",()=>{
-      dragged=index;
-      el.classList.add("dragging");
-    });
 
-    el.addEventListener("dragend",()=>{
-      el.classList.remove("dragging");
-    });
+    /* Drag start */
 
-    el.addEventListener("dragover",e=>{
-      e.preventDefault();
-    });
+    el.addEventListener(
+      "dragstart",
+      ()=>{
 
-    el.addEventListener("drop",e=>{
+        draggedIndex=index;
 
-      e.preventDefault();
+        el.classList.add("dragging");
 
-      const target=index;
+      }
+    );
 
-      if(dragged===null || dragged===target) return;
 
-      const moved=content.blocks.splice(dragged,1)[0];
+    /* Drag end */
 
-      content.blocks.splice(target,0,moved);
+    el.addEventListener(
+      "dragend",
+      ()=>{
 
-      dragged=null;
+        draggedIndex=null;
 
-      render();
-    });
+        el.classList.remove("dragging");
+
+      }
+    );
+
+
+    /* Drag over */
+
+    el.addEventListener(
+      "dragover",
+      event=>{
+
+        event.preventDefault();
+
+        el.classList.add("drag-over");
+
+      }
+    );
+
+
+    el.addEventListener(
+      "dragleave",
+      ()=>{
+
+        el.classList.remove("drag-over");
+
+      }
+    );
+
+
+    /* Drop */
+
+    el.addEventListener(
+      "drop",
+      event=>{
+
+        event.preventDefault();
+
+        el.classList.remove("drag-over");
+
+
+        const targetIndex=index;
+
+
+        if(
+          draggedIndex===null ||
+          draggedIndex===targetIndex
+        ){
+
+          return;
+
+        }
+
+
+        const moved =
+          content.blocks.splice(
+            draggedIndex,
+            1
+          )[0];
+
+
+        content.blocks.splice(
+          targetIndex,
+          0,
+          moved
+        );
+
+
+        draggedIndex=null;
+
+        render();
+
+      }
+    );
+
 
     el.innerHTML=`
 
       <div class="block-head">
 
-        <span class="drag">☰</span>
+        <span class="drag">
+          ☰
+        </span>
 
-        <strong>${block.type}</strong>
+        <strong>
+          ${index+1}. ${esc(block.type)}
+        </strong>
 
-        <button onclick="duplicateBlock(${index})">
-          Duplicera
+        <button
+          class="secondary"
+          onclick="moveUp(${index})">
+
+          ↑
+
         </button>
 
-        <button class="delete"
+        <button
+          class="secondary"
+          onclick="moveDown(${index})">
+
+          ↓
+
+        </button>
+
+        <button
+          class="secondary"
+          onclick="duplicateBlock(${index})">
+
+          Duplicera
+
+        </button>
+
+        <button
+          class="delete"
           onclick="deleteBlock(${index})">
+
           Ta bort
+
         </button>
 
       </div>
+
 
       <div class="block-body">
 
         ${fields(block,index)}
 
       </div>
+
     `;
+
 
     root.appendChild(el);
 
@@ -343,415 +1103,1120 @@ function render(){
 
 }
 
+
+/* =========================
+   INPUT HELPERS
+========================= */
+
 function input(label,value,callback){
 
   return `
 
-  <label>${label}</label>
+    <label>
+      ${label}
+    </label>
 
-  <input
-    value="${esc(value)}"
-    oninput="${callback}(this.value)"
-  >
+    <input
+      value="${esc(value)}"
+      oninput="${callback}(this.value)"
+    >
 
   `;
+
 }
+
 
 function textarea(label,value,callback){
 
   return `
 
-  <label>${label}</label>
+    <label>
+      ${label}
+    </label>
 
-  <textarea
-    oninput="${callback}(this.value)"
-  >${esc(value)}</textarea>
+    <textarea
+      oninput="${callback}(this.value)"
+    >${esc(value)}</textarea>
 
   `;
+
 }
+
+
+/* =========================
+   BLOCK FIELDS
+========================= */
 
 function fields(block,i){
 
+
+  /* HERO */
+
   if(block.type==="hero"){
 
-    return`
+    return `
 
-    ${input(
-      "Plats",
-      block.location,
-      `update(${i},'location'`
-    )}
+      ${input(
+        "Plats",
+        block.location || "",
+        `update(${i},'location'`
+      )}
 
-    ${textarea(
-      "Rubrik",
-      block.title,
-      `update(${i},'title'`
-    )}
+      ${textarea(
+        "Rubrik",
+        block.title || "",
+        `update(${i},'title'`
+      )}
 
     `;
+
   }
+
+
+  /* STATEMENT */
 
   if(block.type==="statement"){
 
     return textarea(
       "Text",
-      block.text,
+      block.text || "",
       `update(${i},'text'`
     );
+
   }
+
+
+  /* TEXT */
 
   if(block.type==="text"){
 
     return textarea(
       "Text",
-      block.text,
+      block.text || "",
       `update(${i},'text'`
     );
+
   }
+
+
+  /* IMAGE */
 
   if(block.type==="image"){
 
-    return`
+    return `
 
-    ${input(
-      "Bild URL",
-      block.src,
-      `update(${i},'src'`
-    )}
+      ${input(
+        "Bild URL",
+        block.src || "",
+        `update(${i},'src'`
+      )}
 
-    ${input(
-      "Alt-text",
-      block.alt,
-      `update(${i},'alt'`
-    )}
+      ${input(
+        "Alt-text",
+        block.alt || "",
+        `update(${i},'alt'`
+      )}
 
     `;
+
   }
+
+
+  /* VIDEO */
 
   if(block.type==="video"){
 
-    return`
+    return `
 
-    <label>Format</label>
+      <label>
+        Format
+      </label>
 
-    <select
-      onchange="update(${i},'ratio',this.value)"
-    >
+      <select
+        onchange="update(${i},'ratio',this.value)"
+      >
 
-      <option ${block.ratio==="16:9"?"selected":""}>
-        16:9
-      </option>
+        <option
+          value="16:9"
+          ${block.ratio==="16:9"?"selected":""}>
 
-      <option ${block.ratio==="9:16"?"selected":""}>
-        9:16
-      </option>
+          16:9
 
-    </select>
+        </option>
 
-    ${input(
-      "Video URL",
-      block.src,
-      `update(${i},'src'`
-    )}
+        <option
+          value="9:16"
+          ${block.ratio==="9:16"?"selected":""}>
 
-    ${input(
-      "Poster URL (valfritt)",
-      block.poster||"",
-      `update(${i},'poster'`
-    )}
+          9:16
+
+        </option>
+
+      </select>
+
+
+      ${input(
+        "Video URL",
+        block.src || "",
+        `update(${i},'src'`
+      )}
+
+
+      ${input(
+        "Poster URL (valfritt)",
+        block.poster || "",
+        `update(${i},'poster'`
+      )}
 
     `;
+
   }
+
+
+  /* PROJECTS */
 
   if(block.type==="projects"){
 
-    let html=`
+    let html = `
 
-    ${input(
-      "Rubrik",
-      block.title,
-      `update(${i},'title'`
-    )}
+      ${input(
+        "Rubrik",
+        block.title || "",
+        `update(${i},'title'`
+      )}
 
-    <hr>
+      <hr>
+
+    `;
+
+
+    (block.projects || [])
+      .forEach((project,projectIndex)=>{
+
+        html += `
+
+          <div class="project">
+
+            <div class="project-head">
+
+              <strong>
+                Projekt ${projectIndex+1}
+              </strong>
+
+              <button
+                class="delete"
+                onclick="
+                  deleteProject(
+                    ${i},
+                    ${projectIndex}
+                  )
+                ">
+
+                Ta bort
+
+              </button>
+
+            </div>
+
+
+            ${input(
+              "Titel",
+              project.title || "",
+              `updateProject(${i},${projectIndex},'title'`
+            )}
+
+
+            ${input(
+              "Kategori",
+              project.category || "",
+              `updateProject(${i},${projectIndex},'category'`
+            )}
+
+
+            ${input(
+              "Bild / Video URL",
+              project.image || "",
+              `updateProject(${i},${projectIndex},'image'`
+            )}
+
+
+            <label>
+              Media
+            </label>
+
+            <select
+              onchange="
+                updateProject(
+                  ${i},
+                  ${projectIndex},
+                  'type',
+                  this.value
+                )
+              "
+            >
+
+              <option
+                value="image"
+                ${project.type==="image"?"selected":""}>
+
+                Bild
+
+              </option>
+
+              <option
+                value="video"
+                ${project.type==="video"?"selected":""}>
+
+                Video
+
+              </option>
+
+            </select>
+
+          </div>
+
+        `;
+
+      });
+
+
+    html += `
+
+      <button onclick="addProject(${i})">
+
+        + Lägg till projekt
+
+      </button>
 
     `;
 
-    (block.projects||[]).forEach((p,pi)=>{
-
-      html+=`
-
-      <div class="project">
-
-        <div class="project-head">
-
-          <strong>Projekt ${pi+1}</strong>
-
-          <button class="delete"
-            onclick="deleteProject(${i},${pi})">
-            Ta bort
-          </button>
-
-        </div>
-
-        ${input(
-          "Titel",
-          p.title,
-          `updateProject(${i},${pi},'title'`
-        )}
-
-        ${input(
-          "Kategori",
-          p.category,
-          `updateProject(${i},${pi},'category'`
-        )}
-
-        ${input(
-          "Bild / Video URL",
-          p.image,
-          `updateProject(${i},${pi},'image'`
-        )}
-
-        <label>Media</label>
-
-        <select
-          onchange="updateProject(${i},${pi},'type',this.value)"
-        >
-
-          <option value="image"
-            ${p.type==="image"?"selected":""}>
-            Bild
-          </option>
-
-          <option value="video"
-            ${p.type==="video"?"selected":""}>
-            Video
-          </option>
-
-        </select>
-
-      </div>
-
-      `;
-    });
-
-    html+=`
-
-    <button onclick="addProject(${i})">
-      + Lägg till projekt
-    </button>
-
-    `;
 
     return html;
+
   }
+
+
+  /* ABOUT */
 
   if(block.type==="about"){
 
-    return`
+    return `
 
-    ${textarea(
-      "Rubrik",
-      block.title,
-      `update(${i},'title'`
-    )}
+      ${textarea(
+        "Rubrik",
+        block.title || "",
+        `update(${i},'title'`
+      )}
 
-    ${textarea(
-      "Text",
-      block.text,
-      `update(${i},'text'`
-    )}
+      ${textarea(
+        "Text",
+        block.text || "",
+        `update(${i},'text'`
+      )}
 
     `;
+
   }
+
+
+  /* CONTACT */
 
   if(block.type==="contact"){
 
-    return`
+    return `
 
-    ${textarea(
-      "Rubrik",
-      block.title,
-      `update(${i},'title'`
-    )}
+      ${textarea(
+        "Rubrik",
+        block.title || "",
+        `update(${i},'title'`
+      )}
 
-    ${input(
-      "E-post",
-      block.email,
-      `update(${i},'email'`
-    )}
+      ${input(
+        "E-post",
+        block.email || "",
+        `update(${i},'email'`
+      )}
 
     `;
+
   }
 
+
   return "";
+
 }
 
-function esc(v){
 
-  return String(v||"")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;");
-}
+/* =========================
+   UPDATE
+========================= */
 
 function update(i,key,value){
+
+  if(!content.blocks[i]) return;
 
   content.blocks[i][key]=value;
 
 }
 
-function updateProject(i,p,key,value){
 
-  content.blocks[i].projects[p][key]=value;
+/* =========================
+   UPDATE PROJECT
+========================= */
+
+function updateProject(
+  blockIndex,
+  projectIndex,
+  key,
+  value
+){
+
+  if(
+    !content.blocks[blockIndex] ||
+    !content.blocks[blockIndex].projects
+  ){
+
+    return;
+
+  }
+
+
+  content.blocks[
+    blockIndex
+  ].projects[
+    projectIndex
+  ][key]=value;
 
 }
 
-function addProject(i){
 
-  if(!content.blocks[i].projects)
-    content.blocks[i].projects=[];
+/* =========================
+   ADD PROJECT
+========================= */
 
-  content.blocks[i].projects.push({
+function addProject(index){
 
-    id:id(),
+  if(!content.blocks[index].projects){
+
+    content.blocks[index].projects=[];
+
+  }
+
+
+  content.blocks[index].projects.push({
+
+    id:createId(),
+
     title:"Nytt projekt",
+
     category:"Film / Content",
+
     image:"",
+
     type:"image"
 
   });
 
-  render();
-
-}
-
-function deleteProject(i,p){
-
-  content.blocks[i].projects.splice(p,1);
 
   render();
 
 }
+
+
+/* =========================
+   DELETE PROJECT
+========================= */
+
+function deleteProject(
+  blockIndex,
+  projectIndex
+){
+
+  content.blocks[
+    blockIndex
+  ].projects.splice(
+    projectIndex,
+    1
+  );
+
+
+  render();
+
+}
+
+
+/* =========================
+   ADD BLOCK
+========================= */
 
 function addBlock(type){
 
-  const base={
-    id:id(),
+  const block={
+
+    id:createId(),
+
     type:type
+
   };
+
 
   if(type==="hero"){
 
-    Object.assign(base,{
-      location:"Stockholm · Sweden",
-      title:"Ny rubrik"
-    });
+    block.location="Stockholm · Sweden";
+
+    block.title="Film.\nFoto.\nContent.";
 
   }
+
 
   if(type==="statement"){
 
-    base.text="Ny statement";
+    block.text="Visuals that\nstay with you.";
 
   }
+
 
   if(type==="text"){
 
-    base.text="Ny text";
+    block.text="Ny text";
 
   }
+
 
   if(type==="image"){
 
-    base.src="";
-    base.alt="";
+    block.src="";
+
+    block.alt="";
 
   }
+
 
   if(type==="video"){
 
-    base.ratio="16:9";
-    base.src="";
-    base.poster="";
+    block.ratio="16:9";
+
+    block.src="";
+
+    block.poster="";
 
   }
+
 
   if(type==="projects"){
 
-    base.title="Selected work";
-    base.projects=[];
+    block.title="Selected work";
+
+    block.projects=[];
 
   }
+
 
   if(type==="about"){
 
-    base.title="We create\nvisual stories.";
-    base.text="";
+    block.title="We create\nvisual stories.";
+
+    block.text="";
 
   }
+
 
   if(type==="contact"){
 
-    base.title="Let's make\nsomething sweet.";
-    base.email="hello@sweetproduction.se";
+    block.title="Let's make\nsomething sweet.";
+
+    block.email="hello@sweetproduction.se";
 
   }
 
-  content.blocks.push(base);
+
+  content.blocks.push(block);
+
 
   render();
 
 }
 
-function deleteBlock(i){
 
-  if(!confirm("Ta bort blocket?")) return;
+/* =========================
+   DELETE BLOCK
+========================= */
 
-  content.blocks.splice(i,1);
+function deleteBlock(index){
+
+  if(
+    !confirm(
+      "Är du säker på att du vill ta bort blocket?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  content.blocks.splice(index,1);
 
   render();
 
 }
 
-function duplicateBlock(i){
 
-  const copy=JSON.parse(
-    JSON.stringify(content.blocks[i])
+/* =========================
+   DUPLICATE
+========================= */
+
+function duplicateBlock(index){
+
+  const copy =
+    JSON.parse(
+      JSON.stringify(
+        content.blocks[index]
+      )
+    );
+
+
+  copy.id=createId();
+
+
+  if(copy.projects){
+
+    copy.projects =
+      copy.projects.map(project=>({
+
+        ...project,
+
+        id:createId()
+
+      }));
+
+  }
+
+
+  content.blocks.splice(
+    index+1,
+    0,
+    copy
   );
 
-  copy.id=id();
-
-  content.blocks.splice(i+1,0,copy);
 
   render();
 
 }
 
-function save(){
+
+/* =========================
+   MOVE UP
+========================= */
+
+function moveUp(index){
+
+  if(index<=0) return;
+
+
+  const temp =
+    content.blocks[index-1];
+
+
+  content.blocks[index-1] =
+    content.blocks[index];
+
+
+  content.blocks[index] =
+    temp;
+
+
+  render();
+
+}
+
+
+/* =========================
+   MOVE DOWN
+========================= */
+
+function moveDown(index){
+
+  if(
+    index >= content.blocks.length-1
+  ){
+
+    return;
+
+  }
+
+
+  const temp =
+    content.blocks[index+1];
+
+
+  content.blocks[index+1] =
+    content.blocks[index];
+
+
+  content.blocks[index] =
+    temp;
+
+
+  render();
+
+}
+
+
+/* =========================
+   GITHUB SETTINGS
+========================= */
+
+function loadGitHubSettings(){
+
+  document.getElementById(
+    "githubOwner"
+  ).value =
+    localStorage.getItem(
+      "sweetGithubOwner"
+    ) || "";
+
+
+  document.getElementById(
+    "githubRepo"
+  ).value =
+    localStorage.getItem(
+      "sweetGithubRepo"
+    ) || "";
+
+
+  document.getElementById(
+    "githubBranch"
+  ).value =
+    localStorage.getItem(
+      "sweetGithubBranch"
+    ) || "main";
+
+
+  document.getElementById(
+    "githubToken"
+  ).value =
+    localStorage.getItem(
+      "sweetGithubToken"
+    ) || "";
+
+}
+
+
+/* =========================
+   SAVE GITHUB SETTINGS
+========================= */
+
+function saveGitHubSettings(){
+
+  const owner =
+    document.getElementById(
+      "githubOwner"
+    ).value.trim();
+
+
+  const repo =
+    document.getElementById(
+      "githubRepo"
+    ).value.trim();
+
+
+  const branch =
+    document.getElementById(
+      "githubBranch"
+    ).value.trim() || "main";
+
+
+  const token =
+    document.getElementById(
+      "githubToken"
+    ).value.trim();
+
 
   localStorage.setItem(
-    "sweetProductionContent",
-    JSON.stringify(content)
+    "sweetGithubOwner",
+    owner
   );
 
-  const status=document.getElementById("status");
 
-  status.textContent=
-    "Sparat på den här enheten ✓";
+  localStorage.setItem(
+    "sweetGithubRepo",
+    repo
+  );
 
-  status.style.display="block";
 
-  setTimeout(()=>{
-    status.style.display="none";
-  },2000);
+  localStorage.setItem(
+    "sweetGithubBranch",
+    branch
+  );
+
+
+  localStorage.setItem(
+    "sweetGithubToken",
+    token
+  );
+
+
+  return {
+    owner,
+    repo,
+    branch,
+    token
+  };
 
 }
 
-load();
+
+/* =========================
+   GITHUB REQUEST
+========================= */
+
+async function githubRequest(
+  url,
+  options={}
+){
+
+  const token =
+    localStorage.getItem(
+      "sweetGithubToken"
+    );
+
+
+  const headers={
+
+    "Accept":
+      "application/vnd.github+json",
+
+    "Content-Type":
+      "application/json",
+
+    "X-GitHub-Api-Version":
+      "2022-11-28"
+
+  };
+
+
+  if(token){
+
+    headers.Authorization =
+      "Bearer " + token;
+
+  }
+
+
+  const response =
+    await fetch(
+      url,
+      {
+        ...options,
+        headers
+      }
+    );
+
+
+  const data =
+    await response.json()
+      .catch(()=>({}));
+
+
+  if(!response.ok){
+
+    throw new Error(
+      data.message ||
+      "GitHub API error"
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/* =========================
+   LOAD FROM GITHUB
+========================= */
+
+async function loadFromGitHub(){
+
+  const settings =
+    saveGitHubSettings();
+
+
+  if(
+    !settings.owner ||
+    !settings.repo
+  ){
+
+    alert(
+      "Fyll i GitHub owner och repository först."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    status(
+      "Laddar från GitHub..."
+    );
+
+
+    const url =
+      `https://api.github.com/repos/` +
+      `${encodeURIComponent(settings.owner)}/` +
+      `${encodeURIComponent(settings.repo)}/` +
+      `contents/site/content.json?ref=` +
+      `${encodeURIComponent(settings.branch)}`;
+
+
+    const data =
+      await githubRequest(url);
+
+
+    const decoded =
+      decodeBase64Unicode(data.content);
+
+
+    content =
+      JSON.parse(decoded);
+
+
+    render();
+
+
+    status(
+      "Content laddat från GitHub ✓"
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Kunde inte ladda content.json:\n\n"
+      + error.message
+    );
+
+  }
+
+}
+
+
+/* =========================
+   SAVE TO GITHUB
+========================= */
+
+async function saveToGitHub(){
+
+  const settings =
+    saveGitHubSettings();
+
+
+  if(
+    !settings.owner ||
+    !settings.repo ||
+    !settings.token
+  ){
+
+    alert(
+      "Fyll i GitHub owner, repository och token först."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    status(
+      "Sparar till GitHub..."
+    );
+
+
+    const url =
+      `https://api.github.com/repos/` +
+      `${encodeURIComponent(settings.owner)}/` +
+      `${encodeURIComponent(settings.repo)}/` +
+      `/contents/site/content.json`;
+
+
+    /* Get current file SHA */
+
+    const existing =
+      await githubRequest(
+        url +
+        `?ref=${encodeURIComponent(settings.branch)}`
+      );
+
+
+    const json =
+      JSON.stringify(
+        content,
+        null,
+        2
+      );
+
+
+    const encoded =
+      encodeBase64Unicode(json);
+
+
+    const response =
+      await githubRequest(
+        url,
+        {
+
+          method:"PUT",
+
+          body:JSON.stringify({
+
+            message:
+              "Update website content",
+
+            content:encoded,
+
+            sha:existing.sha,
+
+            branch:settings.branch
+
+          })
+
+        }
+      );
+
+
+    if(response.commit){
+
+      status(
+        "Sparat till GitHub ✓"
+      );
+
+    }
+
+    else{
+
+      status(
+        "Sparat ✓"
+      );
+
+    }
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Kunde inte spara till GitHub:\n\n"
+      + error.message
+    );
+
+  }
+
+}
+
+
+/* =========================
+   BASE64
+========================= */
+
+function encodeBase64Unicode(text){
+
+  const bytes =
+    new TextEncoder()
+      .encode(text);
+
+
+  let binary="";
+
+
+  bytes.forEach(byte=>{
+
+    binary += String.fromCharCode(byte);
+
+  });
+
+
+  return btoa(binary);
+
+}
+
+
+function decodeBase64Unicode(base64){
+
+  const binary =
+    atob(
+      base64.replace(/\n/g,"")
+    );
+
+
+  const bytes =
+    Uint8Array.from(
+      binary,
+      char=>char.charCodeAt(0)
+    );
+
+
+  return new TextDecoder()
+    .decode(bytes);
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadGitHubSettings();
+
+
+/*
+  Första gången försöker vi
+  läsa den lokala content.json.
+*/
+
+fetch(
+  "content.json?v=" + Date.now()
+)
+
+.then(response=>{
+
+  if(!response.ok){
+
+    throw new Error();
+
+  }
+
+  return response.json();
+
+})
+
+.then(data=>{
+
+  content=data;
+
+  render();
+
+})
+
+.catch(()=>{
+
+  render();
+
+});
+
 
 </script>
 
+
 </body>
+
 </html>
