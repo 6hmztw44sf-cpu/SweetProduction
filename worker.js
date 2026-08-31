@@ -71,8 +71,7 @@ async function githubRequest(path, options = {}, env) {
 
   if (!response.ok) {
     throw new Error(
-      data.message ||
-      `GitHub API error ${response.status}`
+      `GitHub API ${response.status}: ${data.message || "Unknown error"}`
     );
   }
 
