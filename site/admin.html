@@ -299,7 +299,7 @@ function textarea(label,value,callback){
   return `
     <label>${esc(label)}</label>
     <textarea
-      oninput="${callback}(this.value)"
+      oninput="${callback},this.value)"
     >${esc(value)}</textarea>
   `;
 }
