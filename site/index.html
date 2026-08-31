@@ -488,7 +488,7 @@ async function load(){
   try{
 
     const response = await fetch(
-      "content.json?v=" + Date.now()
+      "content?v=" + Date.now()
     );
 
     if(!response.ok){
