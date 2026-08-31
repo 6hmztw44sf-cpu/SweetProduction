@@ -527,6 +527,15 @@ function fields(block,i){
 }
 
 function render(){
+    document.querySelector(
+    'select[onchange*="headingFont"]'
+  ).value =
+    content.settings.headingFont || "Arial";
+
+  document.querySelector(
+    'select[onchange*="bodyFont"]'
+  ).value =
+    content.settings.bodyFont || "Arial";
 
   document.getElementById("bgColor").value =
     content.settings.bgColor || "#080808";
