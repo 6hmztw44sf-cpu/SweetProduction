@@ -492,7 +492,7 @@ async function load(){
     );
 
     if(!response.ok){
-      throw new Error("Could not load content.json");
+      throw new Error("Could not load content");
     }
 
     const data = await response.json();
