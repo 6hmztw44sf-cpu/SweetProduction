@@ -1,17 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="sv">
 
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Sweet Production – Admin</title>
-
 
 <style>
 
@@ -19,500 +15,234 @@
   box-sizing:border-box;
 }
 
-
 body{
-
   margin:0;
-
   background:#f3f3f3;
-
   color:#111;
-
   font-family:Arial,sans-serif;
-
 }
-
-
-/* =========================
-   HEADER
-========================= */
 
 header{
-
   position:sticky;
-
   top:0;
-
   z-index:100;
-
   background:#111;
-
   color:white;
-
   padding:18px 25px;
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
-
   gap:15px;
-
 }
-
 
 header strong{
-
   letter-spacing:.05em;
-
 }
-
 
 .header-actions{
-
   display:flex;
-
   gap:8px;
-
 }
-
-
-/* =========================
-   BUTTONS
-========================= */
 
 button{
-
   border:0;
-
   background:#111;
-
   color:white;
-
   padding:11px 16px;
-
   border-radius:7px;
-
   cursor:pointer;
-
   font-size:14px;
-
 }
-
 
 button:hover{
-
   opacity:.8;
-
 }
-
 
 header button{
-
   background:white;
-
   color:#111;
-
 }
-
 
 button.secondary{
-
   background:white;
-
   color:#111;
-
   border:1px solid #ddd;
-
 }
-
 
 button.delete{
-
   background:#ddd;
-
   color:#111;
-
 }
-
-
-button.danger{
-
-  background:#c62828;
-
-  color:white;
-
-}
-
-
-/* =========================
-   MAIN
-========================= */
 
 main{
-
   max-width:1000px;
-
   margin:auto;
-
   padding:30px 20px 120px;
-
 }
 
-
-/* =========================
-   SETTINGS
-========================= */
-
+.github-box,
 .settings{
-
   background:white;
-
   border:1px solid #ddd;
-
   border-radius:12px;
-
   padding:20px;
-
   margin-bottom:25px;
-
 }
 
+.github-box{
+  background:#fff8df;
+  border-color:#eadb9b;
+}
 
+.github-box h2,
 .settings h2{
-
   margin-top:0;
-
 }
 
+.github-box p{
+  font-size:13px;
+  line-height:1.4;
+}
 
 .settings-grid{
-
   display:grid;
-
   grid-template-columns:repeat(2,1fr);
-
   gap:15px;
-
 }
-
-
-/* =========================
-   TOOLBAR
-========================= */
 
 .toolbar{
-
   display:flex;
-
   flex-wrap:wrap;
-
   gap:8px;
-
   margin-bottom:25px;
-
 }
-
-
-/* =========================
-   BLOCK
-========================= */
 
 .block{
-
   background:white;
-
   border:1px solid #ddd;
-
   border-radius:12px;
-
   margin-bottom:15px;
-
   overflow:hidden;
-
 }
-
 
 .block.dragging{
-
   opacity:.35;
-
 }
-
 
 .block.drag-over{
-
   border:2px dashed #111;
-
 }
-
 
 .block-head{
-
   display:flex;
-
   align-items:center;
-
-  gap:10px;
-
+  gap:8px;
   padding:14px;
-
   border-bottom:1px solid #eee;
-
   cursor:grab;
-
 }
-
-
-.block-head:active{
-
-  cursor:grabbing;
-
-}
-
 
 .drag{
-
   font-size:20px;
-
   color:#999;
-
 }
-
 
 .block-head strong{
-
   flex:1;
-
 }
-
 
 .block-body{
-
   padding:18px;
-
 }
-
-
-/* =========================
-   FORM
-========================= */
 
 label{
-
   display:block;
-
   font-size:12px;
-
   font-weight:bold;
-
   margin-bottom:6px;
-
 }
-
 
 input,
 textarea,
 select{
-
   width:100%;
-
   padding:11px;
-
   border:1px solid #ccc;
-
   border-radius:7px;
-
   margin-bottom:15px;
-
   font:inherit;
-
 }
-
 
 textarea{
-
   min-height:120px;
-
   resize:vertical;
-
 }
-
 
 input[type="color"]{
-
   height:45px;
-
   padding:4px;
-
 }
-
-
-/* =========================
-   PROJECT
-========================= */
 
 .project{
-
   border:1px solid #ddd;
-
   border-radius:8px;
-
   padding:15px;
-
   margin-bottom:10px;
-
 }
-
 
 .project-head{
-
   display:flex;
-
-  align-items:center;
-
   justify-content:space-between;
-
+  align-items:center;
   margin-bottom:12px;
-
 }
-
-
-/* =========================
-   STATUS
-========================= */
-
-.status{
-
-  position:fixed;
-
-  bottom:20px;
-
-  left:50%;
-
-  transform:translateX(-50%);
-
-  background:#111;
-
-  color:white;
-
-  padding:12px 18px;
-
-  border-radius:8px;
-
-  display:none;
-
-  z-index:500;
-
-}
-
-
-/* =========================
-   GITHUB
-========================= */
-
-.github-box{
-
-  background:#fff8df;
-
-  border:1px solid #eadb9b;
-
-  border-radius:10px;
-
-  padding:15px;
-
-  margin-bottom:25px;
-
-}
-
-
-.github-box strong{
-
-  display:block;
-
-  margin-bottom:6px;
-
-}
-
-
-.github-box p{
-
-  margin:5px 0;
-
-  font-size:13px;
-
-  line-height:1.4;
-
-}
-
-
-/* =========================
-   EMPTY
-========================= */
 
 .empty{
-
   padding:30px;
-
   text-align:center;
-
   color:#777;
-
   border:1px dashed #ccc;
-
   border-radius:10px;
-
 }
 
-
-/* =========================
-   MOBILE
-========================= */
+.status{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111;
+  color:white;
+  padding:12px 18px;
+  border-radius:8px;
+  display:none;
+  z-index:500;
+}
 
 @media(max-width:700px){
 
   header{
-
     padding:15px;
-
     align-items:flex-start;
-
   }
-
 
   header strong{
-
     font-size:12px;
-
   }
-
 
   .settings-grid{
-
     grid-template-columns:1fr;
-
   }
-
 
   main{
-
     padding:20px 12px 100px;
-
   }
-
 
   .block-head{
-
     flex-wrap:wrap;
-
   }
 
-
   .block-head strong{
-
     min-width:100px;
-
   }
 
 }
@@ -521,217 +251,147 @@ input[type="color"]{
 
 </head>
 
-
 <body>
-
 
 <header>
 
-<strong>
-SWEET PRODUCTION — ADMIN
-</strong>
-
+<strong>SWEET PRODUCTION — ADMIN</strong>
 
 <div class="header-actions">
 
 <button
-  class="secondary"
-  onclick="loadFromGitHub()">
-
-  Ladda
-
-</button>
-
+class="secondary"
+onclick="loadFromGitHub()">
+Ladda </button>
 
 <button onclick="saveToGitHub()">
-
   Spara
-
 </button>
 
 </div>
 
 </header>
 
-
 <main>
-
-
-<!-- =========================
-     GITHUB
-========================= -->
 
 <section class="github-box">
 
-<strong>
-GitHub-inställningar
-</strong>
+<h2>GitHub</h2>
 
 <p>
-Fyll i detta första gången. Uppgifterna sparas endast
-lokalt i den här webbläsaren.
+Dina GitHub-uppgifter sparas endast i den här webbläsaren.
+Skicka aldrig tokenen till någon annan.
 </p>
 
 <div class="settings-grid">
 
 <div>
 
-<label>
-GitHub användarnamn / Owner
-</label>
+<label>Owner</label>
 
 <input
-  id="githubOwner"
-  placeholder="t.ex. dittnamn"
->
+id="githubOwner"
+placeholder="GitHub username">
 
 </div>
 
-
 <div>
 
-<label>
-Repository
-</label>
+<label>Repository</label>
 
 <input
-  id="githubRepo"
-  placeholder="t.ex. sweet-production"
->
+id="githubRepo"
+placeholder="Repository name">
 
 </div>
 
-
 <div>
 
-<label>
-Branch
-</label>
+<label>Branch</label>
 
 <input
-  id="githubBranch"
-  value="main"
->
+id="githubBranch"
+value="main">
 
 </div>
 
-
 <div>
 
-<label>
-GitHub Token
-</label>
+<label>GitHub Token</label>
 
 <input
-  id="githubToken"
-  type="password"
-  placeholder="github_pat_..."
->
+id="githubToken"
+type="password"
+placeholder="github_pat_...">
 
 </div>
 
 </div>
 
 </section>
-
-
-<!-- =========================
-     SITE SETTINGS
-========================= -->
 
 <section class="settings">
 
-<h2>
-Site settings
-</h2>
-
+<h2>Site settings</h2>
 
 <div class="settings-grid">
 
-
 <div>
 
-<label>
-Bakgrund
-</label>
+<label>Bakgrund</label>
 
 <input
-  id="bgColor"
-  type="color"
-  onchange="updateSetting('bgColor',this.value)"
->
+id="bgColor"
+type="color"
+onchange="updateSetting('bgColor',this.value)">
 
 </div>
 
-
 <div>
 
-<label>
-Text
-</label>
+<label>Text</label>
 
 <input
-  id="textColor"
-  type="color"
-  onchange="updateSetting('textColor',this.value)"
->
+id="textColor"
+type="color"
+onchange="updateSetting('textColor',this.value)">
 
 </div>
 
-
 <div>
 
-<label>
-Accent
-</label>
+<label>Accent</label>
 
 <input
-  id="accentColor"
-  type="color"
-  onchange="updateSetting('accentColor',this.value)"
->
+id="accentColor"
+type="color"
+onchange="updateSetting('accentColor',this.value)">
 
 </div>
 
-
 <div>
 
-<label>
-Heading font
-</label>
+<label>Heading font</label>
 
 <input
-  id="headingFont"
-  oninput="updateSetting('headingFont',this.value)"
-  placeholder="Arial"
->
+id="headingFont"
+oninput="updateSetting('headingFont',this.value)">
 
 </div>
 
-
 <div>
 
-<label>
-Body font
-</label>
+<label>Body font</label>
 
 <input
-  id="bodyFont"
-  oninput="updateSetting('bodyFont',this.value)"
-  placeholder="Arial"
->
+id="bodyFont"
+oninput="updateSetting('bodyFont',this.value)">
 
 </div>
-
 
 </div>
 
 </section>
-
-
-<!-- =========================
-     ADD BLOCK
-========================= -->
 
 <div class="toolbar">
 
@@ -769,58 +429,34 @@ Body font
 
 </div>
 
-
-<!-- =========================
-     BLOCKS
-========================= -->
-
 <div id="blocks"></div>
-
 
 </main>
 
-
-<div
-  id="status"
-  class="status">
-</div>
-
+<div id="status" class="status"></div>
 
 <script>
-
-
-/* =========================
-   CONTENT
-========================= */
 
 let content = {
 
   settings:{
-
     bgColor:"#080808",
-
     textColor:"#f1efe9",
-
     accentColor:"#f1efe9",
-
     headingFont:"Arial",
-
     bodyFont:"Arial",
-
     customFonts:[]
-
   },
 
   blocks:[]
 
 };
 
-
-let draggedIndex = null;
+let draggedIndex=null;
 
 
 /* =========================
-   ID
+   HELPERS
 ========================= */
 
 function createId(){
@@ -829,11 +465,6 @@ function createId(){
     + Math.random().toString(36).slice(2);
 
 }
-
-
-/* =========================
-   ESCAPE
-========================= */
 
 function esc(value){
 
@@ -846,260 +477,364 @@ function esc(value){
 
 }
 
+function showStatus(message){
 
-/* =========================
-   STATUS
-========================= */
-
-function status(message){
-
-  const el =
-    document.getElementById("status");
+  const el=document.getElementById("status");
 
   el.textContent=message;
 
   el.style.display="block";
 
   setTimeout(()=>{
-
     el.style.display="none";
-
   },2500);
 
 }
 
 
 /* =========================
-   SETTINGS
+   GITHUB SETTINGS
 ========================= */
 
-function updateSetting(key,value){
+function getGitHubSettings(){
 
-  content.settings[key]=value;
+  const owner=
+    document.getElementById("githubOwner").value.trim();
+
+  const repo=
+    document.getElementById("githubRepo").value.trim();
+
+  const branch=
+    document.getElementById("githubBranch").value.trim() || "main";
+
+  const token=
+    document.getElementById("githubToken").value.trim();
+
+  localStorage.setItem("sweetGithubOwner",owner);
+  localStorage.setItem("sweetGithubRepo",repo);
+  localStorage.setItem("sweetGithubBranch",branch);
+  localStorage.setItem("sweetGithubToken",token);
+
+  return {
+    owner,
+    repo,
+    branch,
+    token
+  };
+
+}
+
+
+function loadGitHubSettings(){
+
+  document.getElementById("githubOwner").value=
+    localStorage.getItem("sweetGithubOwner") || "";
+
+  document.getElementById("githubRepo").value=
+    localStorage.getItem("sweetGithubRepo") || "";
+
+  document.getElementById("githubBranch").value=
+    localStorage.getItem("sweetGithubBranch") || "main";
+
+  document.getElementById("githubToken").value=
+    localStorage.getItem("sweetGithubToken") || "";
 
 }
 
 
 /* =========================
-   RENDER
+   GITHUB API
 ========================= */
 
-function render(){
+async function githubFetch(url,options={}){
 
-  document.getElementById("bgColor").value =
-    content.settings.bgColor || "#080808";
+  const token=
+    localStorage.getItem("sweetGithubToken");
+
+  const headers={
+    "Accept":"application/vnd.github+json",
+    "Content-Type":"application/json",
+    "X-GitHub-Api-Version":"2022-11-28"
+  };
+
+  if(token){
+    headers["Authorization"]="Bearer "+token;
+  }
+
+  const response=
+    await fetch(url,{
+      ...options,
+      headers
+    });
+
+  const text=await response.text();
+
+  let data={};
+
+  try{
+    data=JSON.parse(text);
+  }catch(e){
+    data={message:text};
+  }
+
+  if(!response.ok){
+
+    throw new Error(
+      data.message ||
+      `GitHub returned HTTP ${response.status}`
+    );
+
+  }
+
+  return data;
+
+}
 
 
-  document.getElementById("textColor").value =
-    content.settings.textColor || "#f1efe9";
+/* =========================
+   BASE64
+========================= */
+
+function encodeBase64Unicode(text){
+
+  const bytes=
+    new TextEncoder().encode(text);
+
+  let binary="";
+
+  for(const byte of bytes){
+
+    binary+=String.fromCharCode(byte);
+
+  }
+
+  return btoa(binary);
+
+}
 
 
-  document.getElementById("accentColor").value =
-    content.settings.accentColor || "#f1efe9";
+function decodeBase64Unicode(base64){
+
+  const binary=
+    atob(base64.replace(/\n/g,""));
+
+  const bytes=
+    Uint8Array.from(
+      binary,
+      char=>char.charCodeAt(0)
+    );
+
+  return new TextDecoder().decode(bytes);
+
+}
 
 
-  document.getElementById("headingFont").value =
-    content.settings.headingFont || "Arial";
+/* =========================
+   LOAD FROM GITHUB
+========================= */
+
+async function loadFromGitHub(){
+
+  const settings=getGitHubSettings();
+
+  if(
+    !settings.owner ||
+    !settings.repo ||
+    !settings.token
+  ){
+
+    alert(
+      "Fyll i Owner, Repository och Token först."
+    );
+
+    return;
+
+  }
+
+  try{
+
+    showStatus("Laddar från GitHub...");
+
+    const url=
+      "https://api.github.com/repos/"
+      +encodeURIComponent(settings.owner)
+      +"/"
+      +encodeURIComponent(settings.repo)
+      +"/contents/site/content.json?ref="
+      +encodeURIComponent(settings.branch);
 
 
-  document.getElementById("bodyFont").value =
-    content.settings.bodyFont || "Arial";
+    const data=
+      await githubFetch(url);
 
 
-  const root =
-    document.getElementById("blocks");
+    content=
+      JSON.parse(
+        decodeBase64Unicode(data.content)
+      );
 
-  root.innerHTML="";
+
+    render();
+
+    showStatus("Laddat från GitHub ✓");
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Kunde inte ladda från GitHub:\n\n"
+      +error.message
+    );
+
+  }
+
+}
 
 
-  if(!content.blocks.length){
+/* =========================
+   SAVE TO GITHUB
+========================= */
 
-    root.innerHTML=`
+async function saveToGitHub(){
 
-      <div class="empty">
+  const settings=getGitHubSettings();
 
-        Inga block ännu.<br>
-        Lägg till ett block ovan.
+  if(
+    !settings.owner ||
+    !settings.repo ||
+    !settings.token
+  ){
 
-      </div>
-
-    `;
+    alert(
+      "Fyll i Owner, Repository och Token först."
+    );
 
     return;
 
   }
 
 
-  content.blocks.forEach((block,index)=>{
+  try{
 
-    const el =
-      document.createElement("div");
-
-
-    el.className="block";
-
-    el.draggable=true;
-
-    el.dataset.index=index;
+    showStatus("Hämtar aktuell fil...");
 
 
-    /* Drag start */
+    /*
+      Först hämtar vi aktuell content.json.
+      Det ger oss SHA:n som GitHub kräver
+      när en befintlig fil ska uppdateras.
+    */
 
-    el.addEventListener(
-      "dragstart",
-      ()=>{
-
-        draggedIndex=index;
-
-        el.classList.add("dragging");
-
-      }
-    );
-
-
-    /* Drag end */
-
-    el.addEventListener(
-      "dragend",
-      ()=>{
-
-        draggedIndex=null;
-
-        el.classList.remove("dragging");
-
-      }
-    );
+    const fileUrl=
+      "https://api.github.com/repos/"
+      +encodeURIComponent(settings.owner)
+      +"/"
+      +encodeURIComponent(settings.repo)
+      +"/contents/site/content.json";
 
 
-    /* Drag over */
-
-    el.addEventListener(
-      "dragover",
-      event=>{
-
-        event.preventDefault();
-
-        el.classList.add("drag-over");
-
-      }
-    );
+    const current=
+      await githubFetch(
+        fileUrl
+        +"?ref="
+        +encodeURIComponent(settings.branch)
+      );
 
 
-    el.addEventListener(
-      "dragleave",
-      ()=>{
+    /*
+      Gör JSON snyggt formaterad.
+    */
 
-        el.classList.remove("drag-over");
-
-      }
-    );
-
-
-    /* Drop */
-
-    el.addEventListener(
-      "drop",
-      event=>{
-
-        event.preventDefault();
-
-        el.classList.remove("drag-over");
+    const json=
+      JSON.stringify(
+        content,
+        null,
+        2
+      );
 
 
-        const targetIndex=index;
+    const encoded=
+      encodeBase64Unicode(json);
 
 
-        if(
-          draggedIndex===null ||
-          draggedIndex===targetIndex
-        ){
+    showStatus("Skriver till GitHub...");
 
-          return;
+
+    /*
+      PUT = uppdatera befintlig fil.
+    */
+
+    const result=
+      await githubFetch(
+        fileUrl,
+        {
+
+          method:"PUT",
+
+          body:JSON.stringify({
+
+            message:
+              "Update website content",
+
+            content:
+              encoded,
+
+            sha:
+              current.sha,
+
+            branch:
+              settings.branch
+
+          })
 
         }
+      );
 
 
-        const moved =
-          content.blocks.splice(
-            draggedIndex,
-            1
-          )[0];
-
-
-        content.blocks.splice(
-          targetIndex,
-          0,
-          moved
-        );
-
-
-        draggedIndex=null;
-
-        render();
-
-      }
+    console.log(
+      "GitHub commit:",
+      result
     );
 
 
-    el.innerHTML=`
-
-      <div class="block-head">
-
-        <span class="drag">
-          ☰
-        </span>
-
-        <strong>
-          ${index+1}. ${esc(block.type)}
-        </strong>
-
-        <button
-          class="secondary"
-          onclick="moveUp(${index})">
-
-          ↑
-
-        </button>
-
-        <button
-          class="secondary"
-          onclick="moveDown(${index})">
-
-          ↓
-
-        </button>
-
-        <button
-          class="secondary"
-          onclick="duplicateBlock(${index})">
-
-          Duplicera
-
-        </button>
-
-        <button
-          class="delete"
-          onclick="deleteBlock(${index})">
-
-          Ta bort
-
-        </button>
-
-      </div>
+    showStatus(
+      "Sparat till GitHub ✓"
+    );
 
 
-      <div class="block-body">
+  }
 
-        ${fields(block,index)}
+  catch(error){
 
-      </div>
+    console.error(
+      "SAVE ERROR:",
+      error
+    );
 
-    `;
+
+    alert(
+      "Kunde inte spara till GitHub:\n\n"
+      +error.message
+      +"\n\n"
+      +"Kontrollera att tokenen har "
+      +"Contents → Read and write."
+    );
+
+  }
+
+}
 
 
-    root.appendChild(el);
+/* =========================
+   SITE SETTINGS
+========================= */
 
-  });
+function updateSetting(key,value){
+
+  content.settings[key]=value;
 
 }
 
@@ -1112,9 +847,7 @@ function input(label,value,callback){
 
   return `
 
-    <label>
-      ${label}
-    </label>
+    <label>${label}</label>
 
     <input
       value="${esc(value)}"
@@ -1130,1092 +863,808 @@ function textarea(label,value,callback){
 
   return `
 
-    <label>
-      ${label}
-    </label>
+    <label>${label}</label>
 
     <textarea
       oninput="${callback}(this.value)"
     >${esc(value)}</textarea>
 
-  `;
+`;
 
 }
 
-
 /* =========================
-   BLOCK FIELDS
+BLOCK FIELDS
 ========================= */
 
 function fields(block,i){
 
-
-  /* HERO */
-
-  if(block.type==="hero"){
-
-    return `
-
-      ${input(
-        "Plats",
-        block.location || "",
-        `update(${i},'location'`
-      )}
-
-      ${textarea(
-        "Rubrik",
-        block.title || "",
-        `update(${i},'title'`
-      )}
-
-    `;
-
-  }
-
-
-  /* STATEMENT */
-
-  if(block.type==="statement"){
-
-    return textarea(
-      "Text",
-      block.text || "",
-      `update(${i},'text'`
-    );
-
-  }
-
-
-  /* TEXT */
-
-  if(block.type==="text"){
-
-    return textarea(
-      "Text",
-      block.text || "",
-      `update(${i},'text'`
-    );
-
-  }
-
-
-  /* IMAGE */
-
-  if(block.type==="image"){
-
-    return `
-
-      ${input(
-        "Bild URL",
-        block.src || "",
-        `update(${i},'src'`
-      )}
-
-      ${input(
-        "Alt-text",
-        block.alt || "",
-        `update(${i},'alt'`
-      )}
-
-    `;
-
-  }
-
-
-  /* VIDEO */
-
-  if(block.type==="video"){
-
-    return `
-
-      <label>
-        Format
-      </label>
-
-      <select
-        onchange="update(${i},'ratio',this.value)"
-      >
-
-        <option
-          value="16:9"
-          ${block.ratio==="16:9"?"selected":""}>
-
-          16:9
-
-        </option>
-
-        <option
-          value="9:16"
-          ${block.ratio==="9:16"?"selected":""}>
-
-          9:16
-
-        </option>
-
-      </select>
-
-
-      ${input(
-        "Video URL",
-        block.src || "",
-        `update(${i},'src'`
-      )}
-
-
-      ${input(
-        "Poster URL (valfritt)",
-        block.poster || "",
-        `update(${i},'poster'`
-      )}
-
-    `;
-
-  }
-
-
-  /* PROJECTS */
-
-  if(block.type==="projects"){
-
-    let html = `
-
-      ${input(
-        "Rubrik",
-        block.title || "",
-        `update(${i},'title'`
-      )}
-
-      <hr>
-
-    `;
-
-
-    (block.projects || [])
-      .forEach((project,projectIndex)=>{
-
-        html += `
-
-          <div class="project">
-
-            <div class="project-head">
-
-              <strong>
-                Projekt ${projectIndex+1}
-              </strong>
-
-              <button
-                class="delete"
-                onclick="
-                  deleteProject(
-                    ${i},
-                    ${projectIndex}
-                  )
-                ">
-
-                Ta bort
-
-              </button>
-
-            </div>
-
-
-            ${input(
-              "Titel",
-              project.title || "",
-              `updateProject(${i},${projectIndex},'title'`
-            )}
-
-
-            ${input(
-              "Kategori",
-              project.category || "",
-              `updateProject(${i},${projectIndex},'category'`
-            )}
-
-
-            ${input(
-              "Bild / Video URL",
-              project.image || "",
-              `updateProject(${i},${projectIndex},'image'`
-            )}
-
-
-            <label>
-              Media
-            </label>
-
-            <select
-              onchange="
-                updateProject(
-                  ${i},
-                  ${projectIndex},
-                  'type',
-                  this.value
-                )
-              "
-            >
-
-              <option
-                value="image"
-                ${project.type==="image"?"selected":""}>
-
-                Bild
-
-              </option>
-
-              <option
-                value="video"
-                ${project.type==="video"?"selected":""}>
-
-                Video
-
-              </option>
-
-            </select>
-
-          </div>
-
-        `;
-
-      });
-
-
-    html += `
-
-      <button onclick="addProject(${i})">
-
-        + Lägg till projekt
-
-      </button>
-
-    `;
-
-
-    return html;
-
-  }
-
-
-  /* ABOUT */
-
-  if(block.type==="about"){
-
-    return `
-
-      ${textarea(
-        "Rubrik",
-        block.title || "",
-        `update(${i},'title'`
-      )}
-
-      ${textarea(
-        "Text",
-        block.text || "",
-        `update(${i},'text'`
-      )}
-
-    `;
-
-  }
-
-
-  /* CONTACT */
-
-  if(block.type==="contact"){
-
-    return `
-
-      ${textarea(
-        "Rubrik",
-        block.title || "",
-        `update(${i},'title'`
-      )}
-
-      ${input(
-        "E-post",
-        block.email || "",
-        `update(${i},'email'`
-      )}
-
-    `;
-
-  }
-
-
-  return "";
+if(block.type==="hero"){
+
+```
+return `
+
+  ${input(
+    "Plats",
+    block.location || "",
+    `update(${i},'location'`
+  )}
+
+  ${textarea(
+    "Rubrik",
+    block.title || "",
+    `update(${i},'title'`
+  )}
+
+`;
+```
 
 }
 
+if(block.type==="statement"){
+
+```
+return textarea(
+  "Text",
+  block.text || "",
+  `update(${i},'text'`
+);
+```
+
+}
+
+if(block.type==="text"){
+
+```
+return textarea(
+  "Text",
+  block.text || "",
+  `update(${i},'text'`
+);
+```
+
+}
+
+if(block.type==="image"){
+
+```
+return `
+
+  ${input(
+    "Bild URL",
+    block.src || "",
+    `update(${i},'src'`
+  )}
+
+  ${input(
+    "Alt-text",
+    block.alt || "",
+    `update(${i},'alt'`
+  )}
+
+`;
+```
+
+}
+
+if(block.type==="video"){
+
+```
+return `
+
+  <label>Format</label>
+
+  <select
+    onchange="
+      update(
+        ${i},
+        'ratio',
+        this.value
+      )
+    "
+  >
+
+    <option
+      value="16:9"
+      ${block.ratio==="16:9"?"selected":""}>
+
+      16:9
+
+    </option>
+
+    <option
+      value="9:16"
+      ${block.ratio==="9:16"?"selected":""}>
+
+      9:16
+
+    </option>
+
+  </select>
+
+
+  ${input(
+    "Video URL",
+    block.src || "",
+    `update(${i},'src'`
+  )}
+
+
+  ${input(
+    "Poster URL",
+    block.poster || "",
+    `update(${i},'poster'`
+  )}
+
+`;
+```
+
+}
+
+if(block.type==="projects"){
+
+```
+let html=`
+
+
+  ${input(
+    "Rubrik",
+    block.title || "",
+    `update(${i},'title'`
+  )}
+
+
+  <hr>
+
+`;
+
+
+(block.projects || [])
+  .forEach((project,pi)=>{
+
+    html+=`
+
+      <div class="project">
+
+        <div class="project-head">
+
+          <strong>
+            Projekt ${pi+1}
+          </strong>
+
+          <button
+            class="delete"
+            onclick="
+              deleteProject(${i},${pi})
+            ">
+
+            Ta bort
+
+          </button>
+
+        </div>
+
+
+        ${input(
+          "Titel",
+          project.title || "",
+          `updateProject(${i},${pi},'title'`
+        )}
+
+
+        ${input(
+          "Kategori",
+          project.category || "",
+          `updateProject(${i},${pi},'category'`
+        )}
+
+
+        ${input(
+          "Bild / Video URL",
+          project.image || "",
+          `updateProject(${i},${pi},'image'`
+        )}
+
+
+        <label>
+          Media
+        </label>
+
+        <select
+          onchange="
+            updateProject(
+              ${i},
+              ${pi},
+              'type',
+              this.value
+            )
+          "
+        >
+
+          <option
+            value="image"
+            ${project.type==="image"?"selected":""}>
+
+            Bild
+
+          </option>
+
+          <option
+            value="video"
+            ${project.type==="video"?"selected":""}>
+
+            Video
+
+          </option>
+
+        </select>
+
+      </div>
+
+    `;
+
+  });
+
+
+html+=`
+
+  <button onclick="addProject(${i})">
+    + Lägg till projekt
+  </button>
+
+`;
+
+
+return html;
+```
+
+}
+
+if(block.type==="about"){
+
+```
+return `
+
+  ${textarea(
+    "Rubrik",
+    block.title || "",
+    `update(${i},'title'`
+  )}
+
+  ${textarea(
+    "Text",
+    block.text || "",
+    `update(${i},'text'`
+  )}
+
+`;
+```
+
+}
+
+if(block.type==="contact"){
+
+```
+return `
+
+  ${textarea(
+    "Rubrik",
+    block.title || "",
+    `update(${i},'title'`
+  )}
+
+  ${input(
+    "E-post",
+    block.email || "",
+    `update(${i},'email'`
+  )}
+
+`;
+```
+
+}
+
+return "";
+
+}
 
 /* =========================
-   UPDATE
+RENDER
+========================= */
+
+function render(){
+
+document.getElementById("bgColor").value=
+content.settings.bgColor || "#080808";
+
+document.getElementById("textColor").value=
+content.settings.textColor || "#f1efe9";
+
+document.getElementById("accentColor").value=
+content.settings.accentColor || "#f1efe9";
+
+document.getElementById("headingFont").value=
+content.settings.headingFont || "Arial";
+
+document.getElementById("bodyFont").value=
+content.settings.bodyFont || "Arial";
+
+const root=
+document.getElementById("blocks");
+
+root.innerHTML="";
+
+if(!content.blocks.length){
+
+```
+root.innerHTML=`
+
+  <div class="empty">
+
+    Inga block ännu.<br>
+    Lägg till ett block ovan.
+
+  </div>
+
+`;
+
+return;
+```
+
+}
+
+content.blocks.forEach((block,index)=>{
+
+```
+const el=
+  document.createElement("div");
+
+el.className="block";
+
+el.draggable=true;
+
+
+el.addEventListener(
+  "dragstart",
+  ()=>{
+    draggedIndex=index;
+    el.classList.add("dragging");
+  }
+);
+
+
+el.addEventListener(
+  "dragend",
+  ()=>{
+    draggedIndex=null;
+    el.classList.remove("dragging");
+  }
+);
+
+
+el.addEventListener(
+  "dragover",
+  event=>{
+    event.preventDefault();
+    el.classList.add("drag-over");
+  }
+);
+
+
+el.addEventListener(
+  "dragleave",
+  ()=>{
+    el.classList.remove("drag-over");
+  }
+);
+
+
+el.addEventListener(
+  "drop",
+  event=>{
+
+    event.preventDefault();
+
+    el.classList.remove("drag-over");
+
+
+    const target=index;
+
+
+    if(
+      draggedIndex===null ||
+      draggedIndex===target
+    ){
+
+      return;
+
+    }
+
+
+    const moved=
+      content.blocks.splice(
+        draggedIndex,
+        1
+      )[0];
+
+
+    content.blocks.splice(
+      target,
+      0,
+      moved
+    );
+
+
+    draggedIndex=null;
+
+    render();
+
+  }
+);
+
+
+el.innerHTML=`
+
+  <div class="block-head">
+
+    <span class="drag">☰</span>
+
+    <strong>
+      ${index+1}. ${esc(block.type)}
+    </strong>
+
+    <button
+      class="secondary"
+      onclick="moveUp(${index})">
+      ↑
+    </button>
+
+    <button
+      class="secondary"
+      onclick="moveDown(${index})">
+      ↓
+    </button>
+
+    <button
+      class="secondary"
+      onclick="duplicateBlock(${index})">
+      Duplicera
+    </button>
+
+    <button
+      class="delete"
+      onclick="deleteBlock(${index})">
+      Ta bort
+    </button>
+
+  </div>
+
+  <div class="block-body">
+
+    ${fields(block,index)}
+
+  </div>
+
+`;
+
+
+root.appendChild(el);
+```
+
+});
+
+}
+
+/* =========================
+UPDATE
 ========================= */
 
 function update(i,key,value){
 
-  if(!content.blocks[i]) return;
+if(!content.blocks[i]) return;
 
-  content.blocks[i][key]=value;
+content.blocks[i][key]=value;
 
 }
 
-
 /* =========================
-   UPDATE PROJECT
+PROJECTS
 ========================= */
 
 function updateProject(
-  blockIndex,
-  projectIndex,
-  key,
-  value
+blockIndex,
+projectIndex,
+key,
+value
 ){
 
-  if(
-    !content.blocks[blockIndex] ||
-    !content.blocks[blockIndex].projects
-  ){
-
-    return;
-
-  }
-
-
-  content.blocks[
-    blockIndex
-  ].projects[
-    projectIndex
-  ][key]=value;
+content.blocks[
+blockIndex
+].projects[
+projectIndex
+][key]=value;
 
 }
-
-
-/* =========================
-   ADD PROJECT
-========================= */
 
 function addProject(index){
 
-  if(!content.blocks[index].projects){
+if(!content.blocks[index].projects){
 
-    content.blocks[index].projects=[];
-
-  }
-
-
-  content.blocks[index].projects.push({
-
-    id:createId(),
-
-    title:"Nytt projekt",
-
-    category:"Film / Content",
-
-    image:"",
-
-    type:"image"
-
-  });
-
-
-  render();
+```
+content.blocks[index].projects=[];
+```
 
 }
 
+content.blocks[index].projects.push({
 
-/* =========================
-   DELETE PROJECT
-========================= */
+```
+id:createId(),
+
+title:"Nytt projekt",
+
+category:"Film / Content",
+
+image:"",
+
+type:"image"
+```
+
+});
+
+render();
+
+}
 
 function deleteProject(
-  blockIndex,
-  projectIndex
+blockIndex,
+projectIndex
 ){
 
-  content.blocks[
-    blockIndex
-  ].projects.splice(
-    projectIndex,
-    1
-  );
+content.blocks[
+blockIndex
+].projects.splice(
+projectIndex,
+1
+);
 
-
-  render();
+render();
 
 }
 
-
 /* =========================
-   ADD BLOCK
+BLOCKS
 ========================= */
 
 function addBlock(type){
 
-  const block={
+const block={
+id:createId(),
+type:type
+};
 
-    id:createId(),
+if(type==="hero"){
 
-    type:type
+```
+block.location=
+  "Stockholm · Sweden";
 
-  };
-
-
-  if(type==="hero"){
-
-    block.location="Stockholm · Sweden";
-
-    block.title="Film.\nFoto.\nContent.";
-
-  }
-
-
-  if(type==="statement"){
-
-    block.text="Visuals that\nstay with you.";
-
-  }
-
-
-  if(type==="text"){
-
-    block.text="Ny text";
-
-  }
-
-
-  if(type==="image"){
-
-    block.src="";
-
-    block.alt="";
-
-  }
-
-
-  if(type==="video"){
-
-    block.ratio="16:9";
-
-    block.src="";
-
-    block.poster="";
-
-  }
-
-
-  if(type==="projects"){
-
-    block.title="Selected work";
-
-    block.projects=[];
-
-  }
-
-
-  if(type==="about"){
-
-    block.title="We create\nvisual stories.";
-
-    block.text="";
-
-  }
-
-
-  if(type==="contact"){
-
-    block.title="Let's make\nsomething sweet.";
-
-    block.email="hello@sweetproduction.se";
-
-  }
-
-
-  content.blocks.push(block);
-
-
-  render();
+block.title=
+  "Film.\nFoto.\nContent.";
+```
 
 }
 
+if(type==="statement"){
 
-/* =========================
-   DELETE BLOCK
-========================= */
+```
+block.text=
+  "Visuals that\nstay with you.";
+```
+
+}
+
+if(type==="text"){
+
+```
+block.text=
+  "Ny text";
+```
+
+}
+
+if(type==="image"){
+
+```
+block.src="";
+block.alt="";
+```
+
+}
+
+if(type==="video"){
+
+```
+block.ratio="16:9";
+block.src="";
+block.poster="";
+```
+
+}
+
+if(type==="projects"){
+
+```
+block.title="Selected work";
+block.projects=[];
+```
+
+}
+
+if(type==="about"){
+
+```
+block.title=
+  "We create\nvisual stories.";
+
+block.text="";
+```
+
+}
+
+if(type==="contact"){
+
+```
+block.title=
+  "Let's make\nsomething sweet.";
+
+block.email=
+  "hello@sweetproduction.se";
+```
+
+}
+
+content.blocks.push(block);
+
+render();
+
+}
 
 function deleteBlock(index){
 
-  if(
-    !confirm(
-      "Är du säker på att du vill ta bort blocket?"
-    )
-  ){
+if(
+!confirm(
+"Är du säker på att du vill ta bort blocket?"
+)
+){
 
-    return;
-
-  }
-
-
-  content.blocks.splice(index,1);
-
-  render();
+```
+return;
+```
 
 }
 
+content.blocks.splice(index,1);
 
-/* =========================
-   DUPLICATE
-========================= */
+render();
+
+}
 
 function duplicateBlock(index){
 
-  const copy =
-    JSON.parse(
-      JSON.stringify(
-        content.blocks[index]
-      )
-    );
+const copy=
+JSON.parse(
+JSON.stringify(
+content.blocks[index]
+)
+);
 
+copy.id=createId();
 
-  copy.id=createId();
+if(copy.projects){
 
+```
+copy.projects=
+  copy.projects.map(project=>({
 
-  if(copy.projects){
+    ...project,
 
-    copy.projects =
-      copy.projects.map(project=>({
+    id:createId()
 
-        ...project,
-
-        id:createId()
-
-      }));
-
-  }
-
-
-  content.blocks.splice(
-    index+1,
-    0,
-    copy
-  );
-
-
-  render();
+  }));
+```
 
 }
 
+content.blocks.splice(
+index+1,
+0,
+copy
+);
 
-/* =========================
-   MOVE UP
-========================= */
+render();
+
+}
 
 function moveUp(index){
 
-  if(index<=0) return;
+if(index<=0) return;
 
+[
+content.blocks[index-1],
+content.blocks[index]
+]=[
+content.blocks[index],
+content.blocks[index-1]
+];
 
-  const temp =
-    content.blocks[index-1];
-
-
-  content.blocks[index-1] =
-    content.blocks[index];
-
-
-  content.blocks[index] =
-    temp;
-
-
-  render();
+render();
 
 }
-
-
-/* =========================
-   MOVE DOWN
-========================= */
 
 function moveDown(index){
 
-  if(
-    index >= content.blocks.length-1
-  ){
-
-    return;
-
-  }
-
-
-  const temp =
-    content.blocks[index+1];
-
-
-  content.blocks[index+1] =
-    content.blocks[index];
-
-
-  content.blocks[index] =
-    temp;
-
-
-  render();
-
-}
-
-
-/* =========================
-   GITHUB SETTINGS
-========================= */
-
-function loadGitHubSettings(){
-
-  document.getElementById(
-    "githubOwner"
-  ).value =
-    localStorage.getItem(
-      "sweetGithubOwner"
-    ) || "";
-
-
-  document.getElementById(
-    "githubRepo"
-  ).value =
-    localStorage.getItem(
-      "sweetGithubRepo"
-    ) || "";
-
-
-  document.getElementById(
-    "githubBranch"
-  ).value =
-    localStorage.getItem(
-      "sweetGithubBranch"
-    ) || "main";
-
-
-  document.getElementById(
-    "githubToken"
-  ).value =
-    localStorage.getItem(
-      "sweetGithubToken"
-    ) || "";
-
-}
-
-
-/* =========================
-   SAVE GITHUB SETTINGS
-========================= */
-
-function saveGitHubSettings(){
-
-  const owner =
-    document.getElementById(
-      "githubOwner"
-    ).value.trim();
-
-
-  const repo =
-    document.getElementById(
-      "githubRepo"
-    ).value.trim();
-
-
-  const branch =
-    document.getElementById(
-      "githubBranch"
-    ).value.trim() || "main";
-
-
-  const token =
-    document.getElementById(
-      "githubToken"
-    ).value.trim();
-
-
-  localStorage.setItem(
-    "sweetGithubOwner",
-    owner
-  );
-
-
-  localStorage.setItem(
-    "sweetGithubRepo",
-    repo
-  );
-
-
-  localStorage.setItem(
-    "sweetGithubBranch",
-    branch
-  );
-
-
-  localStorage.setItem(
-    "sweetGithubToken",
-    token
-  );
-
-
-  return {
-    owner,
-    repo,
-    branch,
-    token
-  };
-
-}
-
-
-/* =========================
-   GITHUB REQUEST
-========================= */
-
-async function githubRequest(
-  url,
-  options={}
+if(
+index>=content.blocks.length-1
 ){
 
-  const token =
-    localStorage.getItem(
-      "sweetGithubToken"
-    );
-
-
-  const headers={
-
-    "Accept":
-      "application/vnd.github+json",
-
-    "Content-Type":
-      "application/json",
-
-    "X-GitHub-Api-Version":
-      "2022-11-28"
-
-  };
-
-
-  if(token){
-
-    headers.Authorization =
-      "Bearer " + token;
-
-  }
-
-
-  const response =
-    await fetch(
-      url,
-      {
-        ...options,
-        headers
-      }
-    );
-
-
-  const data =
-    await response.json()
-      .catch(()=>({}));
-
-
-  if(!response.ok){
-
-    throw new Error(
-      data.message ||
-      "GitHub API error"
-    );
-
-  }
-
-
-  return data;
+```
+return;
+```
 
 }
 
+[
+content.blocks[index],
+content.blocks[index+1]
+]=[
+content.blocks[index+1],
+content.blocks[index]
+];
+
+render();
+
+}
 
 /* =========================
-   LOAD FROM GITHUB
-========================= */
-
-async function loadFromGitHub(){
-
-  const settings =
-    saveGitHubSettings();
-
-
-  if(
-    !settings.owner ||
-    !settings.repo
-  ){
-
-    alert(
-      "Fyll i GitHub owner och repository först."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    status(
-      "Laddar från GitHub..."
-    );
-
-
-    const url =
-      `https://api.github.com/repos/` +
-      `${encodeURIComponent(settings.owner)}/` +
-      `${encodeURIComponent(settings.repo)}/` +
-      `contents/site/content.json?ref=` +
-      `${encodeURIComponent(settings.branch)}`;
-
-
-    const data =
-      await githubRequest(url);
-
-
-    const decoded =
-      decodeBase64Unicode(data.content);
-
-
-    content =
-      JSON.parse(decoded);
-
-
-    render();
-
-
-    status(
-      "Content laddat från GitHub ✓"
-    );
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Kunde inte ladda content.json:\n\n"
-      + error.message
-    );
-
-  }
-
-}
-
-
-/* =========================
-   SAVE TO GITHUB
-========================= */
-
-async function saveToGitHub(){
-
-  const settings =
-    saveGitHubSettings();
-
-
-  if(
-    !settings.owner ||
-    !settings.repo ||
-    !settings.token
-  ){
-
-    alert(
-      "Fyll i GitHub owner, repository och token först."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    status(
-      "Sparar till GitHub..."
-    );
-
-
-    const url =
-      `https://api.github.com/repos/` +
-      `${encodeURIComponent(settings.owner)}/` +
-      `${encodeURIComponent(settings.repo)}/` +
-      `/contents/site/content.json`;
-
-
-    /* Get current file SHA */
-
-    const existing =
-      await githubRequest(
-        url +
-        `?ref=${encodeURIComponent(settings.branch)}`
-      );
-
-
-    const json =
-      JSON.stringify(
-        content,
-        null,
-        2
-      );
-
-
-    const encoded =
-      encodeBase64Unicode(json);
-
-
-    const response =
-      await githubRequest(
-        url,
-        {
-
-          method:"PUT",
-
-          body:JSON.stringify({
-
-            message:
-              "Update website content",
-
-            content:encoded,
-
-            sha:existing.sha,
-
-            branch:settings.branch
-
-          })
-
-        }
-      );
-
-
-    if(response.commit){
-
-      status(
-        "Sparat till GitHub ✓"
-      );
-
-    }
-
-    else{
-
-      status(
-        "Sparat ✓"
-      );
-
-    }
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Kunde inte spara till GitHub:\n\n"
-      + error.message
-    );
-
-  }
-
-}
-
-
-/* =========================
-   BASE64
-========================= */
-
-function encodeBase64Unicode(text){
-
-  const bytes =
-    new TextEncoder()
-      .encode(text);
-
-
-  let binary="";
-
-
-  bytes.forEach(byte=>{
-
-    binary += String.fromCharCode(byte);
-
-  });
-
-
-  return btoa(binary);
-
-}
-
-
-function decodeBase64Unicode(base64){
-
-  const binary =
-    atob(
-      base64.replace(/\n/g,"")
-    );
-
-
-  const bytes =
-    Uint8Array.from(
-      binary,
-      char=>char.charCodeAt(0)
-    );
-
-
-  return new TextDecoder()
-    .decode(bytes);
-
-}
-
-
-/* =========================
-   START
+INITIAL LOAD
 ========================= */
 
 loadGitHubSettings();
 
-
-/*
-  Första gången försöker vi
-  läsa den lokala content.json.
-*/
-
 fetch(
-  "content.json?v=" + Date.now()
+"content.json?v="+Date.now()
 )
 
 .then(response=>{
 
-  if(!response.ok){
+if(!response.ok){
 
-    throw new Error();
+```
+throw new Error();
+```
 
-  }
+}
 
-  return response.json();
+return response.json();
 
 })
 
 .then(data=>{
 
-  content=data;
+content=data;
 
-  render();
+render();
 
 })
 
 .catch(()=>{
 
-  render();
+render();
 
 });
 
-
 </script>
-
 
 </body>
 
