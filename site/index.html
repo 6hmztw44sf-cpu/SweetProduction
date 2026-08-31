@@ -487,9 +487,7 @@ async function load(){
 
   try{
 
-    const response = await fetch(
-  "/content?v=" + Date.now()
-    );
+    const response = await fetch("https://sweetproduction-admin.frycts5yrr.workers.dev/content?v=" + Date.now());
 
     if(!response.ok){
       throw new Error("Could not load content");
