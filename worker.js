@@ -1,10 +1,8 @@
+```javascript
 const OWNER = "6hmztw44sf-cpu";
 const REPO = "SweetProduction";
 const BRANCH = "main";
 const FILE_PATH = "site/content.json";
-
-const SITE_RAW =
-  `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/site`;
 
 function corsHeaders(origin) {
   const allowed = [
@@ -14,48 +12,33 @@ function corsHeaders(origin) {
   ];
 
   return {
-    "Access-Control-Allow-Origin":
-      allowed.includes(origin)
-        ? origin
-        : "https://sweetproduction.se",
-
-    "Access-Control-Allow-Methods":
-      "GET, PUT, OPTIONS",
-
-    "Access-Control-Allow-Headers":
-      "Content-Type",
-
-    "Content-Type":
-      "application/json"
+    "Access-Control-Allow-Origin": allowed.includes(origin)
+      ? origin
+      : "https://sweetproduction.se",
+    "Access-Control-Allow-Methods": "GET, PUT, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json"
   };
 }
 
 async function githubRequest(path, options = {}, env) {
+  const token = String(env.GITHUB_TOKEN || "").trim();
 
-  const response = await fetch(
-    `https://api.github.com${path}`,
-    {
-      ...options,
+  if (!token) {
+    throw new Error("GITHUB_TOKEN is missing");
+  }
 
-      headers: {
-        "Accept":
-          "application/vnd.github+json",
-
-        "Authorization":
-          `Bearer ${env.GITHUB_TOKEN}`,
-
-        "X-GitHub-Api-Version":
-          "2022-11-28",
-
-        "Content-Type":
-          "application/json",
-        "User-Agent":
-  "SweetProduction-Admin",
-
-        ...(options.headers || {})
-      }
+  const response = await fetch(`https://api.github.com${path}`, {
+    ...options,
+    headers: {
+      "Accept": "application/vnd.github+json",
+      "Authorization": `Bearer ${token}`,
+      "X-GitHub-Api-Version": "2022-11-28",
+      "Content-Type": "application/json",
+      "User-Agent": "SweetProduction-Admin",
+      ...(options.headers || {})
     }
-  );
+  });
 
   const text = await response.text();
 
@@ -64,9 +47,7 @@ async function githubRequest(path, options = {}, env) {
   try {
     data = JSON.parse(text);
   } catch {
-    data = {
-      message: text
-    };
+    data = { message: text };
   }
 
   if (!response.ok) {
@@ -79,24 +60,17 @@ async function githubRequest(path, options = {}, env) {
 }
 
 function decodeBase64(base64) {
-
-  const binary =
-    atob(base64.replace(/\n/g, ""));
-
-  const bytes =
-    Uint8Array.from(
-      binary,
-      char => char.charCodeAt(0)
-    );
+  const binary = atob(base64.replace(/\n/g, ""));
+  const bytes = Uint8Array.from(
+    binary,
+    char => char.charCodeAt(0)
+  );
 
   return new TextDecoder().decode(bytes);
 }
 
 function encodeBase64(text) {
-
-  const bytes =
-    new TextEncoder().encode(text);
-
+  const bytes = new TextEncoder().encode(text);
   let binary = "";
 
   for (const byte of bytes) {
@@ -106,124 +80,107 @@ function encodeBase64(text) {
   return btoa(binary);
 }
 
-
 async function serveSite(pathname) {
-
   const files = {
-
-    "/":
-      ["index.html", "text/html; charset=UTF-8"],
-
-    "/index.html":
-      ["index.html", "text/html; charset=UTF-8"],
-
-    "/style.css":
-      ["style.css", "text/css; charset=UTF-8"],
-
-    "/content.json":
-      ["content.json", "application/json; charset=UTF-8"],
-
-    "/admin.html":
-      ["admin.html", "text/html; charset=UTF-8"]
-
+    "/": ["index.html", "text/html; charset=UTF-8"],
+    "/index.html": ["index.html", "text/html; charset=UTF-8"],
+    "/style.css": ["style.css", "text/css; charset=UTF-8"],
+    "/content.json": ["content.json", "application/json; charset=UTF-8"],
+    "/admin.html": ["admin.html", "text/html; charset=UTF-8"]
   };
 
-  const file =
-    files[pathname];
+  const file = files[pathname];
 
   if (!file) {
     return null;
   }
 
   const response = await fetch(
-  `${SITE_RAW}/${file[0]}?v=${Date.now()}`,
-  {
-    cf: {
-      cacheTtl: 0,
-      cacheEverything: false
-    }
-  }
-);
-
-  if (!response.ok) {
-
-    return new Response(
-      "Site file not found",
-      {
-        status: 500,
-        headers: {
-          "Content-Type":
-            "text/plain; charset=UTF-8"
-        }
-      }
-    );
-
-  }
-
-  return new Response(
-    await response.text(),
+    `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/site/${file[0]}?v=${Date.now()}`,
     {
-      status: 200,
-
-      headers: {
-        "Content-Type":
-          file[1],
-
-        "Cache-Control":
-          pathname === "/content.json"
-            ? "no-store"
-            : "public, max-age=60"
+      cf: {
+        cacheTtl: 0,
+        cacheEverything: false
       }
     }
   );
+
+  if (!response.ok) {
+    return new Response("Site file not found", {
+      status: 500,
+      headers: {
+        "Content-Type": "text/plain; charset=UTF-8"
+      }
+    });
+  }
+
+  return new Response(await response.text(), {
+    status: 200,
+    headers: {
+      "Content-Type": file[1],
+      "Cache-Control":
+        pathname === "/content.json"
+          ? "no-store"
+          : "public, max-age=60"
+    }
+  });
 }
 
-
 export default {
-
   async fetch(request, env) {
-
     const origin =
       request.headers.get("Origin") || "";
 
     const headers =
       corsHeaders(origin);
 
-
     if (request.method === "OPTIONS") {
-
-      return new Response(
-        null,
-        {
-          status: 204,
-          headers
-        }
-      );
-
+      return new Response(null, {
+        status: 204,
+        headers
+      });
     }
-
 
     const url =
       new URL(request.url);
-
 
     const isContentRoute =
       url.pathname === "/content" ||
       url.pathname === "/api/content";
 
-
     try {
 
+      // DIAGNOSTIK – testar GitHub-token
+      if (
+        request.method === "GET" &&
+        url.pathname === "/github-test"
+      ) {
+        const repo =
+          await githubRequest(
+            `/repos/${OWNER}/${REPO}`,
+            {},
+            env
+          );
 
-      /* =========================
-         ADMIN API – HÄMTA
-      ========================= */
+        return new Response(
+          JSON.stringify({
+            success: true,
+            github: "authenticated",
+            repository: repo.full_name,
+            permissions: repo.permissions || null
+          }),
+          {
+            status: 200,
+            headers
+          }
+        );
+      }
 
+      // HÄMTA CONTENT
       if (
         request.method === "GET" &&
         isContentRoute
       ) {
-
         const file =
           await githubRequest(
             `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
@@ -243,37 +200,27 @@ export default {
             headers
           }
         );
-
       }
 
-
-      /* =========================
-         ADMIN API – SPARA
-      ========================= */
-
+      // SPARA CONTENT
       if (
         request.method === "PUT" &&
         isContentRoute
       ) {
-
         const body =
           await request.json();
 
         if (!body) {
-
           return new Response(
             JSON.stringify({
-              error:
-                "Content saknas"
+              error: "Content saknas"
             }),
             {
               status: 400,
               headers
             }
           );
-
         }
-
 
         const current =
           await githubRequest(
@@ -282,18 +229,10 @@ export default {
             env
           );
 
-
-        const json =
-          JSON.stringify(
-            body,
-            null,
-            2
-          );
-
-
         const encoded =
-          encodeBase64(json);
-
+          encodeBase64(
+            JSON.stringify(body, null, 2)
+          );
 
         const result =
           await githubRequest(
@@ -319,11 +258,9 @@ export default {
             env
           );
 
-
         return new Response(
           JSON.stringify({
             success: true,
-
             commit:
               result.commit?.sha || null
           }),
@@ -332,18 +269,12 @@ export default {
             headers
           }
         );
-
       }
 
-
-      /* =========================
-         VANLIG HEMSIDA
-      ========================= */
-
+      // VANLIG HEMSIDA
       if (
         request.method === "GET"
       ) {
-
         const site =
           await serveSite(
             url.pathname
@@ -352,21 +283,17 @@ export default {
         if (site) {
           return site;
         }
-
       }
-
 
       return new Response(
         JSON.stringify({
-          error:
-            "Not found"
+          error: "Not found"
         }),
         {
           status: 404,
           headers
         }
       );
-
 
     } catch (error) {
 
@@ -381,9 +308,7 @@ export default {
           headers
         }
       );
-
     }
-
   }
-
 };
+```
