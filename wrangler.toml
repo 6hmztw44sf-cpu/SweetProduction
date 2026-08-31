@@ -1,5 +1,3 @@
-name = "sweetproduction"
-compatibility_date = "2026-08-28"
-
-[assets]
-directory = "./site"
+name = "sweetproduction-admin"
+main = "worker.js"
+compatibility_date = "2026-08-31"
