@@ -1,19 +1,13 @@
+ ```html
 <!DOCTYPE html>
-
 <html lang="sv">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>Sweet Production – Admin</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -25,77 +19,38 @@ body{
 header{
   position:sticky;
   top:0;
-  z-index:100;
+  z-index:20;
   background:#111;
-  color:white;
+  color:#fff;
   padding:18px 25px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
 }
 
 header strong{
   letter-spacing:.05em;
 }
 
-.header-actions{
-  display:flex;
-  gap:8px;
-}
-
 button{
   border:0;
   background:#111;
-  color:white;
+  color:#fff;
   padding:11px 16px;
   border-radius:7px;
   cursor:pointer;
   font-size:14px;
 }
 
-button:hover{
-  opacity:.8;
-}
-
 header button{
-  background:white;
-  color:#111;
-}
-
-button.secondary{
-  background:white;
-  color:#111;
-  border:1px solid #ddd;
-}
-
-button.delete{
-  background:#ddd;
+  background:#fff;
   color:#111;
 }
 
 main{
-  max-width:1000px;
+  max-width:900px;
   margin:auto;
-  padding:30px 20px 120px;
-}
-
-.settings{
-  background:white;
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:20px;
-  margin-bottom:25px;
-}
-
-.settings h2{
-  margin-top:0;
-}
-
-.settings-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
+  padding:30px 20px 100px;
 }
 
 .toolbar{
@@ -106,13 +61,13 @@ main{
 }
 
 .toolbar button{
-  background:white;
+  background:#fff;
   color:#111;
   border:1px solid #ddd;
 }
 
 .block{
-  background:white;
+  background:#fff;
   border:1px solid #ddd;
   border-radius:12px;
   margin-bottom:15px;
@@ -120,17 +75,13 @@ main{
 }
 
 .block.dragging{
-  opacity:.35;
-}
-
-.block.drag-over{
-  border:2px dashed #111;
+  opacity:.4;
 }
 
 .block-head{
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:10px;
   padding:14px;
   border-bottom:1px solid #eee;
   cursor:grab;
@@ -172,9 +123,9 @@ textarea{
   resize:vertical;
 }
 
-input[type="color"]{
-  height:45px;
-  padding:4px;
+.delete{
+  background:#ddd;
+  color:#111;
 }
 
 .project{
@@ -191,28 +142,40 @@ input[type="color"]{
   margin-bottom:12px;
 }
 
-.empty{
-  padding:30px;
-  text-align:center;
-  color:#777;
-  border:1px dashed #ccc;
-  border-radius:10px;
-}
-
 .status{
   position:fixed;
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
   background:#111;
-  color:white;
+  color:#fff;
   padding:12px 18px;
   border-radius:8px;
   display:none;
-  z-index:500;
+  z-index:50;
 }
 
-@media(max-width:700px){
+.error{
+  background:#8b0000;
+}
+
+.settings{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:20px;
+}
+
+.settings h2{
+  margin-top:0;
+  font-size:18px;
+}
+
+@media(max-width:600px){
+  main{
+    padding:20px 12px 80px;
+  }
 
   header{
     padding:15px;
@@ -221,148 +184,56 @@ input[type="color"]{
   header strong{
     font-size:12px;
   }
-
-  .settings-grid{
-    grid-template-columns:1fr;
-  }
-
-  main{
-    padding:20px 12px 100px;
-  }
-
-  .block-head{
-    flex-wrap:wrap;
-  }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-<strong>SWEET PRODUCTION — ADMIN</strong>
-
-<div class="header-actions">
-
-<button
-class="secondary"
-onclick="loadFromWorker()">
-Ladda </button>
-
-<button onclick="saveToWorker()">
-  Spara
-</button>
-
-</div>
-
+  <strong>SWEET PRODUCTION — ADMIN</strong>
+  <button onclick="save()">Spara</button>
 </header>
 
 <main>
 
-<section class="settings">
+  <section class="settings">
+    <h2>Design</h2>
 
-<h2>Site settings</h2>
+    <label>Bakgrund</label>
+    <input
+      type="color"
+      id="bgColor"
+      onchange="updateSetting('bgColor',this.value)"
+    >
 
-<div class="settings-grid">
+    <label>Text</label>
+    <input
+      type="color"
+      id="textColor"
+      onchange="updateSetting('textColor',this.value)"
+    >
 
-<div>
+    <label>Accent</label>
+    <input
+      type="color"
+      id="accentColor"
+      onchange="updateSetting('accentColor',this.value)"
+    >
+  </section>
 
-<label>Bakgrund</label>
+  <div class="toolbar">
+    <button onclick="addBlock('hero')">+ Hero</button>
+    <button onclick="addBlock('statement')">+ Statement</button>
+    <button onclick="addBlock('text')">+ Text</button>
+    <button onclick="addBlock('image')">+ Bild</button>
+    <button onclick="addBlock('video')">+ Video</button>
+    <button onclick="addBlock('projects')">+ Projekt</button>
+    <button onclick="addBlock('about')">+ About</button>
+    <button onclick="addBlock('contact')">+ Contact</button>
+  </div>
 
-<input
-id="bgColor"
-type="color"
-onchange="updateSetting('bgColor',this.value)">
-
-</div>
-
-<div>
-
-<label>Text</label>
-
-<input
-id="textColor"
-type="color"
-onchange="updateSetting('textColor',this.value)">
-
-</div>
-
-<div>
-
-<label>Accent</label>
-
-<input
-id="accentColor"
-type="color"
-onchange="updateSetting('accentColor',this.value)">
-
-</div>
-
-<div>
-
-<label>Heading font</label>
-
-<input
-id="headingFont"
-oninput="updateSetting('headingFont',this.value)">
-
-</div>
-
-<div>
-
-<label>Body font</label>
-
-<input
-id="bodyFont"
-oninput="updateSetting('bodyFont',this.value)">
-
-</div>
-
-</div>
-
-</section>
-
-<div class="toolbar">
-
-<button onclick="addBlock('hero')">
-+ Hero
-</button>
-
-<button onclick="addBlock('statement')">
-+ Statement
-</button>
-
-<button onclick="addBlock('text')">
-+ Text
-</button>
-
-<button onclick="addBlock('image')">
-+ Bild
-</button>
-
-<button onclick="addBlock('video')">
-+ Video
-</button>
-
-<button onclick="addBlock('projects')">
-+ Projektsektion
-</button>
-
-<button onclick="addBlock('about')">
-+ About
-</button>
-
-<button onclick="addBlock('contact')">
-+ Contact
-</button>
-
-</div>
-
-<div id="blocks"></div>
+  <div id="blocks"></div>
 
 </main>
 
@@ -370,12 +241,7 @@ oninput="updateSetting('bodyFont',this.value)">
 
 <script>
 
-const API=
-  "https://sweetproduction-admin.frycts5yrr.workers.dev";
-
-
-let content={
-
+let content = {
   settings:{
     bgColor:"#080808",
     textColor:"#f1efe9",
@@ -384,1098 +250,498 @@ let content={
     bodyFont:"Arial",
     customFonts:[]
   },
-
   blocks:[]
-
 };
 
+let dragged = null;
 
-let draggedIndex=null;
+const API = "/api/content";
 
-
-/* =========================
-   HELPERS
-========================= */
-
-function createId(){
-
-  return Date.now().toString(36)
-    +Math.random().toString(36).slice(2);
-
+function makeId(){
+  return Date.now().toString(36)+Math.random().toString(36).slice(2);
 }
 
-
 function esc(value){
-
   return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
-
 }
 
+function showStatus(message,error=false){
 
-function showStatus(message){
-
-  const el=
-    document.getElementById("status");
+  const el=document.getElementById("status");
 
   el.textContent=message;
-
+  el.classList.toggle("error",error);
   el.style.display="block";
 
   setTimeout(()=>{
-
     el.style.display="none";
-
-  },2500);
-
+  },3500);
 }
 
-
-/* =========================
-   LOAD
-========================= */
-
-async function loadFromWorker(){
-
-  try{
-
-    showStatus("Laddar...");
-
-
-    const response=
-      await fetch(
-        API+"/content",
-        {
-          method:"GET",
-          cache:"no-store"
-        }
-      );
-
-
-    const data=
-      await response.json();
-
-
-    if(!response.ok){
-
-      throw new Error(
-        data.error ||
-        "Kunde inte ladda innehållet."
-      );
-
-    }
-
-
-    content=data.content;
-
-
-    render();
-
-
-    showStatus(
-      "Laddat från GitHub ✓"
-    );
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Kunde inte ladda:\n\n"
-      +error.message
-    );
-
-  }
-
-}
-
-
-/* =========================
-   SAVE
-========================= */
-
-async function saveToWorker(){
-
-  try{
-
-    showStatus(
-      "Sparar till GitHub..."
-    );
-
-
-    const response=
-      await fetch(
-        API+"/content",
-        {
-
-          method:"PUT",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            content:content
-          })
-
-        }
-      );
-
-
-    const data=
-      await response.json();
-
-
-    if(!response.ok){
-
-      throw new Error(
-        data.error ||
-        "Kunde inte spara."
-      );
-
-    }
-
-
-    showStatus(
-      "Sparat till GitHub ✓"
-    );
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Kunde inte spara:\n\n"
-      +error.message
-    );
-
-  }
-
-}
-
-
-/* =========================
-   SETTINGS
-========================= */
-
-function updateSetting(
-  key,
-  value
-){
-
-  content.settings[key]=value;
-
-}
-
-
-/* =========================
-   INPUTS
-========================= */
-
-function input(
-  label,
-  value,
-  callback
-){
+function input(label,value,callback){
 
   return `
-
-    <label>${label}</label>
-
+    <label>${esc(label)}</label>
     <input
       value="${esc(value)}"
       oninput="${callback}(this.value)"
     >
-
   `;
-
 }
 
-
-function textarea(
-  label,
-  value,
-  callback
-){
+function textarea(label,value,callback){
 
   return `
-
-    <label>${label}</label>
-
+    <label>${esc(label)}</label>
     <textarea
       oninput="${callback}(this.value)"
     >${esc(value)}</textarea>
-
-`;
-
+  `;
 }
 
-/* =========================
-FIELDS
-========================= */
+function updateSetting(key,value){
 
-function fields(
-block,
-i
-){
-
-if(block.type==="hero"){
-
-```
-return `
-
-  ${input(
-    "Plats",
-    block.location || "",
-    `update(${i},'location'`
-  )}
-
-  ${textarea(
-    "Rubrik",
-    block.title || "",
-    `update(${i},'title'`
-  )}
-
-`;
-```
-
+  content.settings[key]=value;
 }
 
-if(block.type==="statement"){
+function update(i,key,value){
 
-```
-return textarea(
-  "Text",
-  block.text || "",
-  `update(${i},'text'`
-);
-```
-
+  content.blocks[i][key]=value;
 }
 
-if(block.type==="text"){
+function updateProject(i,p,key,value){
 
-```
-return textarea(
-  "Text",
-  block.text || "",
-  `update(${i},'text'`
-);
-```
-
+  content.blocks[i].projects[p][key]=value;
 }
 
-if(block.type==="image"){
+function fields(block,i){
 
-```
-return `
+  if(block.type==="hero"){
+    return `
+      ${input("Plats",block.location||"",
+        `update(${i},'location'`)}
 
-  ${input(
-    "Bild URL",
-    block.src || "",
-    `update(${i},'src'`
-  )}
+      ${textarea("Rubrik",block.title||"",
+        `update(${i},'title'`)}
+    `;
+  }
 
-  ${input(
-    "Alt-text",
-    block.alt || "",
-    `update(${i},'alt'`
-  )}
+  if(block.type==="statement"){
+    return textarea(
+      "Text",
+      block.text||"",
+      `update(${i},'text'`
+    );
+  }
 
-`;
-```
+  if(block.type==="text"){
+    return textarea(
+      "Text",
+      block.text||"",
+      `update(${i},'text'`
+    );
+  }
 
-}
+  if(block.type==="image"){
+    return `
+      ${input(
+        "Bild URL",
+        block.src||"",
+        `update(${i},'src'`
+      )}
 
-if(block.type==="video"){
+      ${input(
+        "Alt-text",
+        block.alt||"",
+        `update(${i},'alt'`
+      )}
+    `;
+  }
 
-```
-return `
+  if(block.type==="video"){
+    return `
+      <label>Format</label>
 
-  <label>Format</label>
+      <select onchange="update(${i},'ratio',this.value)">
+        <option value="16:9"
+          ${block.ratio==="16:9"?"selected":""}>
+          16:9
+        </option>
 
-  <select
-    onchange="
-      update(
-        ${i},
-        'ratio',
-        this.value
-      )
-    "
-  >
+        <option value="9:16"
+          ${block.ratio==="9:16"?"selected":""}>
+          9:16
+        </option>
+      </select>
 
-    <option
-      value="16:9"
-      ${block.ratio==="16:9"?"selected":""}>
-      16:9
-    </option>
+      ${input(
+        "Video URL",
+        block.src||"",
+        `update(${i},'src'`
+      )}
 
-    <option
-      value="9:16"
-      ${block.ratio==="9:16"?"selected":""}>
-      9:16
-    </option>
+      ${input(
+        "Poster URL",
+        block.poster||"",
+        `update(${i},'poster'`
+      )}
+    `;
+  }
 
-  </select>
+  if(block.type==="projects"){
 
+    let html=`
+      ${input(
+        "Rubrik",
+        block.title||"",
+        `update(${i},'title'`
+      )}
 
-  ${input(
-    "Video URL",
-    block.src || "",
-    `update(${i},'src'`
-  )}
+      <hr>
+    `;
 
-
-  ${input(
-    "Poster URL",
-    block.poster || "",
-    `update(${i},'poster'`
-  )}
-
-`;
-```
-
-}
-
-if(block.type==="projects"){
-
-```
-let html=`
-
-  ${input(
-    "Rubrik",
-    block.title || "",
-    `update(${i},'title'`
-  )}
-
-  <hr>
-
-`;
-
-
-(block.projects || [])
-  .forEach(
-    (project,pi)=>{
+    (block.projects||[]).forEach((p,pi)=>{
 
       html+=`
-
         <div class="project">
 
           <div class="project-head">
-
-            <strong>
-              Projekt ${pi+1}
-            </strong>
+            <strong>Projekt ${pi+1}</strong>
 
             <button
               class="delete"
-              onclick="
-                deleteProject(
-                  ${i},
-                  ${pi}
-                )
-              ">
-
+              onclick="deleteProject(${i},${pi})">
               Ta bort
-
             </button>
-
           </div>
-
 
           ${input(
             "Titel",
-            project.title || "",
-            `updateProject(
-              ${i},
-              ${pi},
-              'title'`
+            p.title||"",
+            `updateProject(${i},${pi},'title'`
           )}
-
 
           ${input(
             "Kategori",
-            project.category || "",
-            `updateProject(
-              ${i},
-              ${pi},
-              'category'`
+            p.category||"",
+            `updateProject(${i},${pi},'category'`
           )}
-
 
           ${input(
             "Bild / Video URL",
-            project.image || "",
-            `updateProject(
-              ${i},
-              ${pi},
-              'image'`
+            p.image||"",
+            `updateProject(${i},${pi},'image'`
           )}
-
 
           <label>Media</label>
 
           <select
-            onchange="
-              updateProject(
-                ${i},
-                ${pi},
-                'type',
-                this.value
-              )
-            "
-          >
-
-            <option
-              value="image"
-              ${project.type==="image"?"selected":""}>
+            onchange="updateProject(${i},${pi},'type',this.value)">
+            <option value="image"
+              ${p.type==="image"?"selected":""}>
               Bild
             </option>
 
-            <option
-              value="video"
-              ${project.type==="video"?"selected":""}>
+            <option value="video"
+              ${p.type==="video"?"selected":""}>
               Video
             </option>
-
           </select>
 
         </div>
-
       `;
+    });
 
-    }
-  );
+    html+=`
+      <button onclick="addProject(${i})">
+        + Lägg till projekt
+      </button>
+    `;
 
+    return html;
+  }
 
-html+=`
+  if(block.type==="about"){
+    return `
+      ${textarea(
+        "Rubrik",
+        block.title||"",
+        `update(${i},'title'`
+      )}
 
-  <button
-    onclick="addProject(${i})">
-    + Lägg till projekt
-  </button>
+      ${textarea(
+        "Text",
+        block.text||"",
+        `update(${i},'text'`
+      )}
+    `;
+  }
 
-`;
+  if(block.type==="contact"){
+    return `
+      ${textarea(
+        "Rubrik",
+        block.title||"",
+        `update(${i},'title'`
+      )}
 
+      ${input(
+        "E-post",
+        block.email||"",
+        `update(${i},'email'`
+      )}
+    `;
+  }
 
-return html;
-```
-
+  return "";
 }
-
-if(block.type==="about"){
-
-```
-return `
-
-  ${textarea(
-    "Rubrik",
-    block.title || "",
-    `update(${i},'title'`
-  )}
-
-  ${textarea(
-    "Text",
-    block.text || "",
-    `update(${i},'text'`
-  )}
-
-`;
-```
-
-}
-
-if(block.type==="contact"){
-
-```
-return `
-
-  ${textarea(
-    "Rubrik",
-    block.title || "",
-    `update(${i},'title'`
-  )}
-
-  ${input(
-    "E-post",
-    block.email || "",
-    `update(${i},'email'`
-  )}
-
-`;
-```
-
-}
-
-return "";
-
-}
-
-/* =========================
-RENDER
-========================= */
 
 function render(){
 
-const settings=
-content.settings || {};
+  document.getElementById("bgColor").value =
+    content.settings.bgColor || "#080808";
 
-document.getElementById(
-"bgColor"
-).value=
-settings.bgColor ||
-"#080808";
+  document.getElementById("textColor").value =
+    content.settings.textColor || "#f1efe9";
 
-document.getElementById(
-"textColor"
-).value=
-settings.textColor ||
-"#f1efe9";
+  document.getElementById("accentColor").value =
+    content.settings.accentColor || "#f1efe9";
 
-document.getElementById(
-"accentColor"
-).value=
-settings.accentColor ||
-"#f1efe9";
+  const root=document.getElementById("blocks");
 
-document.getElementById(
-"headingFont"
-).value=
-settings.headingFont ||
-"Arial";
+  root.innerHTML="";
 
-document.getElementById(
-"bodyFont"
-).value=
-settings.bodyFont ||
-"Arial";
+  content.blocks.forEach((block,index)=>{
 
-const root=
-document.getElementById(
-"blocks"
-);
+    const el=document.createElement("div");
 
-root.innerHTML="";
+    el.className="block";
+    el.draggable=true;
 
-if(
-!content.blocks ||
-!content.blocks.length
-){
+    el.addEventListener("dragstart",()=>{
+      dragged=index;
+      el.classList.add("dragging");
+    });
 
-```
-root.innerHTML=`
+    el.addEventListener("dragend",()=>{
+      dragged=null;
+      el.classList.remove("dragging");
+    });
 
-  <div class="empty">
+    el.addEventListener("dragover",e=>{
+      e.preventDefault();
+    });
 
-    Inga block ännu.<br>
-    Lägg till ett block ovan.
+    el.addEventListener("drop",e=>{
 
-  </div>
+      e.preventDefault();
 
-`;
+      if(dragged===null || dragged===index) return;
 
-return;
-```
+      const moved=content.blocks.splice(dragged,1)[0];
 
-}
+      content.blocks.splice(index,0,moved);
 
-content.blocks.forEach(
-(block,index)=>{
-
-```
-  const el=
-    document.createElement(
-      "div"
-    );
-
-
-  el.className="block";
-
-  el.draggable=true;
-
-
-  el.addEventListener(
-    "dragstart",
-    ()=>{
-
-      draggedIndex=index;
-
-      el.classList.add(
-        "dragging"
-      );
-
-    }
-  );
-
-
-  el.addEventListener(
-    "dragend",
-    ()=>{
-
-      draggedIndex=null;
-
-      el.classList.remove(
-        "dragging"
-      );
-
-    }
-  );
-
-
-  el.addEventListener(
-    "dragover",
-    event=>{
-
-      event.preventDefault();
-
-      el.classList.add(
-        "drag-over"
-      );
-
-    }
-  );
-
-
-  el.addEventListener(
-    "dragleave",
-    ()=>{
-
-      el.classList.remove(
-        "drag-over"
-      );
-
-    }
-  );
-
-
-  el.addEventListener(
-    "drop",
-    event=>{
-
-      event.preventDefault();
-
-      el.classList.remove(
-        "drag-over"
-      );
-
-
-      const target=index;
-
-
-      if(
-        draggedIndex===null ||
-        draggedIndex===target
-      ){
-
-        return;
-
-      }
-
-
-      const moved=
-        content.blocks.splice(
-          draggedIndex,
-          1
-        )[0];
-
-
-      content.blocks.splice(
-        target,
-        0,
-        moved
-      );
-
-
-      draggedIndex=null;
+      dragged=null;
 
       render();
+    });
 
-    }
-  );
+    el.innerHTML=`
+      <div class="block-head">
 
+        <span class="drag">☰</span>
 
-  el.innerHTML=`
+        <strong>${esc(block.type)}</strong>
 
-    <div class="block-head">
+        <button onclick="duplicateBlock(${index})">
+          Duplicera
+        </button>
 
-      <span class="drag">
-        ☰
-      </span>
+        <button
+          class="delete"
+          onclick="deleteBlock(${index})">
+          Ta bort
+        </button>
 
-      <strong>
-        ${index+1}.
-        ${esc(block.type)}
-      </strong>
+      </div>
 
-      <button
-        class="secondary"
-        onclick="
-          moveUp(${index})
-        ">
-        ↑
-      </button>
+      <div class="block-body">
+        ${fields(block,index)}
+      </div>
+    `;
 
-      <button
-        class="secondary"
-        onclick="
-          moveDown(${index})
-        ">
-        ↓
-      </button>
-
-      <button
-        class="secondary"
-        onclick="
-          duplicateBlock(${index})
-        ">
-        Duplicera
-      </button>
-
-      <button
-        class="delete"
-        onclick="
-          deleteBlock(${index})
-        ">
-        Ta bort
-      </button>
-
-    </div>
-
-    <div class="block-body">
-
-      ${fields(
-        block,
-        index
-      )}
-
-    </div>
-
-  `;
-
-
-  root.appendChild(el);
-
-}
-```
-
-);
-
+    root.appendChild(el);
+  });
 }
 
-/* =========================
-UPDATE
-========================= */
+function addProject(i){
 
-function update(
-index,
-key,
-value
-){
+  if(!content.blocks[i].projects)
+    content.blocks[i].projects=[];
 
-if(
-!content.blocks[index]
-){
+  content.blocks[i].projects.push({
+    id:makeId(),
+    title:"Nytt projekt",
+    category:"Film / Content",
+    image:"",
+    type:"image"
+  });
 
-```
-return;
-```
-
+  render();
 }
 
-content.blocks[index][key]=
-value;
+function deleteProject(i,p){
 
+  content.blocks[i].projects.splice(p,1);
+
+  render();
 }
-
-/* =========================
-PROJECTS
-========================= */
-
-function updateProject(
-blockIndex,
-projectIndex,
-key,
-value
-){
-
-content.blocks[
-blockIndex
-].projects[
-projectIndex
-][key]=value;
-
-}
-
-function addProject(index){
-
-if(
-!content.blocks[index].projects
-){
-
-```
-content.blocks[index].projects=[];
-```
-
-}
-
-content.blocks[index].projects.push({
-
-```
-id:createId(),
-
-title:"Nytt projekt",
-
-category:
-  "Film / Content",
-
-image:"",
-
-type:"image"
-```
-
-});
-
-render();
-
-}
-
-function deleteProject(
-blockIndex,
-projectIndex
-){
-
-content.blocks[
-blockIndex
-].projects.splice(
-projectIndex,
-1
-);
-
-render();
-
-}
-
-/* =========================
-BLOCKS
-========================= */
 
 function addBlock(type){
 
-const block={
-id:createId(),
-type:type
-};
+  const block={
+    id:makeId(),
+    type
+  };
 
-if(type==="hero"){
+  if(type==="hero"){
+    block.location="Stockholm · Sweden";
+    block.title="Ny rubrik";
+  }
 
-```
-block.location=
-  "Stockholm · Sweden";
+  if(type==="statement"){
+    block.text="Ny statement";
+  }
 
-block.title=
-  "Film.\nFoto.\nContent.";
-```
+  if(type==="text"){
+    block.text="Ny text";
+  }
 
+  if(type==="image"){
+    block.src="";
+    block.alt="";
+  }
+
+  if(type==="video"){
+    block.ratio="16:9";
+    block.src="";
+    block.poster="";
+  }
+
+  if(type==="projects"){
+    block.title="Selected work";
+    block.projects=[];
+  }
+
+  if(type==="about"){
+    block.title="We create\nvisual stories.";
+    block.text="";
+  }
+
+  if(type==="contact"){
+    block.title="Let's make\nsomething sweet.";
+    block.email="hello@sweetproduction.se";
+  }
+
+  content.blocks.push(block);
+
+  render();
 }
 
-if(type==="statement"){
+function deleteBlock(i){
 
-```
-block.text=
-  "Visuals that\nstay with you.";
-```
+  if(!confirm("Ta bort blocket?")) return;
 
+  content.blocks.splice(i,1);
+
+  render();
 }
 
-if(type==="text"){
+function duplicateBlock(i){
 
-```
-block.text=
-  "Ny text";
-```
-
-}
-
-if(type==="image"){
-
-```
-block.src="";
-block.alt="";
-```
-
-}
-
-if(type==="video"){
-
-```
-block.ratio="16:9";
-block.src="";
-block.poster="";
-```
-
-}
-
-if(type==="projects"){
-
-```
-block.title=
-  "Selected work";
-
-block.projects=[];
-```
-
-}
-
-if(type==="about"){
-
-```
-block.title=
-  "We create\nvisual stories.";
-
-block.text="";
-```
-
-}
-
-if(type==="contact"){
-
-```
-block.title=
-  "Let's make\nsomething sweet.";
-
-block.email=
-  "hello@sweetproduction.se";
-```
-
-}
-
-content.blocks.push(
-block
-);
-
-render();
-
-}
-
-function deleteBlock(index){
-
-if(
-!confirm(
-"Är du säker på att du vill ta bort blocket?"
-)
-){
-
-```
-return;
-```
-
-}
-
-content.blocks.splice(
-index,
-1
-);
-
-render();
-
-}
-
-function duplicateBlock(index){
-
-const copy=
-JSON.parse(
-JSON.stringify(
-content.blocks[index]
-)
-);
-
-copy.id=createId();
-
-if(copy.projects){
-
-```
-copy.projects=
-  copy.projects.map(
-    project=>({
-
-      ...project,
-
-      id:createId()
-
-    })
+  const copy=JSON.parse(
+    JSON.stringify(content.blocks[i])
   );
-```
 
+  copy.id=makeId();
+
+  content.blocks.splice(i+1,0,copy);
+
+  render();
 }
 
-content.blocks.splice(
-index+1,
-0,
-copy
-);
+async function load(){
 
-render();
+  try{
 
+    const response=await fetch(API,{
+      cache:"no-store"
+    });
+
+    if(!response.ok){
+      throw new Error(
+        "Servern svarade HTTP "+response.status
+      );
+    }
+
+    content=await response.json();
+
+    render();
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Kunde inte läsa innehållet: "+error.message,
+      true
+    );
+  }
 }
 
-function moveUp(index){
+async function save(){
 
-if(index<=0) return;
+  try{
 
-[
-content.blocks[index-1],
-content.blocks[index]
-]=[
-content.blocks[index],
-content.blocks[index-1]
-];
+    const response=await fetch(API,{
+      method:"PUT",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(content)
+    });
 
-render();
+    const result=await response.json();
 
+    if(!response.ok){
+      throw new Error(
+        result.error || "Kunde inte spara"
+      );
+    }
+
+    showStatus("Sparat på hemsidan ✓");
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Kunde inte spara: "+error.message,
+      true
+    );
+  }
 }
 
-function moveDown(index){
-
-if(
-index>=
-content.blocks.length-1
-){
-
-```
-return;
-```
-
-}
-
-[
-content.blocks[index],
-content.blocks[index+1]
-]=[
-content.blocks[index+1],
-content.blocks[index]
-];
-
-render();
-
-}
-
-/* =========================
-START
-========================= */
-
-loadFromWorker();
+load();
 
 </script>
 
 </body>
-
 </html>
+```
