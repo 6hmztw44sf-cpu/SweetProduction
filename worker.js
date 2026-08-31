@@ -1,4 +1,4 @@
-```javascript
+
 const OWNER = "6hmztw44sf-cpu";
 const REPO = "SweetProduction";
 const BRANCH = "main";
