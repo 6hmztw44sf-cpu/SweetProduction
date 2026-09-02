@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -40,6 +39,10 @@ button{
   border-radius:7px;
   cursor:pointer;
   font-size:14px;
+}
+
+button:hover{
+  opacity:.85;
 }
 
 header button{
@@ -142,6 +145,46 @@ textarea{
   margin-bottom:12px;
 }
 
+.media-upload{
+  border:1px dashed #bbb;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:15px;
+  background:#fafafa;
+}
+
+.media-upload strong{
+  display:block;
+  margin-bottom:8px;
+  font-size:14px;
+}
+
+.media-upload small{
+  display:block;
+  color:#777;
+  margin-bottom:10px;
+}
+
+.media-preview{
+  margin-top:12px;
+  border-radius:8px;
+  overflow:hidden;
+  background:#111;
+}
+
+.media-preview img,
+.media-preview video{
+  display:block;
+  width:100%;
+  max-height:400px;
+  object-fit:contain;
+}
+
+.upload-input{
+  margin-bottom:0;
+  background:#fff;
+}
+
 .status{
   position:fixed;
   bottom:20px;
@@ -153,6 +196,8 @@ textarea{
   border-radius:8px;
   display:none;
   z-index:50;
+  max-width:90%;
+  text-align:center;
 }
 
 .error{
@@ -172,7 +217,14 @@ textarea{
   font-size:18px;
 }
 
+hr{
+  border:0;
+  border-top:1px solid #eee;
+  margin:20px 0;
+}
+
 @media(max-width:600px){
+
   main{
     padding:20px 12px 80px;
   }
@@ -183,6 +235,14 @@ textarea{
 
   header strong{
     font-size:12px;
+  }
+
+  .block-head{
+    flex-wrap:wrap;
+  }
+
+  .block-head strong{
+    min-width:100px;
   }
 }
 </style>
@@ -197,582 +257,1254 @@ textarea{
 
 <main>
 
-  <section class="settings">
-    <h2>Design</h2>
+<section class="settings">
 
-    <label>Bakgrund</label>
-    <input
-      type="color"
-      id="bgColor"
-      onchange="updateSetting('bgColor',this.value)"
-    >
+<h2>Design</h2>
 
-    <label>Text</label>
-    <input
-      type="color"
-      id="textColor"
-      onchange="updateSetting('textColor',this.value)"
-    >
-
-    <label>Accent</label>
-    <input
-      type="color"
-      id="accentColor"
-      onchange="updateSetting('accentColor',this.value)"
-    >
-    <label>Typsnitt rubriker</label>
-<select
-  onchange="updateSetting('headingFont',this.value); render()"
+<label>Bakgrund</label>
+<input
+  type="color"
+  id="bgColor"
+  onchange="updateSetting('bgColor',this.value)"
 >
-  <option value="Gentle Sans">Gentle Sans</option>
-  <option value="Arial">Arial</option>
-  <option value="Helvetica">Helvetica</option>
-  <option value="Georgia">Georgia</option>
-  <option value="Times New Roman">Times New Roman</option>
-  <option value="Verdana">Verdana</option>
-  <option value="Trebuchet MS">Trebuchet MS</option>
-  <option value="Courier New">Courier New</option>
+
+<label>Text</label>
+<input
+  type="color"
+  id="textColor"
+  onchange="updateSetting('textColor',this.value)"
+>
+
+<label>Accent</label>
+<input
+  type="color"
+  id="accentColor"
+  onchange="updateSetting('accentColor',this.value)"
+>
+
+<label>Typsnitt rubriker</label>
+
+<select onchange="updateSetting('headingFont',this.value); render()">
+
+<option value="Gentle Sans">Gentle Sans</option>
+<option value="Arial">Arial</option>
+<option value="Helvetica">Helvetica</option>
+<option value="Georgia">Georgia</option>
+<option value="Times New Roman">Times New Roman</option>
+<option value="Verdana">Verdana</option>
+<option value="Trebuchet MS">Trebuchet MS</option>
+<option value="Courier New">Courier New</option>
+
 </select>
 
 <label>Typsnitt brödtext</label>
-<select
-  onchange="updateSetting('bodyFont',this.value); render()"
->
-  <option value="Gentle Sans">Gentle Sans</option>
-  <option value="Arial">Arial</option>
-  <option value="Helvetica">Helvetica</option>
-  <option value="Georgia">Georgia</option>
-  <option value="Times New Roman">Times New Roman</option>
-  <option value="Verdana">Verdana</option>
-  <option value="Trebuchet MS">Trebuchet MS</option>
-  <option value="Courier New">Courier New</option>
+
+<select onchange="updateSetting('bodyFont',this.value); render()">
+
+<option value="Gentle Sans">Gentle Sans</option>
+<option value="Arial">Arial</option>
+<option value="Helvetica">Helvetica</option>
+<option value="Georgia">Georgia</option>
+<option value="Times New Roman">Times New Roman</option>
+<option value="Verdana">Verdana</option>
+<option value="Trebuchet MS">Trebuchet MS</option>
+<option value="Courier New">Courier New</option>
+
 </select>
-  </section>
 
-  <div class="toolbar">
-    <button onclick="addBlock('hero')">+ Hero</button>
-    <button onclick="addBlock('statement')">+ Statement</button>
-    <button onclick="addBlock('text')">+ Text</button>
-    <button onclick="addBlock('image')">+ Bild</button>
-    <button onclick="addBlock('video')">+ Video</button>
-    <button onclick="addBlock('projects')">+ Projekt</button>
-    <button onclick="addBlock('about')">+ About</button>
-    <button onclick="addBlock('contact')">+ Contact</button>
-  </div>
+</section>
 
-  <div id="blocks"></div>
+
+<div class="toolbar">
+
+<button onclick="addBlock('hero')">+ Hero</button>
+<button onclick="addBlock('statement')">+ Statement</button>
+<button onclick="addBlock('text')">+ Text</button>
+<button onclick="addBlock('image')">+ Bild</button>
+<button onclick="addBlock('video')">+ Video</button>
+<button onclick="addBlock('projects')">+ Projekt</button>
+<button onclick="addBlock('about')">+ About</button>
+<button onclick="addBlock('contact')">+ Contact</button>
+
+</div>
+
+
+<div id="blocks"></div>
 
 </main>
 
+
 <div id="status" class="status"></div>
+
 
 <script>
 
 let content = {
-  settings:{
-    bgColor:"#080808",
-    textColor:"#f1efe9",
-    accentColor:"#f1efe9",
-    headingFont:"Arial",
-    bodyFont:"Arial",
-    customFonts:[]
-  },
-  blocks:[]
+
+settings:{
+bgColor:"#080808",
+textColor:"#f1efe9",
+accentColor:"#f1efe9",
+headingFont:"Arial",
+bodyFont:"Arial",
+customFonts:[]
+},
+
+blocks:[]
+
 };
 
-let dragged = null;
 
-const API = "https://sweetproduction-admin.frycts5yrr.workers.dev/content";
+let dragged=null;
+
+
+const API_BASE =
+"https://sweetproduction-admin.frycts5yrr.workers.dev";
+
+const API =
+API_BASE+"/content";
+
 
 function makeId(){
-  return Date.now().toString(36)+Math.random().toString(36).slice(2);
+
+return Date.now().toString(36)+
+Math.random().toString(36).slice(2);
+
 }
 
+
 function esc(value){
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
 }
+
 
 function showStatus(message,error=false){
 
-  const el=document.getElementById("status");
+const el=document.getElementById("status");
 
-  el.textContent=message;
-  el.classList.toggle("error",error);
-  el.style.display="block";
+el.textContent=message;
 
-  setTimeout(()=>{
-    el.style.display="none";
-  },3500);
+el.classList.toggle("error",error);
+
+el.style.display="block";
+
+setTimeout(()=>{
+
+el.style.display="none";
+
+},3500);
+
 }
+
+
+/* =========================
+   VANLIGA INPUTS
+========================= */
 
 function input(label,value,callback){
 
-  return `
-    <label>${esc(label)}</label>
-    <input
-      value="${esc(value)}"
-      oninput="${callback},this.value)"
-    >
-  `;
+return `
+
+<label>${esc(label)}</label>
+
+<input
+value="${esc(value)}"
+oninput="${callback},this.value)"
+>
+
+`;
+
 }
+
 
 function textarea(label,value,callback){
 
-  return `
-    <label>${esc(label)}</label>
-    <textarea
-      oninput="${callback},this.value)"
-    >${esc(value)}</textarea>
-  `;
+return `
+
+<label>${esc(label)}</label>
+
+<textarea
+oninput="${callback},this.value)"
+>${esc(value)}</textarea>
+
+`;
+
 }
+
+
+/* =========================
+   R2 UPLOAD
+========================= */
+
+async function uploadFile(file){
+
+if(!file) return null;
+
+try{
+
+showStatus("Laddar upp "+file.name+"...");
+
+const form=new FormData();
+
+form.append("file",file);
+
+const response=await fetch(
+API_BASE+"/upload",
+{
+method:"POST",
+body:form
+}
+);
+
+const result=await response.json();
+
+if(!response.ok || !result.success){
+
+throw new Error(
+result.error ||
+"Uppladdningen misslyckades"
+);
+
+}
+
+showStatus("Uppladdad ✓");
+
+return result;
+
+}catch(error){
+
+console.error(error);
+
+showStatus(
+"Uppladdningen misslyckades: "+
+error.message,
+true
+);
+
+return null;
+
+}
+
+}
+
+
+/* =========================
+   BILD
+========================= */
+
+async function handleImageUpload(i,inputEl){
+
+const file=inputEl.files?.[0];
+
+if(!file) return;
+
+const result=await uploadFile(file);
+
+if(!result) return;
+
+content.blocks[i].src=result.url;
+
+content.blocks[i].mediaKey=result.key;
+
+render();
+
+}
+
+
+/* =========================
+   VIDEO
+========================= */
+
+async function handleVideoUpload(i,inputEl){
+
+const file=inputEl.files?.[0];
+
+if(!file) return;
+
+const result=await uploadFile(file);
+
+if(!result) return;
+
+content.blocks[i].src=result.url;
+
+content.blocks[i].mediaKey=result.key;
+
+render();
+
+}
+
+
+/* =========================
+   POSTER
+========================= */
+
+async function handlePosterUpload(i,inputEl){
+
+const file=inputEl.files?.[0];
+
+if(!file) return;
+
+const result=await uploadFile(file);
+
+if(!result) return;
+
+content.blocks[i].poster=result.url;
+
+content.blocks[i].posterKey=result.key;
+
+render();
+
+}
+
+
+/* =========================
+   PROJEKT MEDIA
+========================= */
+
+async function handleProjectUpload(i,p,inputEl){
+
+const file=inputEl.files?.[0];
+
+if(!file) return;
+
+const result=await uploadFile(file);
+
+if(!result) return;
+
+content.blocks[i].projects[p].image=result.url;
+
+content.blocks[i].projects[p].mediaKey=result.key;
+
+render();
+
+}
+
+
+/* =========================
+   UPDATE
+========================= */
 
 function updateSetting(key,value){
 
-  content.settings[key]=value;
+content.settings[key]=value;
+
 }
+
 
 function update(i,key,value){
 
-  content.blocks[i][key]=value;
+content.blocks[i][key]=value;
+
 }
+
 
 function updateProject(i,p,key,value){
 
-  content.blocks[i].projects[p][key]=value;
+content.blocks[i].projects[p][key]=value;
+
 }
+
+
+/* =========================
+   MEDIA PREVIEW
+========================= */
+
+function imagePreview(src){
+
+if(!src) return "";
+
+return `
+
+<div class="media-preview">
+
+<img
+src="${esc(src)}"
+alt=""
+loading="lazy"
+>
+
+</div>
+
+`;
+
+}
+
+
+function videoPreview(src){
+
+if(!src) return "";
+
+return `
+
+<div class="media-preview">
+
+<video
+src="${esc(src)}"
+controls
+muted
+playsinline
+preload="metadata"
+></video>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+   MEDIA UPLOAD UI
+========================= */
+
+function imageUploadUI(i,block){
+
+return `
+
+<div class="media-upload">
+
+<strong>Ladda upp bild</strong>
+
+<small>
+Välj en bild från mobilen eller datorn.
+Den laddas automatiskt upp.
+</small>
+
+<input
+class="upload-input"
+type="file"
+accept="image/*"
+onchange="handleImageUpload(${i},this)"
+>
+
+${imagePreview(block.src)}
+
+</div>
+
+`;
+
+}
+
+
+function videoUploadUI(i,block){
+
+return `
+
+<div class="media-upload">
+
+<strong>Ladda upp video</strong>
+
+<small>
+Välj en video från mobilen eller datorn.
+Den laddas automatiskt upp.
+</small>
+
+<input
+class="upload-input"
+type="file"
+accept="video/*"
+onchange="handleVideoUpload(${i},this)"
+>
+
+${videoPreview(block.src)}
+
+</div>
+
+`;
+
+}
+
+
+function posterUploadUI(i,block){
+
+return `
+
+<div class="media-upload">
+
+<strong>Ladda upp posterbild</strong>
+
+<small>
+Valfri bild som visas innan videon startar.
+</small>
+
+<input
+class="upload-input"
+type="file"
+accept="image/*"
+onchange="handlePosterUpload(${i},this)"
+>
+
+${imagePreview(block.poster)}
+
+</div>
+
+`;
+
+}
+
+
+function projectUploadUI(i,p,pi){
+
+return `
+
+<div class="media-upload">
+
+<strong>Ladda upp ${p.type==="video"?"video":"bild"}</strong>
+
+<small>
+Filen laddas automatiskt upp till Sweet Production.
+</small>
+
+<input
+class="upload-input"
+type="file"
+accept="image/*,video/*"
+onchange="handleProjectUpload(${i},${pi},this)"
+>
+
+${
+p.image
+?
+(
+p.type==="video"
+?
+videoPreview(p.image)
+:
+imagePreview(p.image)
+)
+:
+""
+}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+   BLOCK FIELDS
+========================= */
 
 function fields(block,i){
 
-  if(block.type==="hero"){
-    return `
-      ${input("Plats",block.location||"",
-        `update(${i},'location'`)}
 
-      ${textarea("Rubrik",block.title||"",
-        `update(${i},'title'`)}
-    `;
-  }
+if(block.type==="hero"){
 
-  if(block.type==="statement"){
-    return textarea(
-      "Text",
-      block.text||"",
-      `update(${i},'text'`
-    );
-  }
+return `
 
-  if(block.type==="text"){
-    return textarea(
-      "Text",
-      block.text||"",
-      `update(${i},'text'`
-    );
-  }
+${input(
+"Plats",
+block.location||"",
+`update(${i},'location'`
+)}
 
-  if(block.type==="image"){
-    return `
-      ${input(
-        "Bild URL",
-        block.src||"",
-        `update(${i},'src'`
-      )}
+${textarea(
+"Rubrik",
+block.title||"",
+`update(${i},'title'`
+)}
 
-      ${input(
-        "Alt-text",
-        block.alt||"",
-        `update(${i},'alt'`
-      )}
-    `;
-  }
+`;
 
-  if(block.type==="video"){
-    return `
-      <label>Format</label>
-
-      <select onchange="update(${i},'ratio',this.value)">
-        <option value="16:9"
-          ${block.ratio==="16:9"?"selected":""}>
-          16:9
-        </option>
-
-        <option value="9:16"
-          ${block.ratio==="9:16"?"selected":""}>
-          9:16
-        </option>
-      </select>
-
-      ${input(
-        "Video URL",
-        block.src||"",
-        `update(${i},'src'`
-      )}
-
-      ${input(
-        "Poster URL",
-        block.poster||"",
-        `update(${i},'poster'`
-      )}
-    `;
-  }
-
-  if(block.type==="projects"){
-
-    let html=`
-      ${input(
-        "Rubrik",
-        block.title||"",
-        `update(${i},'title'`
-      )}
-
-      <hr>
-    `;
-
-    (block.projects||[]).forEach((p,pi)=>{
-
-      html+=`
-        <div class="project">
-
-          <div class="project-head">
-            <strong>Projekt ${pi+1}</strong>
-
-            <button
-              class="delete"
-              onclick="deleteProject(${i},${pi})">
-              Ta bort
-            </button>
-          </div>
-
-          ${input(
-            "Titel",
-            p.title||"",
-            `updateProject(${i},${pi},'title'`
-          )}
-
-          ${input(
-            "Kategori",
-            p.category||"",
-            `updateProject(${i},${pi},'category'`
-          )}
-
-          ${input(
-            "Bild / Video URL",
-            p.image||"",
-            `updateProject(${i},${pi},'image'`
-          )}
-
-          <label>Media</label>
-
-          <select
-            onchange="updateProject(${i},${pi},'type',this.value)">
-            <option value="image"
-              ${p.type==="image"?"selected":""}>
-              Bild
-            </option>
-
-            <option value="video"
-              ${p.type==="video"?"selected":""}>
-              Video
-            </option>
-          </select>
-
-        </div>
-      `;
-    });
-
-    html+=`
-      <button onclick="addProject(${i})">
-        + Lägg till projekt
-      </button>
-    `;
-
-    return html;
-  }
-
-  if(block.type==="about"){
-    return `
-      ${textarea(
-        "Rubrik",
-        block.title||"",
-        `update(${i},'title'`
-      )}
-
-      ${textarea(
-        "Text",
-        block.text||"",
-        `update(${i},'text'`
-      )}
-    `;
-  }
-
-  if(block.type==="contact"){
-    return `
-      ${textarea(
-        "Rubrik",
-        block.title||"",
-        `update(${i},'title'`
-      )}
-
-      ${input(
-        "E-post",
-        block.email||"",
-        `update(${i},'email'`
-      )}
-    `;
-  }
-
-  return "";
 }
+
+
+if(block.type==="statement"){
+
+return textarea(
+"Text",
+block.text||"",
+`update(${i},'text'`
+);
+
+}
+
+
+if(block.type==="text"){
+
+return textarea(
+"Text",
+block.text||"",
+`update(${i},'text'`
+);
+
+}
+
+
+if(block.type==="image"){
+
+return `
+
+${imageUploadUI(i,block)}
+
+${input(
+"Bild URL",
+block.src||"",
+`update(${i},'src'`
+)}
+
+${input(
+"Alt-text",
+block.alt||"",
+`update(${i},'alt'`
+)}
+
+`;
+
+}
+
+
+if(block.type==="video"){
+
+return `
+
+<label>Format</label>
+
+<select
+onchange="update(${i},'ratio',this.value)"
+>
+
+<option
+value="16:9"
+${block.ratio==="16:9"?"selected":""}
+>
+16:9
+</option>
+
+<option
+value="9:16"
+${block.ratio==="9:16"?"selected":""}
+>
+9:16
+</option>
+
+</select>
+
+${videoUploadUI(i,block)}
+
+${input(
+"Video URL",
+block.src||"",
+`update(${i},'src'`
+)}
+
+${posterUploadUI(i,block)}
+
+${input(
+"Poster URL",
+block.poster||"",
+`update(${i},'poster'`
+)}
+
+`;
+
+}
+
+
+if(block.type==="projects"){
+
+let html=`
+
+${input(
+"Rubrik",
+block.title||"",
+`update(${i},'title'`
+)}
+
+<hr>
+
+`;
+
+
+(block.projects||[]).forEach((p,pi)=>{
+
+html+=`
+
+<div class="project">
+
+<div class="project-head">
+
+<strong>
+Projekt ${pi+1}
+</strong>
+
+<button
+class="delete"
+onclick="deleteProject(${i},${pi})"
+>
+Ta bort
+</button>
+
+</div>
+
+
+${input(
+"Titel",
+p.title||"",
+`updateProject(${i},${pi},'title'`
+)}
+
+
+${input(
+"Kategori",
+p.category||"",
+`updateProject(${i},${pi},'category'`
+)}
+
+
+<label>Media</label>
+
+<select
+onchange="updateProject(${i},${pi},'type',this.value);render()"
+>
+
+<option
+value="image"
+${p.type==="image"?"selected":""}
+>
+Bild
+</option>
+
+<option
+value="video"
+${p.type==="video"?"selected":""}
+>
+Video
+</option>
+
+</select>
+
+
+${projectUploadUI(i,p,pi)}
+
+
+${input(
+"Bild / Video URL",
+p.image||"",
+`updateProject(${i},${pi},'image'`
+)}
+
+</div>
+
+`;
+
+});
+
+
+html+=`
+
+<button onclick="addProject(${i})">
++ Lägg till projekt
+</button>
+
+`;
+
+return html;
+
+}
+
+
+if(block.type==="about"){
+
+return `
+
+${textarea(
+"Rubrik",
+block.title||"",
+`update(${i},'title'`
+)}
+
+${textarea(
+"Text",
+block.text||"",
+`update(${i},'text'`
+)}
+
+`;
+
+}
+
+
+if(block.type==="contact"){
+
+return `
+
+${textarea(
+"Rubrik",
+block.title||"",
+`update(${i},'title'`
+)}
+
+${input(
+"E-post",
+block.email||"",
+`update(${i},'email'`
+)}
+
+`;
+
+}
+
+
+return "";
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
 
 function render(){
-    document.querySelector(
-    'select[onchange*="headingFont"]'
-  ).value =
-    content.settings.headingFont || "Arial";
 
-  document.querySelector(
-    'select[onchange*="bodyFont"]'
-  ).value =
-    content.settings.bodyFont || "Arial";
 
-  document.getElementById("bgColor").value =
-    content.settings.bgColor || "#080808";
+const headingSelect=
+document.querySelector(
+'select[onchange*="headingFont"]'
+);
 
-  document.getElementById("textColor").value =
-    content.settings.textColor || "#f1efe9";
+const bodySelect=
+document.querySelector(
+'select[onchange*="bodyFont"]'
+);
 
-  document.getElementById("accentColor").value =
-    content.settings.accentColor || "#f1efe9";
 
-  const root=document.getElementById("blocks");
+if(headingSelect){
 
-  root.innerHTML="";
+headingSelect.value=
+content.settings.headingFont||"Arial";
 
-  content.blocks.forEach((block,index)=>{
-
-    const el=document.createElement("div");
-
-    el.className="block";
-    el.draggable=true;
-
-    el.addEventListener("dragstart",()=>{
-      dragged=index;
-      el.classList.add("dragging");
-    });
-
-    el.addEventListener("dragend",()=>{
-      dragged=null;
-      el.classList.remove("dragging");
-    });
-
-    el.addEventListener("dragover",e=>{
-      e.preventDefault();
-    });
-
-    el.addEventListener("drop",e=>{
-
-      e.preventDefault();
-
-      if(dragged===null || dragged===index) return;
-
-      const moved=content.blocks.splice(dragged,1)[0];
-
-      content.blocks.splice(index,0,moved);
-
-      dragged=null;
-
-      render();
-    });
-
-    el.innerHTML=`
-      <div class="block-head">
-
-        <span class="drag">☰</span>
-
-        <strong>${esc(block.type)}</strong>
-
-        <button onclick="duplicateBlock(${index})">
-          Duplicera
-        </button>
-
-        <button
-          class="delete"
-          onclick="deleteBlock(${index})">
-          Ta bort
-        </button>
-
-      </div>
-
-      <div class="block-body">
-        ${fields(block,index)}
-      </div>
-    `;
-
-    root.appendChild(el);
-  });
 }
+
+
+if(bodySelect){
+
+bodySelect.value=
+content.settings.bodyFont||"Arial";
+
+}
+
+
+document.getElementById("bgColor").value=
+content.settings.bgColor||"#080808";
+
+document.getElementById("textColor").value=
+content.settings.textColor||"#f1efe9";
+
+document.getElementById("accentColor").value=
+content.settings.accentColor||"#f1efe9";
+
+
+const root=document.getElementById("blocks");
+
+root.innerHTML="";
+
+
+content.blocks.forEach((block,index)=>{
+
+const el=document.createElement("div");
+
+el.className="block";
+
+el.draggable=true;
+
+
+el.addEventListener("dragstart",()=>{
+
+dragged=index;
+
+el.classList.add("dragging");
+
+});
+
+
+el.addEventListener("dragend",()=>{
+
+dragged=null;
+
+el.classList.remove("dragging");
+
+});
+
+
+el.addEventListener("dragover",e=>{
+
+e.preventDefault();
+
+});
+
+
+el.addEventListener("drop",e=>{
+
+e.preventDefault();
+
+if(
+dragged===null ||
+dragged===index
+)return;
+
+
+const moved=
+content.blocks.splice(
+dragged,
+1
+)[0];
+
+
+content.blocks.splice(
+index,
+0,
+moved
+);
+
+
+dragged=null;
+
+render();
+
+});
+
+
+el.innerHTML=`
+
+<div class="block-head">
+
+<span class="drag">
+☰
+</span>
+
+<strong>
+${esc(block.type)}
+</strong>
+
+<button
+onclick="duplicateBlock(${index})"
+>
+Duplicera
+</button>
+
+<button
+class="delete"
+onclick="deleteBlock(${index})"
+>
+Ta bort
+</button>
+
+</div>
+
+<div class="block-body">
+
+${fields(block,index)}
+
+</div>
+
+`;
+
+
+root.appendChild(el);
+
+});
+
+}
+
+
+/* =========================
+   PROJECTS
+========================= */
 
 function addProject(i){
 
-  if(!content.blocks[i].projects)
-    content.blocks[i].projects=[];
+if(!content.blocks[i].projects)
+content.blocks[i].projects=[];
 
-  content.blocks[i].projects.push({
-    id:makeId(),
-    title:"Nytt projekt",
-    category:"Film / Content",
-    image:"",
-    type:"image"
-  });
 
-  render();
+content.blocks[i].projects.push({
+
+id:makeId(),
+
+title:"Nytt projekt",
+
+category:"Film / Content",
+
+image:"",
+
+type:"image"
+
+});
+
+
+render();
+
 }
+
 
 function deleteProject(i,p){
 
-  content.blocks[i].projects.splice(p,1);
+content.blocks[i].projects.splice(p,1);
 
-  render();
+render();
+
 }
+
+
+/* =========================
+   BLOCKS
+========================= */
 
 function addBlock(type){
 
-  const block={
-    id:makeId(),
-    type
-  };
+const block={
 
-  if(type==="hero"){
-    block.location="Stockholm · Sweden";
-    block.title="Ny rubrik";
-  }
+id:makeId(),
 
-  if(type==="statement"){
-    block.text="Ny statement";
-  }
+type
 
-  if(type==="text"){
-    block.text="Ny text";
-  }
+};
 
-  if(type==="image"){
-    block.src="";
-    block.alt="";
-  }
 
-  if(type==="video"){
-    block.ratio="16:9";
-    block.src="";
-    block.poster="";
-  }
+if(type==="hero"){
 
-  if(type==="projects"){
-    block.title="Selected work";
-    block.projects=[];
-  }
+block.location="Stockholm · Sweden";
 
-  if(type==="about"){
-    block.title="We create\nvisual stories.";
-    block.text="";
-  }
+block.title="Ny rubrik";
 
-  if(type==="contact"){
-    block.title="Let's make\nsomething sweet.";
-    block.email="hello@sweetproduction.se";
-  }
-
-  content.blocks.push(block);
-
-  render();
 }
+
+
+if(type==="statement"){
+
+block.text="Ny statement";
+
+}
+
+
+if(type==="text"){
+
+block.text="Ny text";
+
+}
+
+
+if(type==="image"){
+
+block.src="";
+
+block.alt="";
+
+}
+
+
+if(type==="video"){
+
+block.ratio="16:9";
+
+block.src="";
+
+block.poster="";
+
+}
+
+
+if(type==="projects"){
+
+block.title="Selected work";
+
+block.projects=[];
+
+}
+
+
+if(type==="about"){
+
+block.title=
+"We create\nvisual stories.";
+
+block.text="";
+
+}
+
+
+if(type==="contact"){
+
+block.title=
+"Let's make\nsomething sweet.";
+
+block.email=
+"hello@sweetproduction.se";
+
+}
+
+
+content.blocks.push(block);
+
+render();
+
+}
+
+
+/* =========================
+   DELETE / DUPLICATE
+========================= */
 
 function deleteBlock(i){
 
-  if(!confirm("Ta bort blocket?")) return;
+if(!confirm("Ta bort blocket?"))
+return;
 
-  content.blocks.splice(i,1);
 
-  render();
+content.blocks.splice(i,1);
+
+render();
+
 }
+
 
 function duplicateBlock(i){
 
-  const copy=JSON.parse(
-    JSON.stringify(content.blocks[i])
-  );
+const copy=
+JSON.parse(
+JSON.stringify(
+content.blocks[i]
+)
+);
 
-  copy.id=makeId();
 
-  content.blocks.splice(i+1,0,copy);
+copy.id=makeId();
 
-  render();
+
+content.blocks.splice(
+i+1,
+0,
+copy
+);
+
+
+render();
+
 }
+
+
+/* =========================
+   LOAD
+========================= */
 
 async function load(){
 
-  try{
+try{
 
-    const response=await fetch(API,{
-      cache:"no-store"
-    });
-
-    if(!response.ok){
-      throw new Error(
-        "Servern svarade HTTP "+response.status
-      );
-    }
-
-    content=await response.json();
-
-    render();
-
-  }catch(error){
-
-    console.error(error);
-
-    showStatus(
-      "Kunde inte läsa innehållet: "+error.message,
-      true
-    );
-  }
+const response=
+await fetch(
+API,
+{
+cache:"no-store"
 }
+);
+
+
+if(!response.ok){
+
+throw new Error(
+"Servern svarade HTTP "+
+response.status
+);
+
+}
+
+
+content=
+await response.json();
+
+
+render();
+
+
+}catch(error){
+
+console.error(error);
+
+
+showStatus(
+"Kunde inte läsa innehållet: "+
+error.message,
+true
+);
+
+}
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
 
 async function save(){
 
-  try{
+try{
 
-    const response=await fetch(API,{
-      method:"PUT",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify(content)
-    });
+const response=
+await fetch(
+API,
+{
+method:"PUT",
 
-    const result=await response.json();
+headers:{
+"Content-Type":
+"application/json"
+},
 
-    if(!response.ok){
-      throw new Error(
-        result.error || "Kunde inte spara"
-      );
-    }
+body:
+JSON.stringify(content)
 
-    showStatus("Sparat på hemsidan ✓");
-
-  }catch(error){
-
-    console.error(error);
-
-    showStatus(
-      "Kunde inte spara: "+error.message,
-      true
-    );
-  }
 }
+);
+
+
+const result=
+await response.json();
+
+
+if(!response.ok){
+
+throw new Error(
+result.error ||
+"Kunde inte spara"
+);
+
+}
+
+
+showStatus(
+"Sparat på hemsidan ✓"
+);
+
+
+}catch(error){
+
+console.error(error);
+
+
+showStatus(
+"Kunde inte spara: "+
+error.message,
+true
+);
+
+}
+
+}
+
+
+/* START */
 
 load();
 
@@ -780,4 +1512,3 @@ load();
 
 </body>
 </html>
-```
