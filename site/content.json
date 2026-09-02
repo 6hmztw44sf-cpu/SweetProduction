@@ -5,6 +5,11 @@
     "accentColor": "#68efe9",
     "headingFont": "Arial",
     "bodyFont": "Gentle Sans",
+    "headingSize": "64px",
+    "bodySize": "18px",
+    "sectionSpacing": "100px",
+    "radius": "0px",
+    "portfolioGap": "16px",
     "customFonts": []
   },
   "blocks": [
@@ -25,24 +30,31 @@
       "title": "Selected work",
       "projects": [
         {
+          "width": 33,
+          "fit": "cover",
           "id": "mtjwlkzkd70ssfuoaot",
           "title": "Nytt projekt",
           "category": "Film / Content",
           "image": "https://sweetproduction-admin.frycts5yrr.workers.dev/media/media%2F683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png",
           "type": "image",
-          "width": 33,
           "mediaKey": "media/683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png"
         },
         {
+          "width": 75,
+          "fit": "cover",
           "id": "mtjwlxx0jyf5uazfcgd",
           "title": "Nytt projekt",
           "category": "Film / Content",
           "image": "https://sweetproduction-admin.frycts5yrr.workers.dev/media/media%2F267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png",
           "type": "image",
-          "width": 75,
           "mediaKey": "media/267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png"
         }
       ]
+    },
+    {
+      "type": "image",
+      "src": "",
+      "alt": ""
     },
     {
       "id": "about-1",
@@ -55,6 +67,34 @@
       "type": "contact",
       "title": "Visuals that\nstay with you.\n\n0709501042",
       "email": "Eliasuhreolofsson@hotmail.com"
+    },
+    {
+      "type": "text",
+      "text": "Skriv din text här."
+    },
+    {
+      "type": "projects",
+      "title": "Work",
+      "projects": [
+        {
+          "id": "1788343296288-7j8auhazvo",
+          "title": "Nytt projekt",
+          "category": "Film · Foto",
+          "image": "",
+          "type": "image",
+          "width": 33,
+          "fit": "cover"
+        },
+        {
+          "id": "1788343320231-gag7j57eug8",
+          "title": "Nytt projekt",
+          "category": "Film · Foto",
+          "image": "",
+          "type": "image",
+          "width": 50,
+          "fit": "cover"
+        }
+      ]
     }
   ]
 }
