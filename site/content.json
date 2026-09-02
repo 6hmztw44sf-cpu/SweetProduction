@@ -93,6 +93,15 @@
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2F8311f7ff-23df-4c2d-a479-abe83492eb4c-zROp9N8snGb3m7wj_fzwRDYPbeN0jz23ILL6WE0PRMi8Mz3Eq9alK0bdqidM13duiFzsBb_r5aGXJRbK.jpeg",
           "type": "image"
+        },
+        {
+          "id": "1788346422873-dxpvjieqrih",
+          "title": "Nytt projekt",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2Fd30aa1a3-05eb-400f-9964-9103d262daa5-Firefly_Gemini-Flash_panda-is-looking-at-the-dragon-and-are-happy-78234-1-.png",
+          "type": "image",
+          "width": 50,
+          "fit": "cover"
         }
       ]
     }
