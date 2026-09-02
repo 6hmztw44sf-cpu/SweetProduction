@@ -86,8 +86,17 @@
   width:100%;
   height:auto;
   max-width:100%;
-  object-fit:cover;
   transition:transform .5s ease;
+}
+
+.project .media.fit-cover img,
+.project .media.fit-cover video{
+  object-fit:cover;
+}
+
+.project .media.fit-contain img,
+.project .media.fit-contain video{
+  object-fit:contain;
 }
 
 .project .media:hover img,
