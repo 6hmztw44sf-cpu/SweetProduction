@@ -35,7 +35,7 @@
           "id": "mtjwlkzkd70ssfuoaot",
           "title": "Nytt projekt",
           "category": "Film / Content",
-          "image": "https://sweetproduction-admin.frycts5yrr.workers.dev/media/media%2F683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png",
+          "image": "https://sweetproduction.se/media/media%2F683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png",
           "type": "image",
           "mediaKey": "media/683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png"
         },
@@ -45,7 +45,7 @@
           "id": "mtjwlxx0jyf5uazfcgd",
           "title": "Nytt projekt",
           "category": "Film / Content",
-          "image": "https://sweetproduction-admin.frycts5yrr.workers.dev/media/media%2F267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png",
+          "image": "https://sweetproduction.se/media/media%2F267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png",
           "type": "image",
           "mediaKey": "media/267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png"
         }
@@ -77,22 +77,22 @@
       "title": "Work",
       "projects": [
         {
+          "width": 25,
+          "fit": "contain",
           "id": "1788345750290-v6z4hkalxri",
           "title": "Nytt projekt",
           "category": "Film · Foto",
           "image": "",
-          "type": "image",
-          "width": 75,
-          "fit": "contain"
+          "type": "image"
         },
         {
+          "width": 25,
+          "fit": "contain",
           "id": "1788345750836-i8ajgv7zo2q",
           "title": "Nytt projekt",
           "category": "Film · Foto",
           "image": "",
-          "type": "image",
-          "width": 25,
-          "fit": "contain"
+          "type": "image"
         }
       ]
     }
