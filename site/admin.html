@@ -239,13 +239,29 @@ async function uploadBlockMedia(i,input,kind){
 }
 
 function setProjectWidth(i,pi,width){
- content.blocks[i].projects[pi].width=width;
- render();
+  if(!content.blocks[i] || !content.blocks[i].projects[pi]) return;
+
+  content.blocks[i].projects[pi].width=Number(width);
+
+  const projects = document.querySelectorAll(
+    `#blocks .block:nth-child(${i+1}) .project`
+  );
+
+  const project = projects[pi];
+  if(!project) return;
+
+  project.querySelectorAll(".widths button").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.textContent.trim() === Number(width)+"%"
+    );
+  });
 }
 
-function removeProject(i,pi){
- content.blocks[i].projects.splice(pi,1);
- render();
+function setProjectFit(i,pi,fit){
+  if(!content.blocks[i] || !content.blocks[i].projects[pi]) return;
+
+  content.blocks[i].projects[pi].fit=fit;
 }
 
 function addProject(i){
