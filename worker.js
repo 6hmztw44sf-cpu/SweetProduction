@@ -131,25 +131,40 @@ async function getContent(env) {
     env
   );
 }
-function normalizeMediaUrls(value){
-  if(Array.isArray(value)){
+
+
+// =========================
+// MEDIA URL FIX
+// =========================
+
+function normalizeMediaUrls(value) {
+
+  if (Array.isArray(value)) {
     return value.map(normalizeMediaUrls);
   }
 
-  if(value && typeof value === "object"){
+  if (value && typeof value === "object") {
+
     const out = {};
 
-    for(const [key, val] of Object.entries(value)){
-      if(
-        (key === "image" || key === "src" || key === "poster") &&
+    for (const [key, val] of Object.entries(value)) {
+
+      if (
+        (key === "image" ||
+         key === "src" ||
+         key === "poster") &&
         typeof val === "string"
-      ){
+      ) {
+
         out[key] = val.replace(
           "https://sweetproduction-admin.frycts5yrr.workers.dev/media/",
           "https://sweetproduction.se/media/"
         );
+
       } else {
-        out[key] = normalizeMediaUrls(val);
+
+        out[key] =
+          normalizeMediaUrls(val);
       }
     }
 
@@ -159,10 +174,24 @@ function normalizeMediaUrls(value){
   return value;
 }
 
+
+// =========================
+// SAVE CONTENT
+// =========================
+
 async function saveContent(body, env) {
 
-  const normalized = normalizeMediaUrls(body);
-const encoded = encodeBase64(JSON.stringify(normalized,null,2));
+  const normalized =
+    normalizeMediaUrls(body);
+
+  const encoded =
+    encodeBase64(
+      JSON.stringify(
+        normalized,
+        null,
+        2
+      )
+    );
 
   for (
     let attempt = 0;
@@ -181,6 +210,7 @@ const encoded = encodeBase64(JSON.stringify(normalized,null,2));
           method: "PUT",
 
           body: JSON.stringify({
+
             message:
               "Update website content",
 
@@ -208,7 +238,10 @@ const encoded = encodeBase64(JSON.stringify(normalized,null,2));
 
         await new Promise(
           resolve =>
-            setTimeout(resolve, 1000)
+            setTimeout(
+              resolve,
+              1000
+            )
         );
 
         continue;
@@ -296,8 +329,14 @@ async function uploadMedia(
   // Rensa filnamnet
   const safeName =
     originalName
-      .replace(/[^a-zA-Z0-9._-]/g, "-")
-      .replace(/-+/g, "-");
+      .replace(
+        /[^a-zA-Z0-9._-]/g,
+        "-"
+      )
+      .replace(
+        /-+/g,
+        "-"
+      );
 
 
   const extension =
@@ -310,8 +349,14 @@ async function uploadMedia(
 
   const baseName =
     safeName
-      .replace(extension, "")
-      .slice(0, 80);
+      .replace(
+        extension,
+        ""
+      )
+      .slice(
+        0,
+        80
+      );
 
 
   const id =
@@ -335,25 +380,34 @@ async function uploadMedia(
   );
 
 
+  // ALLA nya mediafiler använder huvuddomänen
   const url =
-    const url =
-  `https://sweetproduction.se/media/${encodeURIComponent(key)}`;
+    `https://sweetproduction.se/media/${encodeURIComponent(key)}`;
 
 
   return new Response(
     JSON.stringify({
-      success: true,
+
+      success:
+        true,
+
       url,
+
       key,
+
       filename:
         originalName,
+
       type:
         file.type,
+
       size:
         file.size
+
     }),
     {
       status: 200,
+
       headers:
         corsHeaders(
           request.headers.get("Origin") || ""
@@ -422,20 +476,17 @@ async function serveMedia(
   const headers =
     new Headers();
 
-
   object.writeHttpMetadata(
     headers
   );
 
-
   headers.set(
-    "ETag",
+    "etag",
     object.httpEtag
   );
 
-
   headers.set(
-    "Cache-Control",
+    "cache-control",
     "public, max-age=31536000, immutable"
   );
 
@@ -496,7 +547,9 @@ async function serveSite(
     files[pathname];
 
 
-  if (!file) return null;
+  if (!file) {
+    return null;
+  }
 
 
   const response =
@@ -522,6 +575,7 @@ async function serveSite(
       status: 200,
 
       headers: {
+
         "Content-Type":
           file[1],
 
@@ -639,6 +693,7 @@ export default {
 
         return new Response(
           JSON.stringify({
+
             success:
               true,
 
@@ -651,6 +706,7 @@ export default {
             permissions:
               repo.permissions ||
               null
+
           }),
           {
             status: 200,
@@ -673,7 +729,7 @@ export default {
           await getContent(env);
 
 
-        const content =
+        let content =
           JSON.parse(
             decodeBase64(
               file.content
@@ -681,8 +737,17 @@ export default {
           );
 
 
+        // Fixar gamla media-URL:er automatiskt
+        content =
+          normalizeMediaUrls(
+            content
+          );
+
+
         return new Response(
-          JSON.stringify(content),
+          JSON.stringify(
+            content
+          ),
           {
             status: 200,
             headers
@@ -762,8 +827,9 @@ export default {
           );
 
 
-        if (site)
+        if (site) {
           return site;
+        }
       }
 
 
@@ -786,9 +852,11 @@ export default {
 
       return new Response(
         JSON.stringify({
+
           error:
             error.message ||
             "Unknown error"
+
         }),
         {
           status: 500,
