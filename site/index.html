@@ -8,7 +8,9 @@
 <title>Sweet Production</title>
 
 <link rel="stylesheet" href="style.css">
-  <style>
+
+<style>
+
 @font-face{
   font-family:"Gentle Sans";
   src:url("Gentle%20Sans%20Regular.ttf") format("truetype");
@@ -16,9 +18,235 @@
   font-style:normal;
   font-display:swap;
 }
+
+
+/* =========================
+   PORTFOLIO
+========================= */
+
+.work{
+  width:100%;
+  padding:80px 5vw;
+}
+
+.section-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
+}
+
+.projects{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  align-items:flex-start;
+}
+
+.project{
+  flex:0 0 calc(50% - 8px);
+  min-width:0;
+}
+
+.project[data-width="25"]{
+  flex-basis:calc(25% - 12px);
+}
+
+.project[data-width="33"]{
+  flex-basis:calc(33.333% - 11px);
+}
+
+.project[data-width="50"]{
+  flex-basis:calc(50% - 8px);
+}
+
+.project[data-width="66"]{
+  flex-basis:calc(66.666% - 6px);
+}
+
+.project[data-width="75"]{
+  flex-basis:calc(75% - 4px);
+}
+
+.project[data-width="100"]{
+  flex-basis:100%;
+}
+
+.project .media{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  background:#111;
+  cursor:pointer;
+}
+
+.project .media img,
+.project .media video{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  object-fit:cover;
+  transition:transform .5s ease;
+}
+
+.project .media:hover img,
+.project .media:hover video{
+  transform:scale(1.02);
+}
+
+.project .meta{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:10px 2px 20px;
+}
+
+.project .meta strong{
+  font-size:14px;
+}
+
+.project .meta small{
+  font-size:12px;
+  opacity:.6;
+}
+
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(0,0,0,.94);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:30px;
+}
+
+.lightbox.open{
+  display:flex;
+}
+
+.lightbox-content{
+  position:relative;
+  width:min(1400px,94vw);
+  max-height:92vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.lightbox-content img,
+.lightbox-content video{
+  display:block;
+  max-width:100%;
+  max-height:88vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+}
+
+.lightbox-close{
+  position:fixed;
+  top:20px;
+  right:25px;
+  z-index:10000;
+  width:45px;
+  height:45px;
+  border:0;
+  border-radius:50%;
+  background:#fff;
+  color:#111;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.lightbox-title{
+  position:fixed;
+  bottom:20px;
+  left:25px;
+  color:#fff;
+  font-size:14px;
+}
+
+@media(max-width:700px){
+
+  .work{
+    padding:60px 15px;
+  }
+
+  .projects{
+    gap:10px;
+  }
+
+  .project,
+  .project[data-width="25"],
+  .project[data-width="33"],
+  .project[data-width="50"],
+  .project[data-width="66"],
+  .project[data-width="75"],
+  .project[data-width="100"]{
+    flex-basis:100%;
+  }
+
+  .project .meta{
+    padding-bottom:15px;
+  }
+
+  .lightbox{
+    padding:15px;
+  }
+
+}
+
+
+/* =========================
+   SINGLE IMAGE / VIDEO BLOCKS
+========================= */
+
+.custom-image{
+  width:100%;
+  padding:40px 5vw;
+}
+
+.custom-image img{
+  display:block;
+  width:100%;
+  max-width:1400px;
+  height:auto;
+  max-height:90vh;
+  object-fit:contain;
+  margin:auto;
+}
+
+.custom-video{
+  width:100%;
+  padding:40px 5vw;
+  display:flex;
+  justify-content:center;
+}
+
+.custom-video video{
+  display:block;
+  width:100%;
+  max-width:1400px;
+  max-height:90vh;
+  height:auto;
+  object-fit:contain;
+}
+
+.custom-video.vertical video{
+  max-width:600px;
+}
+
 </style>
 
 </head>
+
 
 <body>
 
@@ -36,7 +264,9 @@
 
 </header>
 
+
 <main id="page"></main>
+
 
 <footer>
 
@@ -47,20 +277,54 @@
 </footer>
 
 
+<!-- LIGHTBOX -->
+
+<div
+  class="lightbox"
+  id="lightbox"
+  aria-hidden="true"
+>
+
+<button
+  class="lightbox-close"
+  id="lightboxClose"
+  aria-label="Stäng"
+>
+×
+</button>
+
+<div
+  class="lightbox-content"
+  id="lightboxContent"
+></div>
+
+<div
+  class="lightbox-title"
+  id="lightboxTitle"
+></div>
+
+</div>
+
+
 <script>
 
-const fallback = {
 
-  settings:{
-    bgColor:"#080808",
-    textColor:"#f1efe9",
-    accentColor:"#f1efe9",
-    headingFont:"Arial",
-    bodyFont:"Arial",
-    customFonts:[]
-  },
+/* =========================
+   FALLBACK
+========================= */
 
-  blocks:[]
+const fallback={
+
+settings:{
+bgColor:"#080808",
+textColor:"#f1efe9",
+accentColor:"#f1efe9",
+headingFont:"Arial",
+bodyFont:"Arial",
+customFonts:[]
+},
+
+blocks:[]
 
 };
 
@@ -71,12 +335,12 @@ const fallback = {
 
 function esc(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
@@ -87,67 +351,242 @@ function esc(value){
 
 function applySettings(settings){
 
-  const s = settings || fallback.settings;
-
-  document.documentElement.style.setProperty(
-    "--bg-color",
-    s.bgColor || "#080808"
-  );
-
-  document.documentElement.style.setProperty(
-    "--text-color",
-    s.textColor || "#f1efe9"
-  );
-
-  document.documentElement.style.setProperty(
-    "--accent-color",
-    s.accentColor || "#f1efe9"
-  );
-
-  document.documentElement.style.setProperty(
-    "--heading-font",
-    s.headingFont
-      ? `"${s.headingFont}", Arial, sans-serif`
-      : "Arial, sans-serif"
-  );
-
-  document.documentElement.style.setProperty(
-    "--body-font",
-    s.bodyFont
-      ? `"${s.bodyFont}", Arial, sans-serif`
-      : "Arial, sans-serif"
-  );
+const s=
+settings||
+fallback.settings;
 
 
-  /* Custom fonts */
+document.documentElement.style.setProperty(
+"--bg-color",
+s.bgColor||"#080808"
+);
 
-  if(Array.isArray(s.customFonts)){
 
-    s.customFonts.forEach((font,index)=>{
+document.documentElement.style.setProperty(
+"--text-color",
+s.textColor||"#f1efe9"
+);
 
-      if(!font || !font.name || !font.url) return;
 
-      const style = document.createElement("style");
+document.documentElement.style.setProperty(
+"--accent-color",
+s.accentColor||"#f1efe9"
+);
 
-      style.innerHTML = `
-        @font-face{
-          font-family:"${esc(font.name)}";
-          src:url("${esc(font.url)}") format("woff2");
-          font-weight:100 900;
-          font-style:normal;
-          font-display:swap;
-        }
-      `;
 
-      style.dataset.fontIndex=index;
+document.documentElement.style.setProperty(
+"--heading-font",
+s.headingFont
+?
+`"${s.headingFont}",Arial,sans-serif`
+:
+"Arial,sans-serif"
+);
 
-      document.head.appendChild(style);
 
-    });
+document.documentElement.style.setProperty(
+"--body-font",
+s.bodyFont
+?
+`"${s.bodyFont}",Arial,sans-serif`
+:
+"Arial,sans-serif"
+);
 
-  }
+
+/* Custom fonts */
+
+if(Array.isArray(s.customFonts)){
+
+s.customFonts.forEach((font,index)=>{
+
+if(
+!font||
+!font.name||
+!font.url
+)return;
+
+
+const style=
+document.createElement("style");
+
+
+style.innerHTML=`
+
+@font-face{
+
+font-family:"${esc(font.name)}";
+
+src:url("${esc(font.url)}")
+format("woff2");
+
+font-weight:100 900;
+
+font-style:normal;
+
+font-display:swap;
 
 }
+
+`;
+
+
+style.dataset.fontIndex=index;
+
+
+document.head.appendChild(style);
+
+});
+
+}
+
+}
+
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+const lightbox=
+document.getElementById("lightbox");
+
+const lightboxContent=
+document.getElementById("lightboxContent");
+
+const lightboxTitle=
+document.getElementById("lightboxTitle");
+
+const lightboxClose=
+document.getElementById("lightboxClose");
+
+
+function openLightbox(project){
+
+lightboxContent.innerHTML="";
+
+
+if(
+project.type==="video" &&
+project.image
+){
+
+const video=
+document.createElement("video");
+
+video.src=
+project.image;
+
+video.controls=true;
+
+video.autoplay=true;
+
+video.playsInline=true;
+
+video.preload="metadata";
+
+
+if(project.poster){
+
+video.poster=
+project.poster;
+
+}
+
+
+lightboxContent.appendChild(
+video
+);
+
+}else{
+
+const img=
+document.createElement("img");
+
+img.src=
+project.image;
+
+img.alt=
+project.title||"";
+
+
+lightboxContent.appendChild(
+img
+);
+
+}
+
+
+lightboxTitle.textContent=
+project.title||"";
+
+
+lightbox.classList.add("open");
+
+lightbox.setAttribute(
+"aria-hidden",
+"false"
+);
+
+
+document.body.style.overflow=
+"hidden";
+
+}
+
+
+function closeLightbox(){
+
+lightbox.classList.remove(
+"open"
+);
+
+lightbox.setAttribute(
+"aria-hidden",
+"true"
+);
+
+lightboxContent.innerHTML="";
+
+lightboxTitle.textContent="";
+
+document.body.style.overflow="";
+
+}
+
+
+lightboxClose.addEventListener(
+"click",
+closeLightbox
+);
+
+
+lightbox.addEventListener(
+"click",
+event=>{
+
+if(event.target===lightbox){
+
+closeLightbox();
+
+}
+
+});
+
+
+document.addEventListener(
+"keydown",
+event=>{
+
+if(
+event.key==="Escape" &&
+lightbox.classList.contains("open")
+){
+
+closeLightbox();
+
+}
+
+});
 
 
 /* =========================
@@ -156,334 +595,502 @@ function applySettings(settings){
 
 function render(content){
 
-  applySettings(content.settings);
+applySettings(
+content.settings
+);
 
-  const page = document.getElementById("page");
 
-  page.innerHTML = "";
+const page=
+document.getElementById("page");
 
 
-  (content.blocks || []).forEach(block=>{
+page.innerHTML="";
 
 
-    /* =========================
-       HERO
-    ========================= */
+(content.blocks||[]).forEach(
+block=>{
 
-    if(block.type === "hero"){
 
-      page.innerHTML += `
+/* HERO */
 
-        <section class="hero">
+if(block.type==="hero"){
 
-          <div class="hero-bg">
+page.innerHTML+=`
 
-            <div class="glow one"></div>
-            <div class="glow two"></div>
+<section class="hero">
 
-            <div class="grain"></div>
+<div class="hero-bg">
 
-          </div>
+<div class="glow one"></div>
 
-          <div class="hero-content">
+<div class="glow two"></div>
 
-            <p class="eyebrow">
-              ${esc(block.location)}
-            </p>
+<div class="grain"></div>
 
-            <h1>
-              ${esc(block.title).replace(/\n/g,"<br>")}
-            </h1>
+</div>
 
-            <a href="#work" class="scroll">
-              Scroll to explore ↓
-            </a>
+<div class="hero-content">
 
-          </div>
+<p class="eyebrow">
+${esc(block.location)}
+</p>
 
-        </section>
+<h1>
+${esc(block.title)
+.replace(/\n/g,"<br>")}
+</h1>
 
-      `;
+<a
+href="#work"
+class="scroll"
+>
+Scroll to explore ↓
+</a>
 
-    }
+</div>
 
+</section>
 
-    /* =========================
-       STATEMENT
-    ========================= */
+`;
 
-    if(block.type === "statement"){
+}
 
-      page.innerHTML += `
 
-        <section class="statement">
+/* STATEMENT */
 
-          <p class="eyebrow">
-            Sweet Production
-          </p>
+if(block.type==="statement"){
 
-          <h2>
-            ${esc(block.text).replace(/\n/g,"<br>")}
-          </h2>
+page.innerHTML+=`
 
-        </section>
+<section class="statement">
 
-      `;
+<p class="eyebrow">
+Sweet Production
+</p>
 
-    }
+<h2>
+${esc(block.text)
+.replace(/\n/g,"<br>")}
+</h2>
 
+</section>
 
-    /* =========================
-       TEXT
-    ========================= */
+`;
 
-    if(block.type === "text"){
+}
 
-      page.innerHTML += `
 
-        <section class="custom-text">
+/* TEXT */
 
-          <p>
-            ${esc(block.text).replace(/\n/g,"<br>")}
-          </p>
+if(block.type==="text"){
 
-        </section>
+page.innerHTML+=`
 
-      `;
+<section class="custom-text">
 
-    }
+<p>
+${esc(block.text)
+.replace(/\n/g,"<br>")}
+</p>
 
+</section>
 
-    /* =========================
-       IMAGE
-    ========================= */
+`;
 
-    if(block.type === "image" && block.src){
+}
 
-      page.innerHTML += `
 
-        <section class="custom-image">
+/* IMAGE */
 
-          <img
-            src="${esc(block.src)}"
-            alt="${esc(block.alt)}"
-            loading="lazy"
-          >
+if(
+block.type==="image" &&
+block.src
+){
 
-        </section>
+page.innerHTML+=`
 
-      `;
+<section class="custom-image">
 
-    }
+<img
+src="${esc(block.src)}"
+alt="${esc(block.alt)}"
+loading="lazy"
+>
 
+</section>
 
-    /* =========================
-       VIDEO
-    ========================= */
+`;
 
-    if(block.type === "video" && block.src){
+}
 
-      const ratio =
-        block.ratio === "9:16"
-          ? "vertical"
-          : "landscape";
 
+/* VIDEO */
 
-      page.innerHTML += `
+if(
+block.type==="video" &&
+block.src
+){
 
-        <section class="custom-video ${ratio}">
+const ratio=
+block.ratio==="9:16"
+?
+"vertical"
+:
+"landscape";
 
-          <video
-            src="${esc(block.src)}"
-            ${block.poster
-              ? `poster="${esc(block.poster)}"`
-              : ""
-            }
-            autoplay
-            muted
-            loop
-            playsinline
-            controls>
-          </video>
 
-        </section>
+page.innerHTML+=`
 
-      `;
+<section
+class="custom-video ${ratio}"
+>
 
-    }
+<video
 
+src="${esc(block.src)}"
 
-    /* =========================
-       PROJECTS
-    ========================= */
+${block.poster
+?
+`poster="${esc(block.poster)}"`
+:
+""
+}
 
-    if(block.type === "projects"){
+autoplay
+muted
+loop
+playsinline
+controls
 
-      let html = "";
+></video>
 
+</section>
 
-      (block.projects || []).forEach(project=>{
+`;
 
-        let media = "";
+}
 
 
-        if(project.type === "video" && project.image){
+/* =========================
+   PORTFOLIO
+========================= */
 
-          media = `
+if(block.type==="projects"){
 
-            <video
-              src="${esc(project.image)}"
-              autoplay
-              muted
-              loop
-              playsinline>
-            </video>
+let html="";
 
-          `;
 
-        }
+(block.projects||[]).forEach(
+project=>{
 
-        else if(project.image){
+if(!project.image){
 
-          media = `
+html+=`
 
-            <img
-              src="${esc(project.image)}"
-              alt="${esc(project.title)}"
-              loading="lazy"
-            >
+<article
+class="project"
+data-width="${Number(project.width)||50}"
+>
 
-          `;
+<div class="media">
 
-        }
+<div class="empty-media">
+</div>
 
-        else{
+</div>
 
-          media = `
-            <div class="empty-media"></div>
-          `;
+<div class="meta">
 
-        }
+<strong>
+${esc(project.title)}
+</strong>
 
+<small>
+${esc(project.category)}
+</small>
 
-        html += `
+</div>
 
-          <article class="project">
+</article>
 
-            <div class="media">
-              ${media}
-            </div>
+`;
 
-            <div class="meta">
+return;
 
-              <strong>
-                ${esc(project.title)}
-              </strong>
+}
 
-              <small>
-                ${esc(project.category)}
-              </small>
 
-            </div>
+/* VIDEO */
 
-          </article>
+if(project.type==="video"){
 
-        `;
+html+=`
 
-      });
+<article
+class="project"
+data-width="${Number(project.width)||50}"
+data-project-index="${(block.projects||[]).indexOf(project)}"
+>
 
+<div
+class="media"
+role="button"
+tabindex="0"
+aria-label="Spela ${esc(project.title)}"
+>
 
-      page.innerHTML += `
+<video
 
-        <section id="work" class="work">
+src="${esc(project.image)}"
 
-          <div class="section-top">
+${project.poster
+?
+`poster="${esc(project.poster)}"`
+:
+""
+}
 
-            <p class="eyebrow">
-              ${esc(block.title)}
-            </p>
+muted
+playsinline
+loop
+autoplay
+preload="metadata"
 
-            <span>
-              ${String(
-                (block.projects || []).length
-              ).padStart(2,"0")}
-            </span>
+></video>
 
-          </div>
+</div>
 
-          <div class="projects">
-            ${html}
-          </div>
+<div class="meta">
 
-        </section>
+<strong>
+${esc(project.title)}
+</strong>
 
-      `;
+<small>
+${esc(project.category)}
+</small>
 
-    }
+</div>
 
+</article>
 
-    /* =========================
-       ABOUT
-    ========================= */
+`;
 
-    if(block.type === "about"){
+return;
 
-      page.innerHTML += `
+}
 
-        <section id="about" class="about">
 
-          <p class="eyebrow">
-            About
-          </p>
+/* IMAGE */
 
-          <h2>
-            ${esc(block.title).replace(/\n/g,"<br>")}
-          </h2>
+html+=`
 
-          <p class="about-text">
-            ${esc(block.text).replace(/\n/g,"<br>")}
-          </p>
+<article
+class="project"
+data-width="${Number(project.width)||50}"
+data-project-index="${(block.projects||[]).indexOf(project)}"
+>
 
-        </section>
+<div
+class="media"
+role="button"
+tabindex="0"
+aria-label="Visa ${esc(project.title)}"
+>
 
-      `;
+<img
 
-    }
+src="${esc(project.image)}"
 
+alt="${esc(project.title)}"
 
-    /* =========================
-       CONTACT
-    ========================= */
+loading="lazy"
 
-    if(block.type === "contact"){
+>
 
-      page.innerHTML += `
+</div>
 
-        <section id="contact" class="contact">
+<div class="meta">
 
-          <p class="eyebrow">
-            Contact
-          </p>
+<strong>
+${esc(project.title)}
+</strong>
 
-          <h2>
-            ${esc(block.title).replace(/\n/g,"<br>")}
-          </h2>
+<small>
+${esc(project.category)}
+</small>
 
-          <a
-            class="email"
-            href="mailto:${esc(block.email)}">
+</div>
 
-            ${esc(block.email)}
+</article>
 
-          </a>
+`;
 
-        </section>
+});
 
-      `;
 
-    }
+page.innerHTML+=`
 
-  });
+<section
+id="work"
+class="work"
+>
+
+<div class="section-top">
+
+<p class="eyebrow">
+${esc(block.title)}
+</p>
+
+<span>
+${String(
+(block.projects||[]).length
+).padStart(2,"0")}
+</span>
+
+</div>
+
+<div class="projects">
+
+${html}
+
+</div>
+
+</section>
+
+`;
+
+
+/* CONNECT MEDIA CLICKS */
+
+const section=
+page.lastElementChild;
+
+
+section
+.querySelectorAll(
+".project[data-project-index]"
+)
+.forEach(article=>{
+
+const index=
+Number(
+article.dataset.projectIndex
+);
+
+
+const project=
+block.projects[index];
+
+
+const media=
+article.querySelector(
+".media"
+);
+
+
+if(!media)return;
+
+
+media.addEventListener(
+"click",
+()=>{
+
+openLightbox(project);
+
+});
+
+
+media.addEventListener(
+"keydown",
+event=>{
+
+if(
+event.key==="Enter"||
+event.key===" "
+){
+
+event.preventDefault();
+
+openLightbox(project);
+
+}
+
+});
+
+});
+
+}
+
+
+/* ABOUT */
+
+if(block.type==="about"){
+
+page.innerHTML+=`
+
+<section
+id="about"
+class="about"
+>
+
+<p class="eyebrow">
+About
+</p>
+
+<h2>
+${esc(block.title)
+.replace(/\n/g,"<br>")}
+</h2>
+
+<p class="about-text">
+${esc(block.text)
+.replace(/\n/g,"<br>")}
+</p>
+
+</section>
+
+`;
+
+}
+
+
+/* CONTACT */
+
+if(block.type==="contact"){
+
+page.innerHTML+=`
+
+<section
+id="contact"
+class="contact"
+>
+
+<p class="eyebrow">
+Contact
+</p>
+
+<h2>
+${esc(block.title)
+.replace(/\n/g,"<br>")}
+</h2>
+
+<a
+class="email"
+href="mailto:${esc(block.email)}"
+>
+
+${esc(block.email)}
+
+</a>
+
+</section>
+
+`;
+
+}
+
+});
 
 }
 
@@ -494,27 +1101,37 @@ function render(content){
 
 async function load(){
 
-  try{
+try{
 
-    const response = await fetch("https://sweetproduction-admin.frycts5yrr.workers.dev/content?v=" + Date.now());
+const response=
+await fetch(
+"https://sweetproduction-admin.frycts5yrr.workers.dev/content?v="+
+Date.now()
+);
 
-    if(!response.ok){
-      throw new Error("Could not load content");
-    }
 
-    const data = await response.json();
+if(!response.ok){
 
-    render(data);
+throw new Error(
+"Could not load content"
+);
 
-  }
+}
 
-  catch(error){
 
-    console.error(error);
+const data=
+await response.json();
 
-    render(fallback);
 
-  }
+render(data);
+
+}catch(error){
+
+console.error(error);
+
+render(fallback);
+
+}
 
 }
 
