@@ -77,22 +77,22 @@
       "title": "Work",
       "projects": [
         {
+          "width": 33,
+          "fit": "cover",
           "id": "1788343296288-7j8auhazvo",
           "title": "Nytt projekt",
           "category": "Film · Foto",
-          "image": "",
-          "type": "image",
-          "width": 33,
-          "fit": "cover"
+          "image": "https://sweetproduction.se/media/media%2Fe20ee0f0-3863-44a9-a9e8-448b498553f4-zROp9N8snGb3m7wj_fzwRDYPbeN0jz23ILL6WE0PRMi8Mz3Eq9alK0bdqidM13duiFzsBb_r5aGXJRbK.jpeg",
+          "type": "image"
         },
         {
+          "width": 100,
+          "fit": "cover",
           "id": "1788343320231-gag7j57eug8",
           "title": "Nytt projekt",
           "category": "Film · Foto",
-          "image": "",
-          "type": "image",
-          "width": 50,
-          "fit": "cover"
+          "image": "https://sweetproduction.se/media/media%2Fc40dc0a0-bbec-46ab-9a04-1c002303dd80-SWEET.jpg",
+          "type": "image"
         }
       ]
     }
