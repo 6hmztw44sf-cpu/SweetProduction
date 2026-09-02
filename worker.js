@@ -131,14 +131,38 @@ async function getContent(env) {
     env
   );
 }
+function normalizeMediaUrls(value){
+  if(Array.isArray(value)){
+    return value.map(normalizeMediaUrls);
+  }
 
+  if(value && typeof value === "object"){
+    const out = {};
+
+    for(const [key, val] of Object.entries(value)){
+      if(
+        (key === "image" || key === "src" || key === "poster") &&
+        typeof val === "string"
+      ){
+        out[key] = val.replace(
+          "https://sweetproduction-admin.frycts5yrr.workers.dev/media/",
+          "https://sweetproduction.se/media/"
+        );
+      } else {
+        out[key] = normalizeMediaUrls(val);
+      }
+    }
+
+    return out;
+  }
+
+  return value;
+}
 
 async function saveContent(body, env) {
 
-  const encoded =
-    encodeBase64(
-      JSON.stringify(body, null, 2)
-    );
+  const normalized = normalizeMediaUrls(body);
+const encoded = encodeBase64(JSON.stringify(normalized,null,2));
 
   for (
     let attempt = 0;
@@ -312,7 +336,8 @@ async function uploadMedia(
 
 
   const url =
-    `https://sweetproduction-admin.frycts5yrr.workers.dev/media/${encodeURIComponent(key)}`;
+    const url =
+  `https://sweetproduction.se/media/${encodeURIComponent(key)}`;
 
 
   return new Response(
