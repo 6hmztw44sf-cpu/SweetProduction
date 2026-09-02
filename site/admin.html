@@ -3,1673 +3,487 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sweet Production – Admin</title>
-
+<title>Sweet Production — Admin</title>
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:#f3f3f3;
-  color:#111;
-  font-family:Arial,sans-serif;
-}
-
-header{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:#111;
-  color:#fff;
-  padding:18px 25px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-header strong{letter-spacing:.05em}
-
-button{
-  border:0;
-  background:#111;
-  color:#fff;
-  padding:11px 16px;
-  border-radius:7px;
-  cursor:pointer;
-  font-size:14px;
-}
-
-button:hover{opacity:.85}
-
-header button{
-  background:#fff;
-  color:#111;
-}
-
-main{
-  max-width:1000px;
-  margin:auto;
-  padding:30px 20px 100px;
-}
-
-.toolbar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-bottom:25px;
-}
-
-.toolbar button{
-  background:#fff;
-  color:#111;
-  border:1px solid #ddd;
-}
-
-.block{
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:12px;
-  margin-bottom:15px;
-  overflow:hidden;
-}
-
-.block.dragging{
-  opacity:.4;
-}
-
-.block-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:14px;
-  border-bottom:1px solid #eee;
-  cursor:grab;
-}
-
-.drag{
-  font-size:20px;
-  color:#999;
-}
-
-.block-head strong{
-  flex:1;
-}
-
-.block-body{
-  padding:18px;
-}
-
-label{
-  display:block;
-  font-size:12px;
-  font-weight:bold;
-  margin-bottom:6px;
-}
-
-input,
-textarea,
-select{
-  width:100%;
-  padding:11px;
-  border:1px solid #ccc;
-  border-radius:7px;
-  margin-bottom:15px;
-  font:inherit;
-}
-
-textarea{
-  min-height:120px;
-  resize:vertical;
-}
-
-.delete{
-  background:#ddd;
-  color:#111;
-}
-
-.project{
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:15px;
-  margin-bottom:12px;
-  background:#fafafa;
-}
-
-.project.dragging{
-  opacity:.35;
-}
-
-.project-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:12px;
-}
-
-.project-drag{
-  cursor:grab;
-  color:#999;
-  font-size:18px;
-}
-
-.project-title{
-  flex:1;
-}
-
-.media-upload{
-  border:1px dashed #bbb;
-  border-radius:10px;
-  padding:15px;
-  margin-bottom:15px;
-  background:#fff;
-}
-
-.media-upload strong{
-  display:block;
-  margin-bottom:7px;
-}
-
-.media-upload small{
-  display:block;
-  color:#777;
-  margin-bottom:10px;
-}
-
-.upload-input{
-  margin-bottom:0;
-  background:#fff;
-}
-
-.media-preview{
-  margin-top:12px;
-  border-radius:8px;
-  overflow:hidden;
-  background:#111;
-}
-
-.media-preview img,
-.media-preview video{
-  display:block;
-  width:100%;
-  max-height:400px;
-  object-fit:contain;
-}
-
-.width-options{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:6px;
-  margin-bottom:15px;
-}
-
-.width-option{
-  padding:10px 5px;
-  border:1px solid #ccc;
-  background:#fff;
-  color:#111;
-  border-radius:6px;
-  cursor:pointer;
-  font-size:12px;
-}
-
-.width-option.active{
-  background:#111;
-  color:#fff;
-  border-color:#111;
-}
-
-.portfolio-note{
-  font-size:12px;
-  color:#777;
-  margin:0 0 15px;
-}
-
-.status{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#111;
-  color:#fff;
-  padding:12px 18px;
-  border-radius:8px;
-  display:none;
-  z-index:50;
-  max-width:90%;
-  text-align:center;
-}
-
-.error{
-  background:#8b0000;
-}
-
-.settings{
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:20px;
-}
-
-.settings h2{
-  margin-top:0;
-  font-size:18px;
-}
-
-hr{
-  border:0;
-  border-top:1px solid #eee;
-  margin:20px 0;
-}
-
-@media(max-width:700px){
-
-  main{
-    padding:20px 12px 80px;
-  }
-
-  header{
-    padding:15px;
-  }
-
-  header strong{
-    font-size:12px;
-  }
-
-  .block-head{
-    flex-wrap:wrap;
-  }
-
-  .block-head strong{
-    min-width:100px;
-  }
-
-  .width-options{
-    grid-template-columns:repeat(3,1fr);
-  }
+:root{color-scheme:dark}
+body{margin:0;background:#0b0b0b;color:#f3f1ec;font-family:Arial,sans-serif}
+header{position:sticky;top:0;z-index:20;background:#0b0b0bf2;border-bottom:1px solid #292929;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:15px;backdrop-filter:blur(12px)}
+header strong{font-size:13px;letter-spacing:.08em}
+button,input,textarea,select{font:inherit}
+button{border:1px solid #333;background:#171717;color:#fff;border-radius:8px;padding:9px 12px;cursor:pointer}
+button:hover{background:#242424}
+button.primary{background:#fff;color:#111;border-color:#fff}
+button.danger{color:#ff8f8f}
+main{max-width:1200px;margin:auto;padding:22px}
+.settings{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;padding:16px;border:1px solid #292929;border-radius:12px;margin-bottom:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:11px;color:#aaa}
+input,textarea,select{width:100%;background:#111;color:#eee;border:1px solid #333;border-radius:7px;padding:10px}
+textarea{min-height:90px;resize:vertical}
+input[type=color]{height:40px;padding:3px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.block{border:1px solid #303030;border-radius:14px;background:#111;margin:14px 0;overflow:hidden}
+.block.dragging{opacity:.45}
+.block-head{display:flex;align-items:center;gap:10px;padding:13px 15px;border-bottom:1px solid #292929;background:#151515;cursor:grab}
+.drag{color:#777;font-size:18px}
+.block-title{font-weight:bold;flex:1}
+.block-type{font-size:10px;color:#888;text-transform:uppercase}
+.block-body{padding:16px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.full{grid-column:1/-1}
+.project-list{display:flex;flex-direction:column;gap:10px}
+.project{border:1px solid #303030;border-radius:10px;background:#161616;padding:12px;display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:start}
+.project.dragging{opacity:.45}
+.thumb{width:110px;height:80px;border-radius:7px;background:#0b0b0b;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#666}
+.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}
+.project-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.project-fields .wide{grid-column:1/-1}
+.project-actions{display:flex;flex-direction:column;gap:6px}
+.widths{display:flex;flex-wrap:wrap;gap:5px}
+.widths button.active{background:#fff;color:#111}
+.upload{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.status{position:fixed;right:20px;bottom:20px;z-index:50;background:#fff;color:#111;padding:12px 15px;border-radius:9px;display:none;box-shadow:0 10px 40px #0008}
+.preview{margin-top:8px;color:#888;font-size:12px;word-break:break-all}
+.help{font-size:11px;color:#777;margin-top:5px}
+@media(max-width:850px){.settings{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){
+ main{padding:12px}
+ .settings,.grid{grid-template-columns:1fr}
+ .project{grid-template-columns:80px 1fr}
+ .thumb{width:80px;height:65px}
+ .project-actions{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}
 }
 </style>
 </head>
-
 <body>
 
 <header>
 <strong>SWEET PRODUCTION — ADMIN</strong>
-<button onclick="save()">Spara</button>
+<button class="primary" onclick="save()">Spara & publicera</button>
 </header>
 
 <main>
 
 <section class="settings">
-
-<h2>Design</h2>
-
-<label>Bakgrund</label>
-<input type="color" id="bgColor"
-onchange="updateSetting('bgColor',this.value)">
-
-<label>Text</label>
-<input type="color" id="textColor"
-onchange="updateSetting('textColor',this.value)">
-
-<label>Accent</label>
-<input type="color" id="accentColor"
-onchange="updateSetting('accentColor',this.value)">
-
-<label>Typsnitt rubriker</label>
-
-<select onchange="updateSetting('headingFont',this.value);render()">
-<option value="Gentle Sans">Gentle Sans</option>
-<option value="Arial">Arial</option>
-<option value="Helvetica">Helvetica</option>
-<option value="Georgia">Georgia</option>
-<option value="Times New Roman">Times New Roman</option>
-<option value="Verdana">Verdana</option>
-<option value="Trebuchet MS">Trebuchet MS</option>
-<option value="Courier New">Courier New</option>
-</select>
-
-<label>Typsnitt brödtext</label>
-
-<select onchange="updateSetting('bodyFont',this.value);render()">
-<option value="Gentle Sans">Gentle Sans</option>
-<option value="Arial">Arial</option>
-<option value="Helvetica">Helvetica</option>
-<option value="Georgia">Georgia</option>
-<option value="Times New Roman">Times New Roman</option>
-<option value="Verdana">Verdana</option>
-<option value="Trebuchet MS">Trebuchet MS</option>
-<option value="Courier New">Courier New</option>
-</select>
-
+  <div class="field"><label>Bakgrund</label><input id="bgColor" type="color"></div>
+  <div class="field"><label>Text</label><input id="textColor" type="color"></div>
+  <div class="field"><label>Accent</label><input id="accentColor" type="color"></div>
+  <div class="field"><label>Rubrikfont</label><input id="headingFont" type="text"></div>
+  <div class="field"><label>Brödtextfont</label><input id="bodyFont" type="text"></div>
+  <div class="field"><label>Rubrikstorlek</label><input id="headingSize" type="text" placeholder="t.ex. 64px"></div>
+  <div class="field"><label>Brödtextstorlek</label><input id="bodySize" type="text" placeholder="t.ex. 18px"></div>
+  <div class="field"><label>Sektionsavstånd</label><input id="sectionSpacing" type="text" placeholder="t.ex. 100px"></div>
+  <div class="field"><label>Rundade hörn</label><input id="radius" type="text" placeholder="t.ex. 0px"></div>
+  <div class="field"><label>Portfolio gap</label><input id="portfolioGap" type="text" placeholder="t.ex. 16px"></div>
 </section>
 
-
 <div class="toolbar">
-
-<button onclick="addBlock('hero')">+ Hero</button>
-<button onclick="addBlock('statement')">+ Statement</button>
-<button onclick="addBlock('text')">+ Text</button>
-<button onclick="addBlock('image')">+ Bild</button>
-<button onclick="addBlock('video')">+ Video</button>
-<button onclick="addBlock('projects')">+ Portfolio</button>
-<button onclick="addBlock('about')">+ About</button>
-<button onclick="addBlock('contact')">+ Contact</button>
-
+  <button onclick="addBlock('hero')">+ Hero</button>
+  <button onclick="addBlock('statement')">+ Statement</button>
+  <button onclick="addBlock('text')">+ Text</button>
+  <button onclick="addBlock('image')">+ Bild</button>
+  <button onclick="addBlock('video')">+ Video</button>
+  <button onclick="addBlock('projects')">+ Portfolio</button>
+  <button onclick="addBlock('about')">+ About</button>
+  <button onclick="addBlock('contact')">+ Contact</button>
 </div>
 
 <div id="blocks"></div>
-
 </main>
 
 <div id="status" class="status"></div>
 
-
 <script>
+const API_BASE="https://sweetproduction-admin.frycts5yrr.workers.dev";
+const API=API_BASE+"/content";
 
 let content={
-settings:{
-bgColor:"#080808",
-textColor:"#f1efe9",
-accentColor:"#f1efe9",
-headingFont:"Arial",
-bodyFont:"Arial",
-customFonts:[]
-},
-blocks:[]
+ settings:{
+  bgColor:"#080808",
+  textColor:"#f1efe9",
+  accentColor:"#f1efe9",
+  headingFont:"Arial",
+  bodyFont:"Arial",
+  headingSize:"64px",
+  bodySize:"18px",
+  sectionSpacing:"100px",
+  radius:"0px",
+  portfolioGap:"16px",
+  customFonts:[]
+ },
+ blocks:[]
 };
 
 let draggedBlock=null;
 let draggedProject=null;
 
-const API_BASE=
-"https://sweetproduction-admin.frycts5yrr.workers.dev";
-
-const API=
-API_BASE+"/content";
-
-
-function makeId(){
-
-return Date.now().toString(36)+
-Math.random().toString(36).slice(2);
-
+function esc(v){
+ return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
-
-function esc(value){
-
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
+function notify(msg){
+ const el=document.getElementById("status");
+ el.textContent=msg;
+ el.style.display="block";
+ clearTimeout(window.__status);
+ window.__status=setTimeout(()=>el.style.display="none",2500);
 }
-
-
-function showStatus(message,error=false){
-
-const el=document.getElementById("status");
-
-el.textContent=message;
-
-el.classList.toggle("error",error);
-
-el.style.display="block";
-
-setTimeout(()=>{
-el.style.display="none";
-},3500);
-
-}
-
-
-/* =========================
-   BASIC INPUTS
-========================= */
-
-function input(label,value,callback){
-
-return `
-<label>${esc(label)}</label>
-<input
-value="${esc(value)}"
-oninput="${callback},this.value)"
->
-`;
-
-}
-
-
-function textarea(label,value,callback){
-
-return `
-<label>${esc(label)}</label>
-<textarea
-oninput="${callback},this.value)"
->${esc(value)}</textarea>
-`;
-
-}
-
-
-/* =========================
-   R2 UPLOAD
-========================= */
 
 async function uploadFile(file){
+ if(!file) return null;
+ const fd=new FormData();
+ fd.append("file",file);
+ const res=await fetch(API_BASE+"/upload",{method:"POST",body:fd});
+ if(!res.ok) throw new Error("Uppladdningen misslyckades");
+ const data=await res.json();
 
-if(!file)return null;
-
-try{
-
-showStatus("Laddar upp "+file.name+"...");
-
-const form=new FormData();
-
-form.append("file",file);
-
-const response=await fetch(
-API_BASE+"/upload",
-{
-method:"POST",
-body:form
-}
-);
-
-const result=await response.json();
-
-if(!response.ok||!result.success){
-
-throw new Error(
-result.error||
-"Uppladdningen misslyckades"
-);
-
+ /* R2 is served publicly through the main site worker. */
+ if(data.key){
+   data.url="https://sweetproduction.se/media/"+encodeURIComponent(data.key);
+ }
+ return data;
 }
 
-showStatus("Uppladdad ✓");
-
-return result;
-
-}catch(error){
-
-console.error(error);
-
-showStatus(
-"Uppladdningen misslyckades: "+
-error.message,
-true
-);
-
-return null;
-
+function bindSettings(){
+ const s=content.settings||{};
+ const ids=["bgColor","textColor","accentColor","headingFont","bodyFont","headingSize","bodySize","sectionSpacing","radius","portfolioGap"];
+ ids.forEach(id=>{
+   const el=document.getElementById(id);
+   el.value=s[id]??"";
+   el.oninput=()=>content.settings[id]=el.value;
+ });
 }
-
-}
-
-
-/* =========================
-   IMAGE UPLOAD
-========================= */
-
-async function handleImageUpload(i,inputEl){
-
-const file=inputEl.files?.[0];
-
-if(!file)return;
-
-const result=await uploadFile(file);
-
-if(!result)return;
-
-content.blocks[i].src=result.url;
-content.blocks[i].mediaKey=result.key;
-
-render();
-
-}
-
-
-/* =========================
-   VIDEO UPLOAD
-========================= */
-
-async function handleVideoUpload(i,inputEl){
-
-const file=inputEl.files?.[0];
-
-if(!file)return;
-
-const result=await uploadFile(file);
-
-if(!result)return;
-
-content.blocks[i].src=result.url;
-content.blocks[i].mediaKey=result.key;
-
-render();
-
-}
-
-
-/* =========================
-   POSTER
-========================= */
-
-async function handlePosterUpload(i,inputEl){
-
-const file=inputEl.files?.[0];
-
-if(!file)return;
-
-const result=await uploadFile(file);
-
-if(!result)return;
-
-content.blocks[i].poster=result.url;
-content.blocks[i].posterKey=result.key;
-
-render();
-
-}
-
-
-/* =========================
-   PROJECT UPLOAD
-========================= */
-
-async function handleProjectUpload(i,p,inputEl){
-
-const file=inputEl.files?.[0];
-
-if(!file)return;
-
-const result=await uploadFile(file);
-
-if(!result)return;
-
-content.blocks[i].projects[p].image=result.url;
-content.blocks[i].projects[p].mediaKey=result.key;
-
-render();
-
-}
-
-
-/* =========================
-   UPDATE
-========================= */
-
-function updateSetting(key,value){
-
-content.settings[key]=value;
-
-}
-
-
-function update(i,key,value){
-
-content.blocks[i][key]=value;
-
-}
-
-
-function updateProject(i,p,key,value){
-
-content.blocks[i].projects[p][key]=value;
-
-}
-
-
-/* =========================
-   PREVIEWS
-========================= */
-
-function imagePreview(src){
-
-if(!src)return"";
-
-return `
-<div class="media-preview">
-<img
-src="${esc(src)}"
-alt=""
-loading="lazy"
->
-</div>
-`;
-
-}
-
-
-function videoPreview(src){
-
-if(!src)return"";
-
-return `
-<div class="media-preview">
-<video
-src="${esc(src)}"
-controls
-muted
-playsinline
-preload="metadata">
-</video>
-</div>
-`;
-
-}
-
-
-/* =========================
-   WIDTH
-========================= */
-
-function widthOptions(i,p){
-
-const project=
-content.blocks[i].projects[p];
-
-const current=
-Number(project.width)||50;
-
-const widths=[25,33,50,66,75,100];
-
-return `
-
-<label>Bredd på hemsidan</label>
-
-<div class="width-options">
-
-${widths.map(width=>`
-
-<button
-type="button"
-class="width-option ${current===width?"active":""}"
-onclick="setProjectWidth(${i},${p},${width})"
->
-${width}%
-</button>
-
-`).join("")}
-
-</div>
-
-`;
-
-}
-
-
-function setProjectWidth(i,p,width){
-
-content.blocks[i].projects[p].width=Number(width);
-
-render();
-
-}
-
-
-/* =========================
-   UPLOAD UI
-========================= */
-
-function projectUploadUI(i,p,pi){
-
-return `
-
-<div class="media-upload">
-
-<strong>
-Ladda upp ${p.type==="video"?"video":"bild"}
-</strong>
-
-<small>
-Välj fil från dator eller mobil.
-Den laddas automatiskt upp.
-</small>
-
-<input
-class="upload-input"
-type="file"
-accept="image/*,video/*"
-onchange="handleProjectUpload(${i},${pi},this)"
->
-
-${
-p.image
-?
-(
-p.type==="video"
-?
-videoPreview(p.image)
-:
-imagePreview(p.image)
-)
-:
-""
-}
-
-</div>
-
-`;
-
-}
-
-
-/* =========================
-   BLOCK FIELDS
-========================= */
-
-function fields(block,i){
-
-if(block.type==="hero"){
-
-return `
-${input(
-"Plats",
-block.location||"",
-`update(${i},'location'`
-)}
-
-${textarea(
-"Rubrik",
-block.title||"",
-`update(${i},'title'`
-)}
-`;
-
-}
-
-
-if(block.type==="statement"){
-
-return textarea(
-"Text",
-block.text||"",
-`update(${i},'text'`
-);
-
-}
-
-
-if(block.type==="text"){
-
-return textarea(
-"Text",
-block.text||"",
-`update(${i},'text'`
-);
-
-}
-
-
-if(block.type==="image"){
-
-return `
-
-<div class="media-upload">
-
-<strong>Ladda upp bild</strong>
-
-<small>
-Välj en bild från dator eller mobil.
-</small>
-
-<input
-class="upload-input"
-type="file"
-accept="image/*"
-onchange="handleImageUpload(${i},this)"
->
-
-${imagePreview(block.src)}
-
-</div>
-
-${input(
-"Bild URL",
-block.src||"",
-`update(${i},'src'`
-)}
-
-${input(
-"Alt-text",
-block.alt||"",
-`update(${i},'alt'`
-)}
-
-`;
-
-}
-
-
-if(block.type==="video"){
-
-return `
-
-<label>Format</label>
-
-<select onchange="update(${i},'ratio',this.value)">
-
-<option
-value="16:9"
-${block.ratio==="16:9"?"selected":""}
->
-16:9
-</option>
-
-<option
-value="9:16"
-${block.ratio==="9:16"?"selected":""}
->
-9:16
-</option>
-
-</select>
-
-<div class="media-upload">
-
-<strong>Ladda upp video</strong>
-
-<small>
-Välj en video från dator eller mobil.
-</small>
-
-<input
-class="upload-input"
-type="file"
-accept="video/*"
-onchange="handleVideoUpload(${i},this)"
->
-
-${videoPreview(block.src)}
-
-</div>
-
-${input(
-"Video URL",
-block.src||"",
-`update(${i},'src'`
-)}
-
-<div class="media-upload">
-
-<strong>Ladda upp posterbild</strong>
-
-<small>
-Valfri bild som visas innan videon startar.
-</small>
-
-<input
-class="upload-input"
-type="file"
-accept="image/*"
-onchange="handlePosterUpload(${i},this)"
->
-
-${imagePreview(block.poster)}
-
-</div>
-
-${input(
-"Poster URL",
-block.poster||"",
-`update(${i},'poster'`
-)}
-
-`;
-
-}
-
-
-if(block.type==="projects"){
-
-let html=`
-
-${input(
-"Rubrik",
-block.title||"",
-`update(${i},'title'`
-)}
-
-<p class="portfolio-note">
-Dra projekten upp eller ner för att ändra ordningen.
-Välj bredd för varje projekt.
-</p>
-
-<hr>
-
-`;
-
-
-(block.projects||[]).forEach((p,pi)=>{
-
-const width=
-Number(p.width)||50;
-
-html+=`
-
-<div
-class="project"
-draggable="true"
-data-project="${pi}"
->
-
-<div class="project-head">
-
-<span
-class="project-drag"
->
-☰
-</span>
-
-<strong class="project-title">
-Projekt ${pi+1}
-</strong>
-
-<button
-class="delete"
-onclick="deleteProject(${i},${pi})"
->
-Ta bort
-</button>
-
-</div>
-
-
-${input(
-"Titel",
-p.title||"",
-`updateProject(${i},${pi},'title'`
-)}
-
-
-${input(
-"Kategori",
-p.category||"",
-`updateProject(${i},${pi},'category'`
-)}
-
-
-<label>Media</label>
-
-<select
-onchange="
-updateProject(${i},${pi},'type',this.value);
-render()
-"
->
-
-<option
-value="image"
-${p.type==="image"?"selected":""}
->
-Bild
-</option>
-
-<option
-value="video"
-${p.type==="video"?"selected":""}
->
-Video
-</option>
-
-</select>
-
-
-${projectUploadUI(i,p,pi)}
-
-
-${widthOptions(i,pi)}
-
-
-${input(
-"Bild / Video URL",
-p.image||"",
-`updateProject(${i},${pi},'image'`
-)}
-
-</div>
-
-`;
-
-});
-
-
-html+=`
-
-<button
-type="button"
-onclick="addProject(${i})"
->
-+ Lägg till media
-</button>
-
-`;
-
-return html;
-
-}
-
-
-if(block.type==="about"){
-
-return `
-
-${textarea(
-"Rubrik",
-block.title||"",
-`update(${i},'title'`
-)}
-
-${textarea(
-"Text",
-block.text||"",
-`update(${i},'text'`
-)}
-
-`;
-
-}
-
-
-if(block.type==="contact"){
-
-return `
-
-${textarea(
-"Rubrik",
-block.title||"",
-`update(${i},'title'`
-)}
-
-${input(
-"E-post",
-block.email||"",
-`update(${i},'email'`
-)}
-
-`;
-
-}
-
-
-return "";
-
-}
-
-
-/* =========================
-   PROJECT DRAGGING
-========================= */
-
-function setupProjectDragging(container,i){
-
-const projects=
-container.querySelectorAll(".project");
-
-projects.forEach((project,pi)=>{
-
-project.addEventListener(
-"dragstart",
-()=>{
-
-draggedProject=pi;
-
-project.classList.add("dragging");
-
-}
-);
-
-project.addEventListener(
-"dragend",
-()=>{
-
-draggedProject=null;
-
-project.classList.remove("dragging");
-
-}
-);
-
-project.addEventListener(
-"dragover",
-e=>{
-e.preventDefault();
-}
-);
-
-project.addEventListener(
-"drop",
-e=>{
-
-e.preventDefault();
-
-if(
-draggedProject===null||
-draggedProject===pi
-)return;
-
-const list=
-content.blocks[i].projects;
-
-const moved=
-list.splice(
-draggedProject,
-1
-)[0];
-
-list.splice(
-pi,
-0,
-moved
-);
-
-draggedProject=null;
-
-render();
-
-}
-);
-
-});
-
-}
-
-
-/* =========================
-   RENDER
-========================= */
-
-function render(){
-
-const headingSelect=
-document.querySelector(
-'select[onchange*="headingFont"]'
-);
-
-const bodySelect=
-document.querySelector(
-'select[onchange*="bodyFont"]'
-);
-
-if(headingSelect){
-
-headingSelect.value=
-content.settings.headingFont||"Arial";
-
-}
-
-if(bodySelect){
-
-bodySelect.value=
-content.settings.bodyFont||"Arial";
-
-}
-
-document.getElementById("bgColor").value=
-content.settings.bgColor||"#080808";
-
-document.getElementById("textColor").value=
-content.settings.textColor||"#f1efe9";
-
-document.getElementById("accentColor").value=
-content.settings.accentColor||"#f1efe9";
-
-
-const root=
-document.getElementById("blocks");
-
-root.innerHTML="";
-
-
-content.blocks.forEach((block,index)=>{
-
-const el=
-document.createElement("div");
-
-el.className="block";
-
-el.draggable=true;
-
-
-el.addEventListener(
-"dragstart",
-()=>{
-
-draggedBlock=index;
-
-el.classList.add("dragging");
-
-}
-);
-
-
-el.addEventListener(
-"dragend",
-()=>{
-
-draggedBlock=null;
-
-el.classList.remove("dragging");
-
-}
-);
-
-
-el.addEventListener(
-"dragover",
-e=>{
-e.preventDefault();
-}
-);
-
-
-el.addEventListener(
-"drop",
-e=>{
-
-e.preventDefault();
-
-if(
-draggedBlock===null||
-draggedBlock===index
-)return;
-
-const moved=
-content.blocks.splice(
-draggedBlock,
-1
-)[0];
-
-content.blocks.splice(
-index,
-0,
-moved
-);
-
-draggedBlock=null;
-
-render();
-
-}
-);
-
-
-el.innerHTML=`
-
-<div class="block-head">
-
-<span class="drag">
-☰
-</span>
-
-<strong>
-${esc(
-block.type==="projects"
-?"PORTFOLIO"
-:block.type
-)}
-</strong>
-
-<button
-onclick="duplicateBlock(${index})"
->
-Duplicera
-</button>
-
-<button
-class="delete"
-onclick="deleteBlock(${index})"
->
-Ta bort
-</button>
-
-</div>
-
-<div class="block-body">
-
-${fields(block,index)}
-
-</div>
-
-`;
-
-
-root.appendChild(el);
-
-
-if(block.type==="projects"){
-
-setupProjectDragging(el,index);
-
-}
-
-});
-
-}
-
-
-/* =========================
-   PROJECT FUNCTIONS
-========================= */
-
-function addProject(i){
-
-if(!content.blocks[i].projects)
-content.blocks[i].projects=[];
-
-content.blocks[i].projects.push({
-
-id:makeId(),
-
-title:"Nytt projekt",
-
-category:"Film / Content",
-
-image:"",
-
-type:"image",
-
-width:50
-
-});
-
-render();
-
-}
-
-
-function deleteProject(i,p){
-
-content.blocks[i].projects.splice(
-p,
-1
-);
-
-render();
-
-}
-
-
-/* =========================
-   BLOCK FUNCTIONS
-========================= */
 
 function addBlock(type){
-
-const block={
-
-id:makeId(),
-
-type
-
-};
-
-
-if(type==="hero"){
-
-block.location=
-"Stockholm · Sweden";
-
-block.title=
-"Ny rubrik";
-
+ const defaults={
+  hero:{type,title:"Film. Foto. Content.",location:"Stockholm · Sweden"},
+  statement:{type,text:"We create films, photographs and content that people remember."},
+  text:{type,text:"Skriv din text här."},
+  image:{type,src:"",alt:""},
+  video:{type,src:"",poster:"",ratio:"16:9"},
+  projects:{type,title:"Work",projects:[]},
+  about:{type,title:"We make things move.",text:"Berätta om Sweet Production här."},
+  contact:{type,title:"Let’s work together.",email:"hello@sweetproduction.se"}
+ };
+ content.blocks.push(defaults[type]);
+ render();
+ window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
 }
 
-
-if(type==="statement"){
-
-block.text=
-"Ny statement";
-
+function removeBlock(i){
+ if(!confirm("Ta bort den här sektionen?")) return;
+ content.blocks.splice(i,1);
+ render();
 }
 
-
-if(type==="text"){
-
-block.text=
-"Ny text";
-
+function moveBlock(i,dir){
+ const j=i+dir;
+ if(j<0||j>=content.blocks.length)return;
+ [content.blocks[i],content.blocks[j]]=[content.blocks[j],content.blocks[i]];
+ render();
 }
 
-
-if(type==="image"){
-
-block.src="";
-block.alt="";
-
+function blockInput(i,key,value){
+ content.blocks[i][key]=value;
 }
 
-
-if(type==="video"){
-
-block.ratio="16:9";
-
-block.src="";
-
-block.poster="";
-
+function fileInput(label,accept,onchange){
+ return `<div class="upload">
+  <label>${label}</label>
+  <input type="file" accept="${accept}" onchange="${onchange}">
+ </div>`;
 }
 
-
-if(type==="projects"){
-
-block.title=
-"Selected work";
-
-block.projects=[];
-
+function mediaPreview(src,type){
+ if(!src)return `<div class="preview">Ingen media uppladdad</div>`;
+ return `<div class="preview">${type==="video"?"Video":"Bild"} uppladdad</div>`;
 }
 
-
-if(type==="about"){
-
-block.title=
-"We create\nvisual stories.";
-
-block.text="";
-
+function projectUploadUI(i,p,pi){
+ return `
+ <div class="upload wide">
+   <input type="file" accept="image/*,video/*" onchange="uploadProjectMedia(${i},${pi},this)">
+   <span class="help">Välj bild eller video — ingen URL behövs.</span>
+ </div>
+ ${mediaPreview(p.image,p.type)}
+ `;
 }
 
-
-if(type==="contact"){
-
-block.title=
-"Let's make\nsomething sweet.";
-
-block.email=
-"hello@sweetproduction.se";
-
+async function uploadProjectMedia(i,pi,input){
+ const file=input.files[0];
+ if(!file)return;
+ try{
+  notify("Laddar upp…");
+  const result=await uploadFile(file);
+  const p=content.blocks[i].projects[pi];
+  p.image=result.url;
+  p.type=file.type.startsWith("video/")?"video":"image";
+  render();
+  notify("Media uppladdad");
+ }catch(e){notify(e.message);}
 }
 
-
-content.blocks.push(block);
-
-render();
-
+async function uploadBlockMedia(i,input,kind){
+ const file=input.files[0];
+ if(!file)return;
+ try{
+  notify("Laddar upp…");
+  const result=await uploadFile(file);
+  if(kind==="image") content.blocks[i].src=result.url;
+  if(kind==="video") content.blocks[i].src=result.url;
+  if(kind==="poster") content.blocks[i].poster=result.url;
+  render();
+  notify("Media uppladdad");
+ }catch(e){notify(e.message);}
 }
 
-
-function deleteBlock(i){
-
-if(!confirm("Ta bort blocket?"))
-return;
-
-content.blocks.splice(i,1);
-
-render();
-
+function setProjectWidth(i,pi,width){
+ content.blocks[i].projects[pi].width=width;
+ render();
 }
 
-
-function duplicateBlock(i){
-
-const copy=
-JSON.parse(
-JSON.stringify(
-content.blocks[i]
-)
-);
-
-copy.id=makeId();
-
-content.blocks.splice(
-i+1,
-0,
-copy
-);
-
-render();
-
+function removeProject(i,pi){
+ content.blocks[i].projects.splice(pi,1);
+ render();
 }
 
+function addProject(i){
+ content.blocks[i].projects.push({
+  id:Date.now()+"-"+Math.random().toString(36).slice(2),
+  title:"Nytt projekt",
+  category:"Film · Foto",
+  image:"",
+  type:"image",
+  width:50,
+  fit:"cover"
+ });
+ render();
+}
 
-/* =========================
-   LOAD
-========================= */
+function moveProject(i,pi,dir){
+ const arr=content.blocks[i].projects;
+ const j=pi+dir;
+ if(j<0||j>=arr.length)return;
+ [arr[pi],arr[j]]=[arr[j],arr[pi]];
+ render();
+}
+
+function setProjectFit(i,pi,fit){
+ content.blocks[i].projects[pi].fit=fit;
+ render();
+}
+
+function setupBlockDrag(el,i){
+ el.addEventListener("dragstart",()=>{
+  draggedBlock=i;
+  el.classList.add("dragging");
+ });
+ el.addEventListener("dragend",()=>{
+  draggedBlock=null;
+  el.classList.remove("dragging");
+ });
+ el.addEventListener("dragover",e=>e.preventDefault());
+ el.addEventListener("drop",e=>{
+  e.preventDefault();
+  if(draggedBlock===null||draggedBlock===i)return;
+  const moved=content.blocks.splice(draggedBlock,1)[0];
+  content.blocks.splice(i,0,moved);
+  render();
+ });
+}
+
+function setupProjectDrag(el,i,pi){
+ el.addEventListener("dragstart",e=>{
+  e.stopPropagation();
+  draggedProject={i,pi};
+  el.classList.add("dragging");
+ });
+ el.addEventListener("dragend",e=>{
+  e.stopPropagation();
+  draggedProject=null;
+  el.classList.remove("dragging");
+ });
+ el.addEventListener("dragover",e=>e.preventDefault());
+ el.addEventListener("drop",e=>{
+  e.preventDefault();
+  e.stopPropagation();
+  if(!draggedProject||draggedProject.i!==i||draggedProject.pi===pi)return;
+  const arr=content.blocks[i].projects;
+  const moved=arr.splice(draggedProject.pi,1)[0];
+  arr.splice(pi,0,moved);
+  render();
+ });
+}
+
+function fields(block,i){
+ if(block.type==="hero") return `
+  <div class="grid">
+   <div class="field"><label>Plats</label><input value="${esc(block.location)}" oninput="blockInput(${i},'location',this.value)"></div>
+   <div class="field"><label>Rubrik</label><input value="${esc(block.title)}" oninput="blockInput(${i},'title',this.value)"></div>
+  </div>`;
+
+ if(block.type==="statement") return `
+  <div class="field"><label>Text</label><textarea oninput="blockInput(${i},'text',this.value)">${esc(block.text)}</textarea></div>`;
+
+ if(block.type==="text") return `
+  <div class="field"><label>Text</label><textarea oninput="blockInput(${i},'text',this.value)">${esc(block.text)}</textarea></div>`;
+
+ if(block.type==="image") return `
+  <div class="grid">
+   <div class="field full">
+    <label>Bild</label>
+    <input type="file" accept="image/*" onchange="uploadBlockMedia(${i},this,'image')">
+    ${mediaPreview(block.src,"image")}
+   </div>
+   <div class="field"><label>Alt-text</label><input value="${esc(block.alt)}" oninput="blockInput(${i},'alt',this.value)"></div>
+   <div class="field"><label>Bild-URL (valfritt)</label><input value="${esc(block.src)}" oninput="blockInput(${i},'src',this.value)"></div>
+  </div>`;
+
+ if(block.type==="video") return `
+  <div class="grid">
+   <div class="field full">
+    <label>Video</label>
+    <input type="file" accept="video/*" onchange="uploadBlockMedia(${i},this,'video')">
+    ${mediaPreview(block.src,"video")}
+   </div>
+   <div class="field">
+    <label>Format</label>
+    <select onchange="blockInput(${i},'ratio',this.value)">
+      <option value="16:9" ${block.ratio!=="9:16"?"selected":""}>16:9</option>
+      <option value="9:16" ${block.ratio==="9:16"?"selected":""}>9:16</option>
+    </select>
+   </div>
+   <div class="field">
+    <label>Posterbild</label>
+    <input type="file" accept="image/*" onchange="uploadBlockMedia(${i},this,'poster')">
+   </div>
+   <div class="field full"><label>Video-URL (valfritt)</label><input value="${esc(block.src)}" oninput="blockInput(${i},'src',this.value)"></div>
+  </div>`;
+
+ if(block.type==="projects"){
+  let html="";
+  (block.projects||[]).forEach((p,pi)=>{
+   html+=`
+   <div class="project" draggable="true" data-project="${pi}">
+    <div class="thumb">
+      ${p.image?(p.type==="video"?`<video src="${esc(p.image)}" muted autoplay loop playsinline></video>`:`<img src="${esc(p.image)}">`):"Ingen media"}
+    </div>
+    <div class="project-fields">
+      <div class="field"><label>Titel</label><input value="${esc(p.title)}" oninput="content.blocks[${i}].projects[${pi}].title=this.value"></div>
+      <div class="field"><label>Kategori</label><input value="${esc(p.category)}" oninput="content.blocks[${i}].projects[${pi}].category=this.value"></div>
+      ${projectUploadUI(i,p,pi)}
+      <div class="field">
+        <label>Bredd</label>
+        <div class="widths">
+          ${[25,33,50,66,75,100].map(w=>`<button class="${(Number(p.width)||50)===w?"active":""}" onclick="setProjectWidth(${i},${pi},${w})">${w}%</button>`).join("")}
+        </div>
+      </div>
+      <div class="field">
+        <label>Bildvisning</label>
+        <select onchange="setProjectFit(${i},${pi},this.value)">
+          <option value="cover" ${(p.fit||"cover")==="cover"?"selected":""}>Beskär / fyll</option>
+          <option value="contain" ${(p.fit||"cover")==="contain"?"selected":""}>Visa hela bilden</option>
+        </select>
+      </div>
+    </div>
+    <div class="project-actions">
+      <button onclick="moveProject(${i},${pi},-1)">↑</button>
+      <button onclick="moveProject(${i},${pi},1)">↓</button>
+      <button class="danger" onclick="removeProject(${i},${pi})">Ta bort</button>
+    </div>
+   </div>`;
+  });
+  return `
+   <div class="grid">
+    <div class="field full"><label>Portfolio-rubrik</label><input value="${esc(block.title)}" oninput="blockInput(${i},'title',this.value)"></div>
+    <div class="full">
+      <button onclick="addProject(${i})">+ Lägg till projekt</button>
+      <p class="help">Dra projekten för att ändra ordning. Bredden styr hur mycket plats varje projekt tar på sidan.</p>
+    </div>
+    <div class="project-list full">${html||'<div class="help">Inga projekt ännu.</div>'}</div>
+   </div>`;
+
+ if(block.type==="about") return `
+  <div class="grid">
+   <div class="field"><label>Rubrik</label><input value="${esc(block.title)}" oninput="blockInput(${i},'title',this.value)"></div>
+   <div class="field full"><label>Text</label><textarea oninput="blockInput(${i},'text',this.value)">${esc(block.text)}</textarea></div>
+  </div>`;
+
+ if(block.type==="contact") return `
+  <div class="grid">
+   <div class="field"><label>Rubrik</label><input value="${esc(block.title)}" oninput="blockInput(${i},'title',this.value)"></div>
+   <div class="field"><label>E-post</label><input value="${esc(block.email)}" oninput="blockInput(${i},'email',this.value)"></div>
+  </div>`;
+
+ return "";
+}
+
+function render(){
+ bindSettings();
+ const root=document.getElementById("blocks");
+ root.innerHTML="";
+
+ content.blocks.forEach((block,i)=>{
+  const el=document.createElement("section");
+  el.className="block";
+  el.draggable=true;
+  el.innerHTML=`
+   <div class="block-head">
+    <span class="drag">☷</span>
+    <span class="block-title">${esc(block.title||block.type)}</span>
+    <span class="block-type">${esc(block.type)}</span>
+    <button onclick="event.stopPropagation();moveBlock(${i},-1)">↑</button>
+    <button onclick="event.stopPropagation();moveBlock(${i},1)">↓</button>
+    <button class="danger" onclick="event.stopPropagation();removeBlock(${i})">Ta bort</button>
+   </div>
+   <div class="block-body">${fields(block,i)}</div>`;
+  root.appendChild(el);
+  setupBlockDrag(el,i);
+  el.querySelectorAll(".project").forEach((p,pi)=>setupProjectDrag(p,i,pi));
+ });
+}
 
 async function load(){
-
-try{
-
-const response=
-await fetch(
-API,
-{
-cache:"no-store"
+ try{
+  const res=await fetch(API+"?v="+Date.now());
+  if(!res.ok)throw new Error("Kunde inte läsa innehållet");
+  const data=await res.json();
+  content=data;
+  content.settings=Object.assign({
+   bgColor:"#080808",textColor:"#f1efe9",accentColor:"#f1efe9",
+   headingFont:"Arial",bodyFont:"Arial",headingSize:"64px",
+   bodySize:"18px",sectionSpacing:"100px",radius:"0px",portfolioGap:"16px",customFonts:[]
+  },content.settings||{});
+  content.blocks=(content.blocks||[]).map(b=>{
+   if(b.type==="projects"){
+    b.projects=(b.projects||[]).map(p=>Object.assign({width:50,fit:"cover"},p));
+   }
+   return b;
+  });
+  render();
+ }catch(e){
+  notify("Kunde inte ladda: "+e.message);
+  render();
+ }
 }
-);
-
-
-if(!response.ok){
-
-throw new Error(
-"Servern svarade HTTP "+
-response.status
-);
-
-}
-
-
-content=
-await response.json();
-
-
-/*
-  Gör gamla projekt kompatibla
-  med nya breddsystemet.
-*/
-
-content.blocks=
-(content.blocks||[]).map(block=>{
-
-if(block.type==="projects"){
-
-block.projects=
-(block.projects||[]).map(project=>({
-
-width:50,
-
-...project
-
-}));
-
-}
-
-return block;
-
-});
-
-
-render();
-
-}catch(error){
-
-console.error(error);
-
-showStatus(
-"Kunde inte läsa innehållet: "+
-error.message,
-true
-);
-
-}
-
-}
-
-
-/* =========================
-   SAVE
-========================= */
 
 async function save(){
-
-try{
-
-const response=
-await fetch(
-API,
-{
-method:"PUT",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:
-JSON.stringify(content)
-
+ try{
+  notify("Sparar…");
+  const res=await fetch(API,{
+   method:"PUT",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify(content)
+  });
+  if(!res.ok)throw new Error("Sparningen misslyckades");
+  notify("Sparat och publicerat ✓");
+ }catch(e){
+  notify(e.message);
+ }
 }
-);
-
-
-const result=
-await response.json();
-
-
-if(!response.ok){
-
-throw new Error(
-result.error||
-"Kunde inte spara"
-);
-
-}
-
-
-showStatus(
-"Sparat på hemsidan ✓"
-);
-
-
-}catch(error){
-
-console.error(error);
-
-showStatus(
-"Kunde inte spara: "+
-error.message,
-true
-);
-
-}
-
-}
-
-
-/* =========================
-   START
-========================= */
 
 load();
-
 </script>
-
 </body>
 </html>
