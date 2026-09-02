@@ -23,7 +23,26 @@
       "id": "projects-1",
       "type": "projects",
       "title": "Selected work",
-      "projects": []
+      "projects": [
+        {
+          "id": "mtjwlkzkd70ssfuoaot",
+          "title": "Nytt projekt",
+          "category": "Film / Content",
+          "image": "https://sweetproduction-admin.frycts5yrr.workers.dev/media/media%2F683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png",
+          "type": "image",
+          "width": 33,
+          "mediaKey": "media/683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png"
+        },
+        {
+          "id": "mtjwlxx0jyf5uazfcgd",
+          "title": "Nytt projekt",
+          "category": "Film / Content",
+          "image": "https://sweetproduction-admin.frycts5yrr.workers.dev/media/media%2F267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png",
+          "type": "image",
+          "width": 75,
+          "mediaKey": "media/267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png"
+        }
+      ]
     },
     {
       "id": "about-1",
@@ -36,13 +55,6 @@
       "type": "contact",
       "title": "Visuals that\nstay with you.\n\n0709501042",
       "email": "Eliasuhreolofsson@hotmail.com"
-    },
-    {
-      "id": "mthfm7l5ja0oubp44e",
-      "type": "image",
-      "src": "https://sweetproduction-admin.frycts5yrr.workers.dev/media/media%2F0d2d32d2-3ece-4ccf-8232-272ef6a6d296-White-Case_202608264099.JPG",
-      "alt": "",
-      "mediaKey": "media/0d2d32d2-3ece-4ccf-8232-272ef6a6d296-White-Case_202608264099.JPG"
     }
   ]
 }
