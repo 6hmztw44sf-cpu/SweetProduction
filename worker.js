@@ -768,9 +768,9 @@ if (
   const password = String(form.get("password") || "");
 
   if (
-    !env.ADMIN_PASSWORD ||
-    password !== env.ADMIN_PASSWORD
-  ) {
+  !env.ADMIN_PASSWORD ||
+  password.trim() !== String(env.ADMIN_PASSWORD).trim()
+) {
     return new Response("Fel lösenord", {
       status: 401,
       headers: {
