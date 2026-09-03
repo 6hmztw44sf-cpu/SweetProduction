@@ -125,12 +125,24 @@ function encodeBase64(text) {
 
 
 async function getContent(env) {
-
-  return githubRequest(
-    `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
-    {},
-    env
+  const response = await fetch(
+    `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${FILE_PATH}?v=${Date.now()}`
   );
+
+  if (!response.ok) {
+    throw new Error("Kunde inte läsa content.json från GitHub");
+  }
+
+  const text = await response.text();
+
+  return {
+    content: btoa(
+      String.fromCharCode(
+        ...new TextEncoder().encode(text)
+      )
+    ),
+    sha: null
+  };
 }
 
 
