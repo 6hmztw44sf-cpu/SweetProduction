@@ -27,26 +27,6 @@ async function verifySession(request, env) {
   );
 }
 
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(env.ADMIN_PASSWORD),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["verify"]
-  );
-
-  const signature = new Uint8Array(
-    parts[1].match(/.{1,2}/g).map(byte => parseInt(byte, 16))
-  );
-
-  return await crypto.subtle.verify(
-    "HMAC",
-    key,
-    signature,
-    new TextEncoder().encode(parts[0])
-  );
-}
-
 function loginPage() {
   return new Response(`
 <!DOCTYPE html>
