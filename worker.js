@@ -818,6 +818,27 @@ if (
     const isContentRoute =
       url.pathname === "/content" ||
       url.pathname === "/api/content";
+    // SKYDDA ADMIN-API
+const protectedRoute =
+  isContentRoute ||
+  url.pathname === "/upload" ||
+  url.pathname === "/api/upload" ||
+  url.pathname === "/github-test";
+
+if (
+  protectedRoute &&
+  !(await verifySession(request, env))
+) {
+  return new Response(
+    JSON.stringify({
+      error: "Unauthorized"
+    }),
+    {
+      status: 401,
+      headers
+    }
+  );
+}
 
 
     try {
