@@ -730,9 +730,16 @@ if (
 
   const password = String(
     form.get("password") || ""
-  );
+  ).trim();
 
-  if (password !== "SweetTest123!") {
+  const correctPassword = String(
+    env.ADMIN_PASSWORD || ""
+  ).trim();
+
+  if (
+    !correctPassword ||
+    password !== correctPassword
+  ) {
     return new Response("Fel lösenord", {
       status: 401,
       headers: {
