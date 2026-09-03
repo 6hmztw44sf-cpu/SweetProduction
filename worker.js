@@ -730,23 +730,14 @@ if (
 
   const password = String(
     form.get("password") || ""
-  ).trim();
+  );
 
-  const correctPassword = String(
-    env.ADMIN_PASSWORD || ""
-  ).trim();
-
-  if (
-    !correctPassword ||
-    password !== correctPassword
-  ) {
+  if (password !== "SweetTest123!") {
     return new Response("Fel lösenord", {
       status: 401,
       headers: {
-        "Content-Type":
-          "text/html; charset=UTF-8",
-        "Cache-Control":
-          "no-store"
+        "Content-Type": "text/html; charset=UTF-8",
+        "Cache-Control": "no-store"
       }
     });
   }
