@@ -46,13 +46,24 @@ async function verifySession(request, env) {
     return false;
   }
 
-  const expected = await createSession(
-    env.ADMIN_PASSWORD
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(env.ADMIN_PASSWORD),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["verify"]
   );
 
-  const expectedParts = expected.split(".");
+  const signature = new Uint8Array(
+    parts[1].match(/.{1,2}/g).map(byte => parseInt(byte, 16))
+  );
 
-  return parts[1] === expectedParts[1];
+  return await crypto.subtle.verify(
+    "HMAC",
+    key,
+    signature,
+    new TextEncoder().encode(parts[0])
+  );
 }
 
 function loginPage() {
