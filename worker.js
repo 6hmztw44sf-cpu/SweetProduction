@@ -645,6 +645,8 @@ export default {
     const isContentRoute =
       url.pathname === "/content" ||
       url.pathname === "/api/content";
+
+    console.log("PATH:", url.pathname);
     // SKYDDA ADMIN-API
 
 
