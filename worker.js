@@ -1,31 +1,11 @@
 const SESSION_COOKIE = "sweet_admin_session";
 const SESSION_SECONDS = 60 * 60 * 12;
 
-async function createSession(password) {
-  const expires = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
+async function createSession() {
+  const expires =
+    Math.floor(Date.now() / 1000) + SESSION_SECONDS;
 
-  const data = String(expires);
-
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(password),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign", "verify"]
-  );
-
-  const signature = await crypto.subtle.sign(
-    "HMAC",
-    key,
-    new TextEncoder().encode(data)
-  );
-
-  const bytes = new Uint8Array(signature);
-  const hex = [...bytes]
-    .map(b => b.toString(16).padStart(2, "0"))
-    .join("");
-
-  return `${data}.${hex}`;
+  return String(expires);
 }
 
 async function verifySession(request, env) {
@@ -35,16 +15,17 @@ async function verifySession(request, env) {
     new RegExp(`${SESSION_COOKIE}=([^;]+)`)
   );
 
-  if (!match) return false;
-
-  const parts = match[1].split(".");
-  if (parts.length !== 2) return false;
-
-  const expires = Number(parts[0]);
-
-  if (!expires || expires < Math.floor(Date.now() / 1000)) {
+  if (!match) {
     return false;
   }
+
+  const expires = Number(match[1]);
+
+  return (
+    expires &&
+    expires > Math.floor(Date.now() / 1000)
+  );
+}
 
   const key = await crypto.subtle.importKey(
     "raw",
@@ -776,9 +757,7 @@ if (
     });
   }
 
-  const session = await createSession(
-    env.ADMIN_PASSWORD
-  );
+  const session = await createSession();
 
   return new Response(null, {
     status: 302,
