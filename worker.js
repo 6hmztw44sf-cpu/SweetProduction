@@ -1,4 +1,3 @@
-
 const OWNER = "6hmztw44sf-cpu";
 const REPO = "SweetProduction";
 const BRANCH = "main";
@@ -125,23 +124,12 @@ function encodeBase64(text) {
 
 
 async function getContent(env) {
+
   return githubRequest(
     `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
     {},
     env
   );
-}
-
-  const text = await response.text();
-
-  return {
-    content: btoa(
-      String.fromCharCode(
-        ...new TextEncoder().encode(text)
-      )
-    ),
-    sha: null
-  };
 }
 
 
@@ -639,14 +627,11 @@ export default {
 
     const url =
       new URL(request.url);
- 
+
 
     const isContentRoute =
       url.pathname === "/content" ||
       url.pathname === "/api/content";
-
-    
-    // SKYDDA ADMIN-API
 
 
     try {
@@ -736,29 +721,39 @@ export default {
       // ---------------------
 
       if (
-  request.method === "GET" &&
-  isContentRoute
-) {
-  const response = await fetch(
-    `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${FILE_PATH}?v=${Date.now()}`
-  );
+        request.method === "GET" &&
+        isContentRoute
+      ) {
 
-  if (!response.ok) {
-    throw new Error("Kunde inte läsa content.json från GitHub");
-  }
+        const file =
+          await getContent(env);
 
-  let content = JSON.parse(await response.text());
 
-  content = normalizeMediaUrls(content);
+        let content =
+          JSON.parse(
+            decodeBase64(
+              file.content
+            )
+          );
 
-  return new Response(
-    JSON.stringify(content),
-    {
-      status: 200,
-      headers
-    }
-  );
-}
+
+        // Fixar gamla media-URL:er automatiskt
+        content =
+          normalizeMediaUrls(
+            content
+          );
+
+
+        return new Response(
+          JSON.stringify(
+            content
+          ),
+          {
+            status: 200,
+            headers
+          }
+        );
+      }
 
 
       // ---------------------
