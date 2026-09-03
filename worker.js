@@ -735,39 +735,29 @@ export default {
       // ---------------------
 
       if (
-        request.method === "GET" &&
-        isContentRoute
-      ) {
+  request.method === "GET" &&
+  isContentRoute
+) {
+  const response = await fetch(
+    `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${FILE_PATH}?v=${Date.now()}`
+  );
 
-        const file =
-          await getContent(env);
+  if (!response.ok) {
+    throw new Error("Kunde inte läsa content.json från GitHub");
+  }
 
+  let content = JSON.parse(await response.text());
 
-        let content =
-          JSON.parse(
-            decodeBase64(
-              file.content
-            )
-          );
+  content = normalizeMediaUrls(content);
 
-
-        // Fixar gamla media-URL:er automatiskt
-        content =
-          normalizeMediaUrls(
-            content
-          );
-
-
-        return new Response(
-          JSON.stringify(
-            content
-          ),
-          {
-            status: 200,
-            headers
-          }
-        );
-      }
+  return new Response(
+    JSON.stringify(content),
+    {
+      status: 200,
+      headers
+    }
+  );
+}
 
 
       // ---------------------
