@@ -173,6 +173,90 @@ function normalizeMediaUrls(value) {
 
   return value;
 }
+function collectMediaKeys(value, keys = new Set()) {
+
+  if (Array.isArray(value)) {
+    value.forEach(item => collectMediaKeys(item, keys));
+    return keys;
+  }
+
+  if (value && typeof value === "object") {
+
+    for (const [key, val] of Object.entries(value)) {
+
+      if (
+        (key === "image" ||
+         key === "src" ||
+         key === "poster") &&
+        typeof val === "string"
+      ) {
+
+        const prefixes = [
+          "https://sweetproduction.se/media/",
+          "https://www.sweetproduction.se/media/",
+          "https://sweetproduction-admin.frycts5yrr.workers.dev/media/"
+        ];
+
+        for (const prefix of prefixes) {
+
+          if (val.startsWith(prefix)) {
+
+            const mediaKey = decodeURIComponent(
+              val.substring(prefix.length)
+            );
+
+            if (mediaKey) {
+              keys.add(mediaKey);
+            }
+
+            break;
+          }
+        }
+
+      } else {
+
+        collectMediaKeys(val, keys);
+
+      }
+    }
+  }
+
+  return keys;
+}
+
+
+async function deleteRemovedMedia(oldContent, newContent, env) {
+
+  if (!env.MEDIA) return;
+
+  const oldKeys = collectMediaKeys(oldContent);
+  const newKeys = collectMediaKeys(newContent);
+
+  for (const key of oldKeys) {
+
+    if (!newKeys.has(key)) {
+
+      try {
+
+        await env.MEDIA.delete(key);
+
+        console.log(
+          "R2 deleted:",
+          key
+        );
+
+      } catch (error) {
+
+        console.error(
+          "R2 delete failed:",
+          key,
+          error
+        );
+
+      }
+    }
+  }
+}
 
 
 // =========================
@@ -204,28 +288,45 @@ async function saveContent(body, env) {
 
     try {
 
-      return await githubRequest(
-        `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`,
-        {
-          method: "PUT",
+      const oldContent =
+        JSON.parse(
+          decodeBase64(
+            current.content
+          )
+        );
 
-          body: JSON.stringify({
+      const result =
+        await githubRequest(
+          `/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`,
+          {
+            method: "PUT",
 
-            message:
-              "Update website content",
+            body: JSON.stringify({
 
-            content:
-              encoded,
+              message:
+                "Update website content",
 
-            sha:
-              current.sha,
+              content:
+                encoded,
 
-            branch:
-              BRANCH
-          })
-        },
+              sha:
+                current.sha,
+
+              branch:
+                BRANCH
+
+            })
+          },
+          env
+        );
+
+      await deleteRemovedMedia(
+        oldContent,
+        normalized,
         env
       );
+
+      return result;
 
     } catch (error) {
 
