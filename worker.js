@@ -9,7 +9,8 @@ async function createSession() {
 }
 
 async function verifySession(request, env) {
-  const cookie = request.headers.get("Cookie") || "";
+  const cookie =
+    request.headers.get("Cookie") || "";
 
   const match = cookie.match(
     new RegExp(`${SESSION_COOKIE}=([^;]+)`)
@@ -717,7 +718,7 @@ export default {
 
     const url =
       new URL(request.url);
-    // =========================
+// =========================
 // ADMIN LOGIN
 // =========================
 
@@ -726,13 +727,26 @@ if (
   url.pathname === "/login"
 ) {
   const form = await request.formData();
-  const password = String(form.get("password") || "");
 
-  if (password !== "SweetTest123!") {
+  const password = String(
+    form.get("password") || ""
+  ).trim();
+
+  const correctPassword = String(
+    env.ADMIN_PASSWORD || ""
+  ).trim();
+
+  if (
+    !correctPassword ||
+    password !== correctPassword
+  ) {
     return new Response("Fel lösenord", {
       status: 401,
       headers: {
-        "Content-Type": "text/html; charset=UTF-8"
+        "Content-Type":
+          "text/html; charset=UTF-8",
+        "Cache-Control":
+          "no-store"
       }
     });
   }
