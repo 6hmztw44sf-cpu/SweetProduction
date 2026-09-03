@@ -1,3 +1,121 @@
+const SESSION_COOKIE = "sweet_admin_session";
+const SESSION_SECONDS = 60 * 60 * 12;
+
+async function createSession(password) {
+  const expires = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
+
+  const data = String(expires);
+
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(password),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign", "verify"]
+  );
+
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    new TextEncoder().encode(data)
+  );
+
+  const bytes = new Uint8Array(signature);
+  const hex = [...bytes]
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return `${data}.${hex}`;
+}
+
+async function verifySession(request, env) {
+  const cookie = request.headers.get("Cookie") || "";
+
+  const match = cookie.match(
+    new RegExp(`${SESSION_COOKIE}=([^;]+)`)
+  );
+
+  if (!match) return false;
+
+  const parts = match[1].split(".");
+  if (parts.length !== 2) return false;
+
+  const expires = Number(parts[0]);
+
+  if (!expires || expires < Math.floor(Date.now() / 1000)) {
+    return false;
+  }
+
+  const expected = await createSession(
+    env.ADMIN_PASSWORD
+  );
+
+  const expectedParts = expected.split(".");
+
+  return parts[1] === expectedParts[1];
+}
+
+function loginPage() {
+  return new Response(`
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sweet Production – Login</title>
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#111;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+form{
+  width:min(340px,calc(100% - 40px));
+}
+h1{
+  font-size:28px;
+  margin-bottom:30px;
+}
+input{
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  margin-bottom:12px;
+  border:1px solid #444;
+  background:#1d1d1d;
+  color:#fff;
+  border-radius:6px;
+}
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:6px;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+<form method="POST" action="/login">
+<h1>Sweet Production</h1>
+<input type="password" name="password" placeholder="Lösenord" required autofocus>
+<button type="submit">Logga in</button>
+</form>
+</body>
+</html>
+`, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/html; charset=UTF-8",
+      "X-Robots-Tag": "noindex, nofollow"
+    }
+  });
+}
 const OWNER = "6hmztw44sf-cpu";
 const REPO = "SweetProduction";
 const BRANCH = "main";
