@@ -745,6 +745,74 @@ export default {
 
     const url =
       new URL(request.url);
+    // =========================
+// ADMIN LOGIN
+// =========================
+
+if (
+  request.method === "POST" &&
+  url.pathname === "/login"
+) {
+  const form = await request.formData();
+  const password = String(form.get("password") || "");
+
+  if (
+    !env.ADMIN_PASSWORD ||
+    password !== env.ADMIN_PASSWORD
+  ) {
+    return new Response("Fel lösenord", {
+      status: 401,
+      headers: {
+        "Content-Type": "text/html; charset=UTF-8"
+      }
+    });
+  }
+
+  const session = await createSession(
+    env.ADMIN_PASSWORD
+  );
+
+  return new Response(null, {
+    status: 302,
+    headers: {
+      "Location": "/admin.html",
+      "Set-Cookie":
+        `${SESSION_COOKIE}=${session}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${SESSION_SECONDS}`
+    }
+  });
+}
+
+
+// LOGOUT
+
+if (
+  request.method === "GET" &&
+  url.pathname === "/logout"
+) {
+  return new Response(null, {
+    status: 302,
+    headers: {
+      "Location": "/admin.html",
+      "Set-Cookie":
+        `${SESSION_COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`
+    }
+  });
+}
+
+
+// SKYDDA ADMIN.HTML
+
+if (
+  request.method === "GET" &&
+  url.pathname === "/admin.html"
+) {
+  const loggedIn =
+    await verifySession(request, env);
+
+  if (!loggedIn) {
+    return loginPage();
+  }
+}
 
 
     const isContentRoute =
