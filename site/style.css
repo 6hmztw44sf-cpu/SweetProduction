@@ -71,11 +71,28 @@ a{
 .hero-bg{
   position:absolute;
   inset:0;
-  background:
-    radial-gradient(circle at 30% 40%,#252525 0,transparent 35%),
-    radial-gradient(circle at 80% 70%,#151515 0,transparent 35%);
+  overflow:hidden;
 }
 
+.hero-background-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.25);
+}
+
+.hero-bg .grain{
+  position:absolute;
+  inset:0;
+}
 .grain{
   position:absolute;
   inset:0;
