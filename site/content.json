@@ -36,9 +36,19 @@
       "text": "0709501042\nEliasuhreolofsson@hotmail.com"
     },
     {
-      "type": "image",
-      "src": "https://sweetproduction.se/media/media%2Ffa8189dc-1ab6-42f9-b781-3edeadda936e-White-Case_202608264099.JPG",
-      "alt": "0709501042 Eliasuhreolofsson@hotmail.com"
+      "type": "projects",
+      "title": "Contact",
+      "projects": [
+        {
+          "id": "1788518123319-z3p2qivecmp",
+          "title": "Contact",
+          "category": "0709501042 Eliasuhreolofsson@hotmail.com",
+          "image": "https://sweetproduction.se/media/media%2F363e5e61-2ee7-4a7a-941b-339d162c94bf-White-Case_202608264099.JPG",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        }
+      ]
     }
   ]
 }
