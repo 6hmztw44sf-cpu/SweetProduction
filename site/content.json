@@ -14,11 +14,10 @@
   },
   "blocks": [
     {
-      "id": "hero-1",
       "type": "hero",
+      "title": "Film. Foto. Content.",
       "location": "Stockholm · Sweden",
-      "title": "Film.\nFoto.\nContent.",
-      "heroVideo": "https://sweetproduction.se/media/media%2F34dc5f9a-bc91-48ca-a671-4e93273fb8d3-Sweet-Hemsida-Hero-v1.mp4"
+      "heroVideo": "https://sweetproduction.se/media/media%2F45e4b189-2576-401c-b8d7-66db165f782e-Sweet-Hemsida-Hero-v2.mp4"
     },
     {
       "id": "statement-1",
@@ -34,45 +33,12 @@
     {
       "id": "contact-1",
       "type": "contact",
-      "title": "Visuals that\nstay with you.\n\n0709501042",
-      "email": "Eliasuhreolofsson@hotmail.com"
+      "title": "Visuals thatstay with you.",
+      "email": ""
     },
     {
       "type": "text",
-      "text": "Skriv din text här."
-    },
-    {
-      "type": "projects",
-      "title": "Work",
-      "projects": [
-        {
-          "width": 33,
-          "fit": "contain",
-          "id": "1788345750836-i8ajgv7zo2q",
-          "title": "Nytt projekt",
-          "category": "Film · Foto",
-          "image": "https://sweetproduction.se/media/media%2Ffdb9a2b2-bb26-46e8-ab95-e3e645055901-ChatGPT-Image-2-sep.-2026-10_40_37.png",
-          "type": "image"
-        },
-        {
-          "width": 33,
-          "fit": "contain",
-          "id": "1788345750290-v6z4hkalxri",
-          "title": "Nytt projekt",
-          "category": "Film · Foto",
-          "image": "https://sweetproduction.se/media/media%2F8311f7ff-23df-4c2d-a479-abe83492eb4c-zROp9N8snGb3m7wj_fzwRDYPbeN0jz23ILL6WE0PRMi8Mz3Eq9alK0bdqidM13duiFzsBb_r5aGXJRbK.jpeg",
-          "type": "image"
-        },
-        {
-          "width": 25,
-          "fit": "contain",
-          "id": "1788346422873-dxpvjieqrih",
-          "title": "Nytt projekt",
-          "category": "Film · Foto",
-          "image": "https://sweetproduction.se/media/media%2Fd30aa1a3-05eb-400f-9964-9103d262daa5-Firefly_Gemini-Flash_panda-is-looking-at-the-dragon-and-are-happy-78234-1-.png",
-          "type": "image"
-        }
-      ]
+      "text": "0709501042\nEliasuhreolofsson@hotmail.com"
     }
   ]
 }
