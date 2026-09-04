@@ -1,6 +1,6 @@
 {
   "settings": {
-    "bgColor": "#080808",
+    "bgColor": "#8e0606",
     "textColor": "#f1efe9",
     "accentColor": "#68efe9",
     "headingFont": "Arial",
@@ -46,8 +46,8 @@
       "projects": [
         {
           "id": "1788518123319-z3p2qivecmp",
-          "title": "",
-          "category": "0709501042 Eliasuhreolofsson@hotmail.com",
+          "title": "0709501042 Eliasuhreolofsson@hotmail.com",
+          "category": "",
           "image": "https://sweetproduction.se/media/media%2F363e5e61-2ee7-4a7a-941b-339d162c94bf-White-Case_202608264099.JPG",
           "type": "image",
           "width": 25,
