@@ -31,15 +31,14 @@
       "text": "Sweet Production är en kreativ produktion i Stockholm. Vi skapar film, foto och content för varumärken, företag och människor som vill synas."
     },
     {
-      "id": "contact-1",
-      "type": "contact",
-      "title": "Visuals that stay with you.",
-      "email": ""
+      "type": "about",
+      "title": "Contact",
+      "text": "0709501042\nEliasuhreolofsson@hotmail.com"
     },
     {
-      "type": "about",
-      "title": "",
-      "text": "0709501042\nEliasuhreolofsson@hotmail.com"
+      "type": "image",
+      "src": "https://sweetproduction.se/media/media%2Ffa8189dc-1ab6-42f9-b781-3edeadda936e-White-Case_202608264099.JPG",
+      "alt": "0709501042 Eliasuhreolofsson@hotmail.com"
     }
   ]
 }
