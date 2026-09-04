@@ -14,16 +14,11 @@
   },
   "blocks": [
     {
-      "type": "video",
-      "src": "https://sweetproduction.se/media/media%2F1c778b7b-1b3e-4b4d-94db-20e18fe0b400-Sweet-Hemsida-Hero-v1.mp4",
-      "poster": "",
-      "ratio": "16:9"
-    },
-    {
       "id": "hero-1",
       "type": "hero",
       "location": "Stockholm · Sweden",
-      "title": "Film.\nFoto.\nContent."
+      "title": "Film.\nFoto.\nContent.",
+      "heroVideo": "https://sweetproduction.se/media/media%2F34dc5f9a-bc91-48ca-a671-4e93273fb8d3-Sweet-Hemsida-Hero-v1.mp4"
     },
     {
       "id": "statement-1",
