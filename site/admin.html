@@ -230,9 +230,10 @@ async function uploadBlockMedia(i,input,kind){
  try{
   notify("Laddar upp…");
   const result=await uploadFile(file);
-  if(kind==="image") content.blocks[i].src=result.url;
-  if(kind==="video") content.blocks[i].src=result.url;
-  if(kind==="poster") content.blocks[i].poster=result.url;
+  if(kind=="image") content.blocks[i].src=result.url;
+if(kind=="video") content.blocks[i].src=result.url;
+if(kind=="poster") content.blocks[i].poster=result.url;
+if(kind=="heroVideo") content.blocks[i].heroVideo=result.url;
   render();
   notify("Media uppladdad");
  }catch(e){notify(e.message);}
@@ -333,10 +334,16 @@ function setupProjectDrag(el,i,pi){
 }
 
 function fields(block,i){
- if(block.type==="hero") return `
+ if(block.type=="hero") return `
   <div class="grid">
    <div class="field"><label>Plats</label><input value="${esc(block.location)}" oninput="blockInput(${i},'location',this.value)"></div>
    <div class="field"><label>Rubrik</label><input value="${esc(block.title)}" oninput="blockInput(${i},'title',this.value)"></div>
+
+   <div class="field full">
+    <label>Bakgrundsvideo</label>
+    <input type="file" accept="video/*" onchange="uploadBlockMedia(${i},this,'heroVideo')">
+    ${mediaPreview(block.heroVideo,"video")}
+   </div>
   </div>`;
 
  if(block.type==="statement") return `
