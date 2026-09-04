@@ -622,7 +622,12 @@ block=>{
 
 /* HERO */
 
-if(block.type==="hero"){
+if(block.type=="hero"){
+
+const heroVideo =
+(content.blocks || []).find(
+b => b.type === "video" && b.src
+);
 
 page.innerHTML+=`
 
@@ -630,9 +635,20 @@ page.innerHTML+=`
 
 <div class="hero-bg">
 
-<div class="glow one"></div>
+${heroVideo ? `
+<video
+  class="hero-background-video"
+  src="${esc(heroVideo.src)}"
+  ${heroVideo.poster ? `poster="${esc(heroVideo.poster)}"` : ""}
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+></video>
+` : ""}
 
-<div class="glow two"></div>
+<div class="hero-overlay"></div>
 
 <div class="grain"></div>
 
