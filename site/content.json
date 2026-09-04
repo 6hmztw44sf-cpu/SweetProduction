@@ -14,6 +14,12 @@
   },
   "blocks": [
     {
+      "type": "video",
+      "src": "https://sweetproduction.se/media/media%2F1c778b7b-1b3e-4b4d-94db-20e18fe0b400-Sweet-Hemsida-Hero-v1.mp4",
+      "poster": "",
+      "ratio": "16:9"
+    },
+    {
       "id": "hero-1",
       "type": "hero",
       "location": "Stockholm · Sweden",
@@ -23,38 +29,6 @@
       "id": "statement-1",
       "type": "statement",
       "text": "Let's make\nsomething SWEET."
-    },
-    {
-      "id": "projects-1",
-      "type": "projects",
-      "title": "Selected work",
-      "projects": [
-        {
-          "width": 33,
-          "fit": "cover",
-          "id": "mtjwlkzkd70ssfuoaot",
-          "title": "Nytt projekt",
-          "category": "Film / Content",
-          "image": "https://sweetproduction.se/media/media%2F683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png",
-          "type": "image",
-          "mediaKey": "media/683a2cae-ac83-4101-a6c1-6ce68b2f8882-ChatGPT-Image-2-sep.-2026-09_49_38.png"
-        },
-        {
-          "width": 75,
-          "fit": "cover",
-          "id": "mtjwlxx0jyf5uazfcgd",
-          "title": "Nytt projekt",
-          "category": "Film / Content",
-          "image": "https://sweetproduction.se/media/media%2F267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png",
-          "type": "image",
-          "mediaKey": "media/267653cf-f922-49d9-8c9e-02e175517e12-ChatGPT-Image-2-sep.-2026-09_49_38.png"
-        }
-      ]
-    },
-    {
-      "type": "image",
-      "src": "",
-      "alt": ""
     },
     {
       "id": "about-1",
@@ -95,13 +69,13 @@
           "type": "image"
         },
         {
+          "width": 25,
+          "fit": "contain",
           "id": "1788346422873-dxpvjieqrih",
           "title": "Nytt projekt",
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2Fd30aa1a3-05eb-400f-9964-9103d262daa5-Firefly_Gemini-Flash_panda-is-looking-at-the-dragon-and-are-happy-78234-1-.png",
-          "type": "image",
-          "width": 25,
-          "fit": "contain"
+          "type": "image"
         }
       ]
     }
