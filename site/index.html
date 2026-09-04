@@ -624,22 +624,16 @@ block=>{
 
 if(block.type=="hero"){
 
-const heroVideo =
-(content.blocks || []).find(
-b => b.type === "video" && b.src
-);
-
 page.innerHTML+=`
 
 <section class="hero">
 
 <div class="hero-bg">
 
-${heroVideo ? `
+${block.heroVideo ? `
 <video
   class="hero-background-video"
-  src="${esc(heroVideo.src)}"
-  ${heroVideo.poster ? `poster="${esc(heroVideo.poster)}"` : ""}
+  src="${esc(block.heroVideo)}"
   autoplay
   muted
   loop
