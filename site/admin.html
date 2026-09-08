@@ -439,8 +439,9 @@ function fields(block,i){
    <div class="field full"><label>Text</label><textarea oninput="blockInput(${i},'text',this.value)">${esc(block.text)}</textarea></div>
   </div>`;
 
- if(block.type=="contact") return `
+if(block.type=="contact") return `
   <div class="grid">
+
    <div class="field">
     <label>Rubrik</label>
     <input value="${esc(block.title)}" oninput="blockInput(${i},'title',this.value)">
@@ -470,9 +471,27 @@ function fields(block,i){
     <label>Telefonstorlek</label>
     <input value="${esc(block.phoneSize||"20px")}" oninput="blockInput(${i},'phoneSize',this.value)">
    </div>
+
+   <div class="field">
+    <label>Bild</label>
+    <input
+      type="file"
+      accept="image/*"
+      onchange="uploadBlockMedia(${i},this,'contactImage')"
+    >
+   </div>
+
+   <div class="field">
+    <label>Bildstorlek</label>
+    <input
+      value="${esc(block.imageSize||"400px")}"
+      oninput="blockInput(${i},'imageSize',this.value)"
+    >
+   </div>
+
   </div>`;
 
- return "";
+return "";
 }
 
 function render(){
