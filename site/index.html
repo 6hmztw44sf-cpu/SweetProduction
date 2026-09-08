@@ -1076,40 +1076,41 @@ ${esc(block.text)
 
 /* CONTACT */
 
-if(block.type==="contact"){
+if(block.type=="contact"){
 
 page.innerHTML+=`
 
-<section
-id="contact"
-class="contact"
->
+<section id="contact" class="contact">
 
-<p class="eyebrow">
-Contact
-</p>
-
-<h2>
-${esc(block.title)
-.replace(/\n/g,"<br>")}
+<h2 style="font-size:${esc(block.titleSize||"150px")}">
+${esc(block.title).replace(/\n/g,"<br>")}
 </h2>
+
+<div class="contact-details">
 
 <a
 class="email"
 href="mailto:${esc(block.email)}"
+style="font-size:${esc(block.emailSize||"20px")}"
 >
-
 ${esc(block.email)}
-
 </a>
+
+${block.phone ? `
+<a
+class="phone"
+href="tel:${esc(block.phone.replace(/\\s/g,""))}"
+style="font-size:${esc(block.phoneSize||"20px")}"
+>
+${esc(block.phone)}
+</a>
+` : ""}
+
+</div>
 
 </section>
 
 `;
-
-}
-
-});
 
 }
 
