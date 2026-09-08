@@ -239,6 +239,7 @@ async function uploadBlockMedia(i,input,kind){
 if(kind=="video") content.blocks[i].src=result.url;
 if(kind=="poster") content.blocks[i].poster=result.url;
 if(kind=="heroVideo") content.blocks[i].heroVideo=result.url;
+if(kind=="contactImage") content.blocks[i].image=result.url;
   render();
   notify("Media uppladdad");
  }catch(e){notify(e.message);}
