@@ -164,7 +164,12 @@ function addBlock(type){
   video:{type,src:"",poster:"",ratio:"16:9"},
   projects:{type,title:"Work",projects:[]},
   about:{type,title:"We make things move.",text:"Berätta om Sweet Production här."},
-  contact:{type,title:"Let’s work together.",email:"hello@sweetproduction.se"}
+  contact:{
+  type,
+  title:"Let’s work together.",
+  email:"hello@sweetproduction.se",
+  phone:""
+}
  };
  content.blocks.push(defaults[type]);
  render();
@@ -434,10 +439,37 @@ function fields(block,i){
    <div class="field full"><label>Text</label><textarea oninput="blockInput(${i},'text',this.value)">${esc(block.text)}</textarea></div>
   </div>`;
 
- if(block.type==="contact") return `
+ if(block.type=="contact") return `
   <div class="grid">
-   <div class="field"><label>Rubrik</label><input value="${esc(block.title)}" oninput="blockInput(${i},'title',this.value)"></div>
-   <div class="field"><label>E-post</label><input value="${esc(block.email)}" oninput="blockInput(${i},'email',this.value)"></div>
+   <div class="field">
+    <label>Rubrik</label>
+    <input value="${esc(block.title)}" oninput="blockInput(${i},'title',this.value)">
+   </div>
+
+   <div class="field">
+    <label>Rubrikstorlek</label>
+    <input value="${esc(block.titleSize||"150px")}" oninput="blockInput(${i},'titleSize',this.value)">
+   </div>
+
+   <div class="field">
+    <label>E-post</label>
+    <input value="${esc(block.email)}" oninput="blockInput(${i},'email',this.value)">
+   </div>
+
+   <div class="field">
+    <label>E-poststorlek</label>
+    <input value="${esc(block.emailSize||"20px")}" oninput="blockInput(${i},'emailSize',this.value)">
+   </div>
+
+   <div class="field">
+    <label>Telefonnummer</label>
+    <input value="${esc(block.phone||"")}" oninput="blockInput(${i},'phone',this.value)">
+   </div>
+
+   <div class="field">
+    <label>Telefonstorlek</label>
+    <input value="${esc(block.phoneSize||"20px")}" oninput="blockInput(${i},'phoneSize',this.value)">
+   </div>
   </div>`;
 
  return "";
