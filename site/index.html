@@ -1108,6 +1108,15 @@ ${esc(block.phone)}
 
 </div>
 
+${block.image ? `
+<img
+  src="${esc(block.image)}"
+  alt=""
+  class="contact-image"
+  style="width:${esc(block.imageSize||"400px")}"
+>
+` : ""}
+
 </section>
 
 `;
