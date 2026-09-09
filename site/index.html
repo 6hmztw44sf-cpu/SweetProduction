@@ -1076,30 +1076,40 @@ ${esc(block.text)
 
 /* CONTACT */
 
-if(block.type=="contact"){
+if(block.type==="contact"){
 
 page.innerHTML+=`
 
-<section id="contact" class="contact">
+<section
+id="contact"
+class="contact"
+>
+
+<p class="eyebrow">
+Contact
+</p>
 
 <h2>
-${esc(block.title).replace(/\n/g,"<br>")}
+${esc(block.title)
+.replace(/\n/g,"<br>")}
 </h2>
-
-<div class="contact-details">
 
 <a
 class="email"
 href="mailto:${esc(block.email)}"
 >
-${esc(block.email)}
-</a>
 
-</div>
+${esc(block.email)}
+
+</a>
 
 </section>
 
 `;
+
+}
+
+});
 
 }
 
