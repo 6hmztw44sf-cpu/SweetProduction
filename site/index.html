@@ -1082,7 +1082,7 @@ page.innerHTML+=`
 
 <section id="contact" class="contact">
 
-<h2 style="font-size:${esc(block.titleSize||"150px")}">
+<h2>
 ${esc(block.title).replace(/\n/g,"<br>")}
 </h2>
 
@@ -1091,24 +1091,11 @@ ${esc(block.title).replace(/\n/g,"<br>")}
 <a
 class="email"
 href="mailto:${esc(block.email)}"
-style="font-size:${esc(block.emailSize||"20px")}"
 >
 ${esc(block.email)}
 </a>
 
-${block.phone ? `
-<a
-class="phone"
-href="tel:${esc(block.phone.replace(/\\s/g,""))}"
-style="font-size:${esc(block.phoneSize||"20px")}"
->
-${esc(block.phone)}
-</a>
-` : ""}
-
 </div>
-
-
 
 </section>
 
