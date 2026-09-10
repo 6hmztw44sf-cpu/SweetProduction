@@ -37,8 +37,10 @@
     },
     {
       "type": "contact",
-      "title": "Elias Uhre Olofsson. 0709501042",
-      "email": "Eliasuhreolofsson@hotmail.com"
+      "title": "Contact",
+      "email": "Eliasuhreolofsson@hotmail.com",
+      "phone": "0709501042",
+      "image": "https://sweetproduction.se/media/media%2Fb146dcb8-318e-4e3d-aa9d-0c9ac5b83637-White-Case_202608264099.JPG"
     },
     {
       "type": "projects",
