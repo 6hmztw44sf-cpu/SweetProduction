@@ -158,16 +158,18 @@ function renderPage(content) {
         <section class="hero">
 
           <div class="hero-bg">
-            ${
-              block.heroVideo
-  ? `<video
-      class="hero-background-video"
-      src="${escapeAttribute(block.heroVideo)}"
-      autoplay
-      muted
-      loop
-      playsinline></video>`
-            }
+            ${ 
+  block.heroVideo
+    ? `<video
+        class="hero-background-video"
+        src="${escapeAttribute(block.heroVideo)}"
+        autoplay
+        muted
+        loop
+        playsinline></video>`
+    : `<div class="glow one"></div>
+       <div class="glow two"></div>`
+}
             <div class="grain"></div>
           </div>
 
@@ -226,10 +228,10 @@ function renderPage(content) {
 
     ${
   project.image
-  ? project.type === "video"
-  ? `<video src="${escapeAttribute(project.image)}" controls playsinline></video>`
-    : `<img src="${escapeAttribute(project.image)}" alt="${escapeAttribute(project.title || "")}">`
-  : "YOUR PROJECT"
+    ? project.type === "video"
+      ? `<video src="${escapeAttribute(project.image)}" controls playsinline></video>`
+      : `<img src="${escapeAttribute(project.image)}" alt="${escapeAttribute(project.title || "")}">`
+    : "YOUR PROJECT"
 }
 
   </div>
