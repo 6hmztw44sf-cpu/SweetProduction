@@ -35,13 +35,13 @@
       "title": "Work",
       "projects": [
         {
+          "width": 50,
+          "fit": "cover",
           "id": "1789114191234-sfxk1n0gwbb",
           "title": "Nytt projekt",
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2F75a70130-9614-44a4-b419-925ad463f724-jimmy-kickflip.mp4",
-          "type": "video",
-          "width": 50,
-          "fit": "cover"
+          "type": "video"
         }
       ]
     },
