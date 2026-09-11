@@ -35,28 +35,6 @@
       "title": "Work",
       "projects": [
         {
-          "width": 25,
-          "fit": "contain",
-          "id": "1789112227278-19v8uybkpiq",
-          "title": "Elias Uhre Olofsson",
-          "category": "Film · Foto",
-          "image": "https://sweetproduction.se/media/media%2Ff39aaebd-def5-4320-ae44-534fc271b43b-White-Case_202608264099.JPG",
-          "type": "image"
-        }
-      ]
-    },
-    {
-      "type": "contact",
-      "title": "0709501042                                    Eliasuhreolofsson@hotmail.com",
-      "email": "",
-      "phone": "",
-      "image": "https://sweetproduction.se/media/media%2Ff9438519-6c0b-4d4c-ae47-8aeda70a18dc-White-Case_202608264099.JPG"
-    },
-    {
-      "type": "projects",
-      "title": "Work",
-      "projects": [
-        {
           "id": "1789114191234-sfxk1n0gwbb",
           "title": "Nytt projekt",
           "category": "Film · Foto",
@@ -66,6 +44,13 @@
           "fit": "cover"
         }
       ]
+    },
+    {
+      "type": "contact",
+      "title": "0709501042                                    Eliasuhreolofsson@hotmail.com",
+      "email": "",
+      "phone": "",
+      "image": "https://sweetproduction.se/media/media%2Ff9438519-6c0b-4d4c-ae47-8aeda70a18dc-White-Case_202608264099.JPG"
     }
   ]
 }
