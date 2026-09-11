@@ -43,13 +43,13 @@
       "title": "Work",
       "projects": [
         {
+          "width": 25,
+          "fit": "contain",
           "id": "1789112227278-19v8uybkpiq",
           "title": "Elias Uhre Olofsson",
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2Ff39aaebd-def5-4320-ae44-534fc271b43b-White-Case_202608264099.JPG",
-          "type": "image",
-          "width": 100,
-          "fit": "contain"
+          "type": "image"
         }
       ]
     }
