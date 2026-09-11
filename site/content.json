@@ -42,6 +42,15 @@
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2F75a70130-9614-44a4-b419-925ad463f724-jimmy-kickflip.mp4",
           "type": "video"
+        },
+        {
+          "id": "1789115633808-wei2wfo3gp",
+          "title": "Nytt projekt",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2Fc133d3ac-5fe3-4bb0-960b-388f1f9e605f-strumpor-lila-final.mp4",
+          "type": "video",
+          "width": 33,
+          "fit": "cover"
         }
       ]
     },
