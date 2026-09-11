@@ -5,3 +5,7 @@ compatibility_date = "2026-08-31"
 [[r2_buckets]]
 binding = "MEDIA"
 bucket_name = "sweetproduction-media"
+
+[[routes]]
+pattern = "sweetproduction.se/*"
+zone_name = "sweetproduction.se"
