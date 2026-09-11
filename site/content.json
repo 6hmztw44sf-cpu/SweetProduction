@@ -34,7 +34,8 @@
       "type": "contact",
       "title": "Let’s work together.",
       "email": "Eliasuhreolofsson@hotmail.com",
-      "phone": "0709501042"
+      "phone": "0709501042",
+      "emailSize": "150px"
     }
   ]
 }
