@@ -50,7 +50,7 @@
           "image": "https://sweetproduction.se/media/media%2Fc133d3ac-5fe3-4bb0-960b-388f1f9e605f-strumpor-lila-final.mp4",
           "type": "video",
           "width": 33,
-          "fit": "cover"
+          "fit": "contain"
         }
       ]
     },
