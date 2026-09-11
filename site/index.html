@@ -160,13 +160,7 @@ function renderPage(content) {
           <div class="hero-bg">
             ${
               block.heroVideo
-                ? `<video
-                    class="hero-background-video"
-                    src="${escapeAttribute(block.heroVideo)}"
-                    autoplay
-                    muted
-                    loop
-                    playsinline></video>
+                ? `<video src="${escapeAttribute(project.image)}" controls playsinline></video>
                    <div class="hero-overlay"></div>`
                 : `<div class="glow one"></div>
                    <div class="glow two"></div>`
