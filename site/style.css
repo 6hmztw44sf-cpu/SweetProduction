@@ -143,11 +143,7 @@ a{
   margin-bottom:40px;
 }
 
-.projects{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:70px 25px;
-}
+.projects{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:70px 25px}
 
 .project:nth-child(odd){
   margin-top:80px;
