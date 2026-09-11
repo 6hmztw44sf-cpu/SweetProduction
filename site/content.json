@@ -35,8 +35,8 @@
       "title": "Work",
       "projects": [
         {
-          "width": 50,
-          "fit": "cover",
+          "width": 33,
+          "fit": "contain",
           "id": "1789114191234-sfxk1n0gwbb",
           "title": "Nytt projekt",
           "category": "Film · Foto",
