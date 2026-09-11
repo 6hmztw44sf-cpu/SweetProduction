@@ -59,6 +59,21 @@
       "email": "",
       "phone": "",
       "image": "https://sweetproduction.se/media/media%2Ff9438519-6c0b-4d4c-ae47-8aeda70a18dc-White-Case_202608264099.JPG"
+    },
+    {
+      "type": "projects",
+      "title": "Work",
+      "projects": [
+        {
+          "id": "1789114191234-sfxk1n0gwbb",
+          "title": "Nytt projekt",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F75a70130-9614-44a4-b419-925ad463f724-jimmy-kickflip.mp4",
+          "type": "video",
+          "width": 50,
+          "fit": "cover"
+        }
+      ]
     }
   ]
 }
