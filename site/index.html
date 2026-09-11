@@ -220,17 +220,20 @@ function renderPage(content) {
       (block.projects || []).forEach((project) => {
 
         projectsHTML += `
-          <article class="project">
+          <article
+  class="project"
+  style="grid-column:span ${Math.round(Number(project.width || 50) / 100 * 12)}"
+>
 
-            <div class="media">
+  <div class="media ${project.fit === "contain" ? "fit-contain" : "fit-cover"}">
 
-              ${
-                project.image
-                ? `<img src="${escapeAttribute(project.image)}" alt="${escapeAttribute(project.title || "")}">`
-                : "YOUR PROJECT"
-              }
+    ${
+      project.image
+      ? `<img src="${escapeAttribute(project.image)}" alt="${escapeAttribute(project.title || "")}">`
+      : "YOUR PROJECT"
+    }
 
-            </div>
+  </div>
 
             <div class="meta">
 
