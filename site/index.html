@@ -65,7 +65,6 @@
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
-    <a href="admin.html">Admin</a>
   </nav>
 </header>
 
@@ -159,8 +158,19 @@ function renderPage(content) {
         <section class="hero">
 
           <div class="hero-bg">
-            <div class="glow one"></div>
-            <div class="glow two"></div>
+            ${
+              block.heroVideo
+                ? `<video
+                    class="hero-background-video"
+                    src="${escapeAttribute(block.heroVideo)}"
+                    autoplay
+                    muted
+                    loop
+                    playsinline></video>
+                   <div class="hero-overlay"></div>`
+                : `<div class="glow one"></div>
+                   <div class="glow two"></div>`
+            }
             <div class="grain"></div>
           </div>
 
@@ -288,22 +298,51 @@ function renderPage(content) {
 
     if (block.type === "contact") {
 
+      const contactDetails = [
+        block.email
+          ? `<a href="mailto:${escapeAttribute(block.email)}">${escapeHTML(block.email)}</a>`
+          : "",
+        block.phone
+          ? `<a href="tel:${escapeAttribute(block.phone)}">${escapeHTML(block.phone)}</a>`
+          : ""
+      ].filter(Boolean).join(" · ");
+
       page.innerHTML += `
-        <section id="contact" class="contact">
+        <section id="contact" class="work">
 
-          <p class="eyebrow">
-            Contact
-          </p>
+          <div class="section-top">
 
-          <h2>
-            ${escapeHTML(block.title || "").replace(/\n/g, "<br>")}
-          </h2>
+            <p class="eyebrow">
+              Contact
+            </p>
 
-          <a
-            class="email"
-            href="mailto:${escapeAttribute(block.email || "")}">
-            ${escapeHTML(block.email || "")}
-          </a>
+          </div>
+
+          <div class="projects">
+
+            <article class="project">
+
+              ${
+                block.image
+                  ? `<div class="media">
+                      <img src="${escapeAttribute(block.image)}" alt="${escapeAttribute(block.title || "Contact")}">
+                    </div>`
+                  : ""
+              }
+
+              <div class="meta">
+
+                <strong>
+                  ${escapeHTML(block.title || "Contact").replace(/\n/g, "<br>")}
+                </strong>
+
+                ${contactDetails ? `<small>${contactDetails}</small>` : ""}
+
+              </div>
+
+            </article>
+
+          </div>
 
         </section>
       `;
