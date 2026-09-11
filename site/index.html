@@ -228,10 +228,12 @@ function renderPage(content) {
   <div class="media ${project.fit === "contain" ? "fit-contain" : "fit-cover"}">
 
     ${
-      project.image
-      ? `<img src="${escapeAttribute(project.image)}" alt="${escapeAttribute(project.title || "")}">`
-      : "YOUR PROJECT"
-    }
+  project.image
+  ? project.type === "video"
+    ? `<video src="${escapeAttribute(project.image)}" autoplay muted loop playsinline></video>`
+    : `<img src="${escapeAttribute(project.image)}" alt="${escapeAttribute(project.title || "")}">`
+  : "YOUR PROJECT"
+}
 
   </div>
 
