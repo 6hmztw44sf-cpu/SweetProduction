@@ -51,6 +51,15 @@
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2Fc133d3ac-5fe3-4bb0-960b-388f1f9e605f-strumpor-lila-final.mp4",
           "type": "video"
+        },
+        {
+          "id": "1789474301985-kk42gnt8tsj",
+          "title": "Nytt projekt",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F5cb8641f-b040-45d2-af36-bdce60ca8c04-tennis-final-Master.mp4",
+          "type": "video",
+          "width": 33,
+          "fit": "contain"
         }
       ]
     },
