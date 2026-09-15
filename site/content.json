@@ -20,17 +20,6 @@
       "heroVideo": "https://sweetproduction.se/media/media%2F22f674be-41fa-4a35-9081-ebfa91b6015c-Sweet-Hemsida-Hero-v3.mp4"
     },
     {
-      "id": "statement-1",
-      "type": "statement",
-      "text": "Let's make\nsomething SWEET."
-    },
-    {
-      "id": "about-1",
-      "type": "about",
-      "title": "We create\nvisual stories.",
-      "text": "Sweet Production är en kreativ produktion i Stockholm. Vi skapar film, foto och content för varumärken, företag och människor som vill synas."
-    },
-    {
       "type": "projects",
       "title": "Work",
       "projects": [
@@ -87,6 +76,11 @@
       "email": "",
       "phone": "",
       "image": "https://sweetproduction.se/media/media%2Ff9438519-6c0b-4d4c-ae47-8aeda70a18dc-White-Case_202608264099.JPG"
+    },
+    {
+      "id": "statement-1",
+      "type": "statement",
+      "text": "Let's make\nsomething SWEET."
     }
   ]
 }
