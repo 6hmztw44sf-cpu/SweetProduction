@@ -53,31 +53,22 @@
           "type": "video"
         },
         {
-          "id": "1789472277966-xiri66mjye",
-          "title": "Nytt projekt",
-          "category": "Film · Foto",
-          "image": "https://sweetproduction.se/media/media%2Fe018bdd1-de47-45ad-8783-c86c1d6d3b11-konstert-promo-klar.mp4",
-          "type": "video",
-          "width": 33,
-          "fit": "contain"
-        },
-        {
+          "width": 25,
+          "fit": "cover",
           "id": "1789472474665-b5f51ig7dx9",
           "title": "Nytt projekt",
           "category": "Film · Foto",
           "image": "",
-          "type": "image",
-          "width": 25,
-          "fit": "cover"
+          "type": "image"
         },
         {
+          "width": 25,
+          "fit": "contain",
           "id": "1789472202868-rl8mvh62v3i",
           "title": "SNOWBEACH MUSIKVIDEO",
           "category": "Film · Foto",
           "image": "",
-          "type": "image",
-          "width": 25,
-          "fit": "contain"
+          "type": "image"
         }
       ]
     },
