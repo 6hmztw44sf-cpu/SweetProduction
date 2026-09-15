@@ -296,7 +296,13 @@ function setProjectFit(i,pi,fit){
  content.blocks[i].projects[pi].fit=fit;
  render();
 }
+async function removeProject(i,pi){
+  if(!confirm("Ta bort det här projektet?")) return;
 
+  content.blocks[i].projects.splice(pi,1);
+  render();
+  await save();
+}
 function setupBlockDrag(el,i){
  el.addEventListener("dragstart",()=>{
   draggedBlock=i;
