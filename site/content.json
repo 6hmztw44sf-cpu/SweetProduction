@@ -42,31 +42,31 @@
           "type": "video"
         },
         {
+          "width": 33,
+          "fit": "contain",
           "id": "1789474301985-kk42gnt8tsj",
           "title": "Nytt projekt",
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2F5cb8641f-b040-45d2-af36-bdce60ca8c04-tennis-final-Master.mp4",
-          "type": "video",
-          "width": 33,
-          "fit": "contain"
+          "type": "video"
         },
         {
+          "width": 50,
+          "fit": "contain",
           "id": "1789475115244-6k1mymrb1mw",
           "title": "Intervju med trummis",
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2F6338d4cc-94d6-42d7-894b-d7b4a6869ead-konstert-promo-Till-Sweet-hemsida.mp4",
-          "type": "video",
-          "width": 50,
-          "fit": "contain"
+          "type": "video"
         },
         {
+          "width": 50,
+          "fit": "contain",
           "id": "1789475115813-pjd8qfwcj7",
           "title": "SNOWBEACH MUSIKVIDEO",
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2Ffbdcf74f-9e83-4219-bfe9-20bc73892506-hustak-till-sweet-hemsida.mp4",
-          "type": "video",
-          "width": 50,
-          "fit": "contain"
+          "type": "video"
         }
       ]
     },
