@@ -67,6 +67,15 @@
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2Ffbdcf74f-9e83-4219-bfe9-20bc73892506-hustak-till-sweet-hemsida.mp4",
           "type": "video"
+        },
+        {
+          "id": "1789632340893-waweez049tg",
+          "title": "En God pasta alfredo, eller kan de vara en felix färdigrätt kanske?",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F25d54a20-6db8-4afe-8c78-257bcca4685e-Pasta-Alfredo.mp4",
+          "type": "video",
+          "width": 50,
+          "fit": "contain"
         }
       ]
     },
