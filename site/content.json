@@ -80,16 +80,121 @@
       ]
     },
     {
-      "type": "contact",
-      "title": "0709501042                                    Eliasuhreolofsson@hotmail.com",
-      "email": "",
-      "phone": "",
-      "image": "https://sweetproduction.se/media/media%2Ff9438519-6c0b-4d4c-ae47-8aeda70a18dc-White-Case_202608264099.JPG"
+      "type": "projects",
+      "title": "Work",
+      "projects": [
+        {
+          "id": "1789633788992-lq032g5864",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F27437f87-6b30-4196-9fff-b26dd11478f6-DSC02841.jpg",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633814631-2gx1ig51lmx",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2Ff740a755-0226-4b3e-bfa8-ef3b710722fa-DSC02774.jpg",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633841988-vinjt8w8ma",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F4307cec7-ae6a-4d61-a266-baeecbe1059c-Firefly_gpt-image_Ra-ta-upp-kartongen-sa-att-alla-kanter-och-perspektiv-ser-natu.png",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633865125-d429gwe8nav",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F36e2c06f-ac1d-4c83-a309-96acd9a712ee-DSC00771.jpg",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633886892-pgj3izftxn8",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F5b096a34-f3f1-43f5-8a81-c86b4bad5f6c-CR7_3004.jpg",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633908316-kkyle17lpk",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F82d86aee-d709-484a-bb72-41e631024ec9-CR7_2963.png",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633925964-y3fl0ggdx",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F6e425cef-773b-44ed-af07-97ae28dd0a77-DSC00595.JPG",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633926867-q1qtgevm1zh",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F847d3c18-131e-41da-9f09-af6d3a3d486c-DSC00592.JPG",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633963517-0pniit5zqdt",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2Fb260378f-79c2-43df-997e-f58eee1c2f17-DSC00912.jpg",
+          "type": "image",
+          "width": 33,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633964069-muu6e5sxctm",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F172b5a3b-fec8-4de9-a574-9ebda8d038f8-DSC00556.JPG",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        },
+        {
+          "id": "1789633964684-8gl9620p04k",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F6fef3807-897f-48c4-95f8-32f32dfdb727-DSC00553.JPG",
+          "type": "image",
+          "width": 25,
+          "fit": "contain"
+        }
+      ]
     },
     {
       "id": "statement-1",
       "type": "statement",
       "text": "Let's make\nsomething SWEET."
+    },
+    {
+      "type": "contact",
+      "title": "0709501042                                    Eliasuhreolofsson@hotmail.com",
+      "email": "",
+      "phone": "",
+      "image": "https://sweetproduction.se/media/media%2Ff9438519-6c0b-4d4c-ae47-8aeda70a18dc-White-Case_202608264099.JPG"
     }
   ]
 }
