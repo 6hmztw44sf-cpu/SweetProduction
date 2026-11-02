@@ -138,6 +138,24 @@
           "type": "image"
         },
         {
+          "id": "1793623737209-1f7fjizrfur",
+          "title": "Nytt projekt",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2F451e5bc1-9bf1-4a56-808c-8ea85d522f1a-DSC03928.jpg",
+          "type": "image",
+          "width": 50,
+          "fit": "contain"
+        },
+        {
+          "width": 50,
+          "fit": "contain",
+          "id": "1789633963517-0pniit5zqdt",
+          "title": "",
+          "category": "Film · Foto",
+          "image": "https://sweetproduction.se/media/media%2Fb260378f-79c2-43df-997e-f58eee1c2f17-DSC00912.jpg",
+          "type": "image"
+        },
+        {
           "width": 50,
           "fit": "contain",
           "id": "1789633925964-y3fl0ggdx",
@@ -153,15 +171,6 @@
           "title": "",
           "category": "Film · Foto",
           "image": "https://sweetproduction.se/media/media%2F847d3c18-131e-41da-9f09-af6d3a3d486c-DSC00592.JPG",
-          "type": "image"
-        },
-        {
-          "width": 50,
-          "fit": "contain",
-          "id": "1789633963517-0pniit5zqdt",
-          "title": "",
-          "category": "Film · Foto",
-          "image": "https://sweetproduction.se/media/media%2Fb260378f-79c2-43df-997e-f58eee1c2f17-DSC00912.jpg",
           "type": "image"
         },
         {
